@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>엔씨문화재단 수집기 (초안)</title>
+  <style>
+    :root {
+      --green: #1f9d5a;
+      --green-dark: #167a44;
+      --green-soft: #e8f6ee;
+      --ink: #1b2330;
+      --ink-soft: #5b6675;
+      --line: #e7eaef;
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --news: #2f6fed;
+      --news-soft: #e9f0ff;
+      --warn: #d9822b;
+      --radius: 14px;
+      --shadow: 0 2px 10px rgba(20, 30, 50, 0.06);
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      background: #d9dee4;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Phone frame (데모용 모바일 뷰) ---- */
+    .phone {
+      max-width: 440px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 40px rgba(0,0,0,0.12);
+    }
+
+    /* ---- App header ---- */
+    .appbar {
+      position: sticky; top: 0; z-index: 30;
+      background: #fff;
+      padding: 14px 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .appbar-top {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 17px; letter-spacing: -0.3px; }
+    .brand .mark {
+      width: 26px; height: 26px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff; display: grid; place-items: center; font-size: 15px;
+    }
+    .appbar-sub { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+    /* ---- Tabs ---- */
+    .tabs { display: flex; margin-top: 12px; gap: 4px; }
+    .tab {
+      flex: 1; text-align: center; padding: 11px 0 12px;
+      font-size: 14px; font-weight: 700; color: var(--ink-soft);
+      border: none; background: none; cursor: pointer;
+      position: relative;
+    }
+    .tab.active { color: var(--ink); }
+    .tab.active::after {
+      content: ""; position: absolute; left: 18%; right: 18%; bottom: -1px; height: 3px;
+      background: var(--green); border-radius: 3px 3px 0 0;
+    }
+    .tab .cnt { font-size: 11px; color: #97a1ae; font-weight: 600; }
+
+    /* ---- Toolbar ---- */
+    .toolbar { padding: 12px 16px 10px; }
+    .crawl-row { display: flex; align-items: center; gap: 10px; }
+    .crawl-btn {
+      flex: 1; border: none; border-radius: 12px; padding: 12px;
+      background: var(--green); color: #fff; font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+      transition: transform .08s ease, background .15s ease;
+    }
+    .crawl-btn:active { transform: scale(0.985); background: var(--green-dark); }
+    .crawl-btn .ico { font-size: 15px; }
+    .crawl-btn.loading { background: var(--ink-soft); pointer-events: none; }
+    .crawl-btn.loading .ico { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .last-sync { font-size: 11px; color: var(--ink-soft); white-space: nowrap; line-height: 1.3; text-align: right; }
+    .last-sync b { color: var(--ink); font-weight: 700; }
+
+    .search {
+      margin-top: 10px; display: flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px;
+    }
+    .search input { flex: 1; border: none; outline: none; font-size: 14px; background: none; }
+    .search .ico { color: #9aa3af; }
+
+    /* ---- Filter chips ---- */
+    .chips { display: flex; gap: 7px; overflow-x: auto; padding: 10px 16px 2px; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto; padding: 7px 13px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
+      background: #fff; border: 1px solid var(--line); color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+    }
+    .chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* ---- Meta line (collection info) ---- */
+    .collect-info {
+      margin: 8px 16px 0; font-size: 11px; color: var(--ink-soft);
+      background: var(--green-soft); border: 1px solid #cdeeda; border-radius: 10px; padding: 8px 11px; line-height: 1.5;
+    }
+    .collect-info b { color: var(--green-dark); }
+
+    /* ---- List ---- */
+    .list { flex: 1; padding: 12px 16px 90px; display: flex; flex-direction: column; gap: 11px; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 14px 14px 13px; box-shadow: var(--shadow); cursor: pointer;
+      transition: transform .08s ease;
+    }
+    .card:active { transform: scale(0.99); }
+    .card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; flex-wrap: wrap; }
+    .src-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+      background: var(--news-soft); color: var(--news);
+    }
+    .src-badge.board { background: var(--green-soft); color: var(--green-dark); }
+    .cat-badge {
+      font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px;
+      background: #f0f2f5; color: var(--ink-soft);
+    }
+    .card-title { font-size: 14.5px; font-weight: 700; line-height: 1.4; letter-spacing: -0.2px; }
+    .card-excerpt { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-meta { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 11.5px; color: #8a93a0; }
+    .card-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: #c7ccd4; }
+    .card-meta .author { font-weight: 600; color: var(--ink-soft); }
+    .card-meta .src-link { margin-left: auto; color: var(--news); font-weight: 700; }
+    .card-meta .src-link.board { color: var(--green-dark); }
+
+    .empty { text-align: center; color: #9aa3af; font-size: 13px; padding: 50px 20px; }
+
+    /* ---- Dedup banner ---- */
+    .dedup-note {
+      display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--warn);
+      background: #fff7ee; border: 1px dashed #f0cfa0; border-radius: 10px; padding: 9px 11px; margin-top: 2px;
+    }
+
+    /* ---- Detail sheet ---- */
+    .scrim {
+      position: fixed; inset: 0; background: rgba(15,22,35,0.45); z-index: 50;
+      opacity: 0; pointer-events: none; transition: opacity .2s ease;
+    }
+    .scrim.open { opacity: 1; pointer-events: auto; }
+    .sheet {
+      position: fixed; left: 50%; transform: translateX(-50%) translateY(100%);
+      bottom: 0; width: 100%; max-width: 440px; max-height: 88vh; background: #fff; z-index: 60;
+      border-radius: 20px 20px 0 0; transition: transform .26s cubic-bezier(.2,.8,.2,1);
+      display: flex; flex-direction: column;
+    }
+    .sheet.open { transform: translateX(-50%) translateY(0); }
+    .sheet-grab { width: 40px; height: 4px; background: #d7dbe1; border-radius: 3px; margin: 10px auto 4px; flex: 0 0 auto; }
+    .sheet-head { padding: 6px 18px 12px; border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+    .sheet-head .card-top { margin-bottom: 9px; }
+    .sheet-title { font-size: 17px; font-weight: 800; line-height: 1.4; letter-spacing: -0.3px; }
+    .sheet-meta { display: flex; gap: 8px; align-items: center; margin-top: 9px; font-size: 12px; color: #8a93a0; }
+    .sheet-body { padding: 16px 18px; overflow-y: auto; font-size: 14px; line-height: 1.75; color: #2c333d; white-space: pre-line; }
+    .sheet-foot { padding: 12px 18px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); flex: 0 0 auto; }
+    .open-origin {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 13px; border-radius: 12px; border: none; cursor: pointer;
+      background: var(--ink); color: #fff; font-size: 14px; font-weight: 700; text-decoration: none;
+    }
+
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+      background: rgba(27,35,48,0.95); color: #fff; font-size: 12.5px; font-weight: 600;
+      padding: 11px 16px; border-radius: 11px; z-index: 80; opacity: 0; transition: all .25s ease; white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .demo-flag {
+      font-size: 10.5px; color: #b23; background: #fdecec; border: 1px solid #f6c9c9;
+      padding: 6px 10px; border-radius: 8px; margin: 0 16px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <!-- App bar -->
+    <header class="appbar">
+      <div class="appbar-top">
+        <div class="brand"><span class="mark">⊐</span> 엔씨문화재단 수집기</div>
+      </div>
+      <div class="appbar-sub">키워드 기반 뉴스·게시판 수집 · 2026-01-01 이후</div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="news">재단 뉴스 <span class="cnt" id="cntNews"></span></button>
+        <button class="tab" data-tab="board">서비스 게시판 <span class="cnt" id="cntBoard"></span></button>
+      </nav>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="crawl-row">
+        <button class="crawl-btn" id="crawlBtn"><span class="ico">⟳</span> <span id="crawlLabel">수동 크롤링 실행</span></button>
+        <div class="last-sync">최근 수집<br /><b id="lastSync">2026-06-01 09:12</b></div>
+      </div>
+      <div class="search">
+        <span class="ico">🔍</span>
+        <input type="text" id="searchInput" placeholder="제목·본문 검색" />
+      </div>
+    </div>
+
+    <!-- Filter chips (board only) -->
+    <div class="chips" id="chips" style="display:none"></div>
+
+    <!-- Collection info -->
+    <div class="collect-info" id="collectInfo"></div>
+
+    <!-- List -->
+    <div class="list" id="list"></div>
+
+    <p class="demo-flag">※ 데모(초안) 화면입니다. 실제 크롤링은 백엔드 수집기 연동이 필요하며, 현재는 목업 데이터로 화면·플로우만 시연합니다.</p>
+    <div style="height:24px"></div>
+  </div>
+
+  <!-- Detail bottom sheet -->
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet">
+    <div class="sheet-grab"></div>
+    <div class="sheet-head">
+      <div class="card-top" id="sheetBadges"></div>
+      <div class="sheet-title" id="sheetTitle"></div>
+      <div class="sheet-meta" id="sheetMeta"></div>
+    </div>
+    <div class="sheet-body" id="sheetBody"></div>
+    <div class="sheet-foot">
+      <a class="open-origin" id="sheetOrigin" target="_blank" rel="noopener">원문 보기 ↗</a>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* =========================================================
+       목업 데이터  (실제 연동 시 백엔드 수집 API 응답으로 대체)
+       - news : 네이버 뉴스 크롤링 결과 (중복=본문 유사도 판단)
+       - board: 서비스 게시판 크롤링 결과 (중복=제목 판단)
+       ========================================================= */
+    const NEWS = [
+      {
+        id: 'n1', title: '엔씨문화재단, 발달장애인 AAC 앱 "나의AAC" 신규 기능 공개',
+        author: '연합뉴스', date: '2026-05-28', url: 'https://news.naver.com/',
+        body: '엔씨문화재단이 발달장애인을 위한 보완대체의사소통(AAC) 애플리케이션 "나의AAC"에 신규 기능을 추가했다고 28일 밝혔다.\n\n이번 업데이트는 사용자 맞춤형 상징 카드와 음성 합성 품질 개선을 핵심으로 한다. 재단 측은 "현장 의견을 반영해 접근성을 강화했다"고 설명했다.\n\n나의AAC는 누구나 무료로 이용할 수 있으며, 앱 마켓에서 내려받을 수 있다.'
+      },
+      {
+        id: 'n1b', title: '[중복후보] NC문화재단 \'나의AAC\' 새 기능 추가…발달장애 의사소통 지원',
+        author: '뉴시스', date: '2026-05-28', url: 'https://news.naver.com/',
+        dup: true, dupOf: 'n1', sim: 0.93,
+        body: '동일 보도자료를 재배포한 기사입니다. 본문 유사도 0.93 으로 신규 저장에서 제외되었습니다.'
+      },
+      {
+        id: 'n2', title: 'NC문화재단 "FAIR AI", AI 윤리 인사이트 시리즈 연재 시작',
+        author: '전자신문', date: '2026-05-20', url: 'https://news.naver.com/',
+        body: 'NC문화재단이 운영하는 AI 윤리 플랫폼 "FAIR AI"가 임베디드 에식스(Embedded Ethics) 인사이트 시리즈 연재를 시작한다.\n\n첫 회차는 생성형 AI 시대의 데이터 편향 문제를 다룬다. 재단은 매월 전문가 기고를 통해 산업 현장에 적용 가능한 윤리 가이드를 제시할 계획이다.'
+      },
+      {
+        id: 'n3', title: '엔씨문화재단 프로젝토리, 청소년 창작 프로젝트 성과 전시',
+        author: '머니투데이', date: '2026-05-12', url: 'https://news.naver.com/',
+        body: '엔씨문화재단의 창의 활동 공간 "프로젝토리"가 청소년 창작 프로젝트 성과를 모은 전시를 혜화 공간에서 열었다.\n\n참가 청소년들은 직접 기획한 과학·예술 융합 작품을 선보였다. 전시는 무료로 관람할 수 있다.'
+      },
+      {
+        id: 'n4', title: 'NC문화재단, 2026년 사회공헌 사업 방향 발표',
+        author: '아시아경제', date: '2026-02-04', url: 'https://news.naver.com/',
+        body: 'NC문화재단이 2026년 사회공헌 사업 방향을 발표했다. 올해는 디지털 접근성, AI 윤리, 청소년 창의교육 세 축을 중심으로 사업을 확대한다.'
+      },
+      {
+        id: 'n5', title: '엔씨문화재단 "나의AAC" 누적 이용자 10만 명 돌파',
+        author: '디지털타임스', date: '2026-01-15', url: 'https://news.naver.com/',
+        body: '엔씨문화재단의 AAC 앱 "나의AAC" 누적 이용자가 10만 명을 넘어섰다. 재단은 사용자 데이터를 바탕으로 한 추가 개선을 예고했다.'
+      }
+    ];
+
+    /* 본사(엔씨소프트/엔씨) 관련 기사는 수집 단계에서 제외 — 참고용 표시값 */
+    const EXCLUDED_HQ = 7;
+
+    const BOARD = [
+      { id: 'b1', service: '프로젝토리', cat: '공지', title: '6월 워밍업 프로젝트 모집 안내', author: '프로젝토리', date: '2026-05-29', url: 'https://www.projectory.or.kr/news/notice-list',
+        body: '6월 워밍업 프로젝트 참가자를 모집합니다.\n\n대상: 청소년 누구나\n장소: 혜화 프로젝토리\n신청: 홈페이지 신청 폼\n\n많은 참여 바랍니다.' },
+      { id: 'b2', service: '프로젝토리', cat: '이야기', title: '크루가 전하는 5월 활동 이야기', author: '크루 여름', date: '2026-05-22', url: 'https://www.projectory.or.kr/news/projectory-story-list',
+        body: '5월 한 달간 진행된 다양한 창작 활동을 크루의 시선으로 정리했습니다. 참가 청소년들의 생생한 후기를 담았습니다.' },
+      { id: 'b3', service: '프로젝토리', cat: '갤러리', title: '[갤러리] 점토조형 전시 "주물주물 조물조물"', author: '크루 데이지', date: '2026-05-30', url: 'https://www.projectory.or.kr/news/gallery-list',
+        body: '프로젝트 그룹 점토조형 전시 현장 사진을 모았습니다.' },
+      { id: 'b4', service: '나의AAC', cat: '소식', title: '나의AAC 앱 v2.4 업데이트 안내', author: '나의AAC', date: '2026-05-27', url: 'https://www.myaac.or.kr/info/announcement.do',
+        body: '나의AAC 앱이 v2.4로 업데이트되었습니다. 상징 카드 추가 및 음성 합성 품질이 개선되었습니다.' },
+      { id: 'b5', service: '나의AAC', cat: '커뮤니티', title: '사용자 활용 사례를 공유해요', author: '이용자', date: '2026-05-18', url: 'https://www.myaac.or.kr/info/community.do',
+        body: '나의AAC를 현장에서 활용한 사례를 자유롭게 공유하는 글입니다.' },
+      { id: 'b6', service: 'FAIR AI', cat: '공지사항', title: 'FAIR AI 윤리 세미나 개최 안내', author: 'FAIR AI', date: '2026-05-15', url: 'https://fairai.or.kr/about/notices',
+        body: 'AI 윤리 세미나를 개최합니다. 온라인 참여 가능하며 사전 신청을 받습니다.' },
+      { id: 'b7', service: 'FAIR AI', cat: '인사이트', title: '[인사이트+] 생성형 AI와 데이터 편향', author: 'FAIR AI', date: '2026-05-08', url: 'https://fairai.or.kr/embedded-ethics/insight-plus',
+        body: '생성형 AI 시대에 데이터 편향이 만들어내는 문제와 대응 방안을 다룹니다.' },
+      { id: 'b8', service: '대표 홈페이지', cat: '재단소식', title: '엔씨문화재단 2026 상반기 활동 보고', author: 'NC문화재단', date: '2026-04-30', url: 'https://www.ncfoundation.or.kr/community/',
+        body: '2026년 상반기 재단의 주요 활동과 성과를 정리해 공유합니다.' },
+      { id: 'b9', service: '대표 홈페이지', cat: '재단소식', title: '신규 후원 프로그램 안내', author: 'NC문화재단', date: '2026-03-12', url: 'https://www.ncfoundation.or.kr/community/',
+        body: '재단의 신규 후원 프로그램을 안내합니다. 자세한 내용은 본문을 참고해 주세요.' }
+    ];
+
+    const SERVICES = ['전체', '나의AAC', 'FAIR AI', '대표 홈페이지', '프로젝토리'];
+
+    /* ---------------- 상태 ---------------- */
+    let curTab = 'news';
+    let curService = '전체';
+    let curQuery = '';
+
+    /* ---------------- 렌더 ---------------- */
+    const $ = (s) => document.querySelector(s);
+    const listEl = $('#list');
+    const chipsEl = $('#chips');
+    const collectInfo = $('#collectInfo');
+
+    function fmtSrc(item){
+      // 뉴스: 매체명, 게시판: 서비스/카테고리
+      return curTab === 'news' ? item.author : item.service;
+    }
+
+    function activeNews(){
+      return NEWS.filter(n => !n.dup);
+    }
+
+    function renderCounts(){
+      $('#cntNews').textContent = '(' + activeNews().length + ')';
+      $('#cntBoard').textContent = '(' + BOARD.length + ')';
+    }
+
+    function renderChips(){
+      if(curTab !== 'board'){ chipsEl.style.display = 'none'; return; }
+      chipsEl.style.display = 'flex';
+      chipsEl.innerHTML = SERVICES.map(s =>
+        `<button class="chip ${s===curService?'active':''}" data-svc="${s}">${s}</button>`
+      ).join('');
+    }
+
+    function renderInfo(){
+      if(curTab === 'news'){
+        collectInfo.innerHTML = `키워드 <b>엔씨문화재단 · NC문화재단</b> · 본사(엔씨소프트) 관련 <b>${EXCLUDED_HQ}건 제외</b> · 본문 유사도 기준 <b>중복 제거</b>`;
+      } else {
+        collectInfo.innerHTML = `재단 서비스 게시판 <b>8개 소스</b> 수집 · 제목 기준 <b>중복 제거</b>`;
+      }
+    }
+
+    function getData(){
+      let data = curTab === 'news' ? activeNews() : BOARD.slice();
+      if(curTab === 'board' && curService !== '전체'){
+        data = data.filter(d => d.service === curService);
+      }
+      if(curQuery){
+        const q = curQuery.toLowerCase();
+        data = data.filter(d => (d.title + d.body).toLowerCase().includes(q));
+      }
+      // 최신순
+      data.sort((a,b) => b.date.localeCompare(a.date));
+      return data;
+    }
+
+    function cardHtml(item){
+      const isNews = curTab === 'news';
+      const badge = isNews
+        ? `<span class="src-badge">네이버뉴스</span><span class="cat-badge">${item.author}</span>`
+        : `<span class="src-badge board">${item.service}</span><span class="cat-badge">${item.cat}</span>`;
+      return `<div class="card" data-id="${item.id}">
+        <div class="card-top">${badge}</div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-excerpt">${item.body.replace(/\n/g,' ')}</div>
+        <div class="card-meta">
+          <span class="author">${isNews ? item.author : item.author}</span>
+          <span class="dot"></span><span>${item.date}</span>
+          <span class="src-link ${isNews?'':'board'}">원문 ↗</span>
+        </div>
+      </div>`;
+    }
+
+    function render(){
+      renderCounts();
+      renderChips();
+      renderInfo();
+      const data = getData();
+
+      let html = '';
+      // 뉴스 탭: 중복 제외 안내 배너
+      if(curTab === 'news' && !curQuery){
+        const dups = NEWS.filter(n => n.dup).length;
+        if(dups > 0){
+          html += `<div class="dedup-note">⚠ 본문 유사도가 높은 중복 기사 ${dups}건이 자동 제외되었습니다.</div>`;
+        }
+      }
+      if(data.length === 0){
+        html += `<div class="empty">표시할 글이 없습니다.</div>`;
+      } else {
+        html += data.map(cardHtml).join('');
+      }
+      listEl.innerHTML = html;
+    }
+
+    /* ---------------- 상세 시트 ---------------- */
+    function openSheet(item){
+      const isNews = curTab === 'news';
+      $('#sheetBadges').innerHTML = isNews
+        ? `<span class="src-badge">네이버뉴스</span><span class="cat-badge">${item.author}</span>`
+        : `<span class="src-badge board">${item.service}</span><span class="cat-badge">${item.cat}</span>`;
+      $('#sheetTitle').textContent = item.title;
+      $('#sheetMeta').innerHTML = `<span class="author" style="font-weight:600;color:#5b6675">${item.author}</span><span class="dot" style="width:3px;height:3px;border-radius:50%;background:#c7ccd4;display:inline-block"></span><span>${item.date}</span>`;
+      $('#sheetBody').textContent = item.body;
+      $('#sheetOrigin').href = item.url;
+      $('#scrim').classList.add('open');
+      $('#sheet').classList.add('open');
+    }
+    function closeSheet(){
+      $('#scrim').classList.remove('open');
+      $('#sheet').classList.remove('open');
+    }
+
+    /* ---------------- 토스트 ---------------- */
+    let toastT;
+    function toast(msg){
+      const t = $('#toast');
+      t.textContent = msg; t.classList.add('show');
+      clearTimeout(toastT);
+      toastT = setTimeout(() => t.classList.remove('show'), 1900);
+    }
+
+    /* ---------------- 이벤트 ---------------- */
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        curTab = btn.dataset.tab;
+        curQuery = ''; $('#searchInput').value = '';
+        render();
+      });
+    });
+
+    chipsEl.addEventListener('click', (e) => {
+      const c = e.target.closest('.chip');
+      if(!c) return;
+      curService = c.dataset.svc;
+      render();
+    });
+
+    listEl.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if(!card) return;
+      const all = curTab === 'news' ? NEWS : BOARD;
+      const item = all.find(d => d.id === card.dataset.id);
+      if(item) openSheet(item);
+    });
+
+    $('#scrim').addEventListener('click', closeSheet);
+
+    $('#searchInput').addEventListener('input', (e) => {
+      curQuery = e.target.value.trim();
+      render();
+    });
+
+    // 수동 크롤링 실행 (데모: 로딩 → 완료 토스트)
+    $('#crawlBtn').addEventListener('click', () => {
+      const btn = $('#crawlBtn');
+      btn.classList.add('loading');
+      $('#crawlLabel').textContent = '수집 중…';
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        $('#crawlLabel').textContent = '수동 크롤링 실행';
+        const now = new Date();
+        const pad = n => String(n).padStart(2,'0');
+        $('#lastSync').textContent = `2026-06-01 ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+        toast(curTab === 'news'
+          ? '뉴스 수집 완료 · 신규 0건 (중복 제외)'
+          : '게시판 수집 완료 · 신규 0건 (중복 제외)');
+      }, 1400);
+    });
+
+    render();
+  </script>
+</body>
+</html>
