@@ -807,6 +807,107 @@ textarea.detail {
   color: #999;
 }
 
+/* ===== Modal (참석자 추가) ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.modal {
+  background: #fff;
+  width: 760px;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 120px);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-head h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modal-close {
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+}
+
+.modal-body {
+  padding: 22px 24px;
+  overflow-y: auto;
+}
+
+.modal-search {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+
+.ms-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.ms-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.modal-table {
+  border-top: 2px solid #444;
+}
+
+.modal-table tbody td {
+  padding: 14px 10px;
+}
+
+.pick-check {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+.modal-empty {
+  text-align: center;
+  color: #999;
+  padding: 34px 0;
+  font-size: 14px;
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
 @media (max-width: 1100px) {
   .filter-row, .form-row { flex-direction: column; }
   .sidebar { display: none; }
