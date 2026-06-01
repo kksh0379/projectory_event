@@ -1199,27 +1199,162 @@ button.btn-row-add[disabled]:hover {
   z-index: 6;
 }
 
-/* ===== 스포트라이트 (화면 설명 → 기능 강조) ===== */
-.spotlight {
-  position: relative;
-  z-index: 10000;
+/* ===== 스포트라이트 (오버레이 + 구멍 방식) ===== */
+.spot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  cursor: pointer;
+}
+
+.spot-hole {
+  position: fixed;
   border-radius: 6px;
-  box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55);
-  animation: spotPulse 0.9s ease-in-out;
+  box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.58);
+  transition: all 0.12s ease;
+  animation: spotPulse 0.7s ease-in-out;
 }
 
 @keyframes spotPulse {
-  0%   { box-shadow: 0 0 0 8px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55); }
-  100% { box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55); }
+  0%   { box-shadow: 0 0 0 9px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.58); }
+  100% { box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.58); }
 }
 
 /* 구역 헤더 클릭 가능 표시 */
 .doc-section-head {
   cursor: pointer;
+  flex-wrap: wrap;
 }
 
 .doc-section-head:hover {
   color: var(--green);
+}
+
+/* ===== 번호별 댓글 ===== */
+.cmt-btn {
+  margin-left: auto;
+  border: 1px solid #e2ddc7;
+  background: #fff;
+  color: #7a7345;
+  border-radius: 4px;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cmt-btn:hover {
+  background: #f6f0d8;
+  color: #5a5331;
+}
+
+.cmt-box {
+  margin-top: 8px;
+  border: 1px solid #e8e3cf;
+  border-radius: 6px;
+  background: #fcfbf4;
+  padding: 8px;
+}
+
+.cmt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cmt-empty {
+  font-size: 12px;
+  color: #b0aa86;
+  padding: 4px 2px;
+}
+
+.cmt-item {
+  background: #fff;
+  border: 1px solid #ece7d4;
+  border-radius: 5px;
+  padding: 6px 8px;
+}
+
+.cmt-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #8a845f;
+  margin-bottom: 3px;
+}
+
+.cmt-meta b {
+  color: #4d4730;
+}
+
+.cmt-time {
+  color: #aaa;
+}
+
+.cmt-del {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #c25b50;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.cmt-del:hover {
+  background: #fde6e3;
+}
+
+.cmt-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cmt-form {
+  display: flex;
+  gap: 6px;
+}
+
+.cmt-author {
+  width: 84px;
+  flex-shrink: 0;
+}
+
+.cmt-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.cmt-form input {
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+
+.cmt-form input:focus {
+  border-color: var(--green);
+}
+
+.cmt-add {
+  border: none;
+  background: var(--green);
+  color: #fff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 /* 화면 설명 구역별 영역 */

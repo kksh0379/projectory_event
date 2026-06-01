@@ -890,24 +890,50 @@
       // EDIT 패널은 항상 노출 — 본문에 공간 확보
       document.body.classList.add('doc-open');
 
-      /* ===== 스포트라이트 (화면 설명 ↔ 기능 연동) ===== */
-      var spotTarget = null;
-      function clearSpotlight() {
-        if (spotTarget) { spotTarget.classList.remove('spotlight'); spotTarget = null; }
+      /* ===== 스포트라이트 (화면 설명 → 기능 강조, 오버레이 방식) ===== */
+      // 오버레이 + 구멍(hole) 방식: 표 셀 등 box-shadow가 안 먹는 요소도 강조 가능
+      var spotOverlay = null, spotEl = null;
+      function positionHole() {
+        if (!spotOverlay || !spotEl) return;
+        var hole = spotOverlay.firstChild;
+        var r = spotEl.getBoundingClientRect();
+        var pad = 6;
+        hole.style.left = (r.left - pad) + 'px';
+        hole.style.top = (r.top - pad) + 'px';
+        hole.style.width = (r.width + pad * 2) + 'px';
+        hole.style.height = (r.height + pad * 2) + 'px';
       }
+      function clearSpotlight() {
+        if (!spotOverlay) return;
+        spotOverlay.remove();
+        spotOverlay = null; spotEl = null;
+        window.removeEventListener('scroll', positionHole, true);
+        window.removeEventListener('resize', positionHole);
+        document.removeEventListener('keydown', spotEsc);
+      }
+      function spotEsc(e) { if (e.key === 'Escape') clearSpotlight(); }
       function spotlight(el) {
         if (!el) return;
+        // 숨겨진 요소면 보이는 상위 영역으로 대체
+        if (el.getClientRects().length === 0) {
+          el = el.closest('.modal-body, .modal-doc, .content, .modal') || el;
+        }
         clearSpotlight();
-        spotTarget = el;
-        el.classList.add('spotlight');
+        spotEl = el;
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // 다음 클릭 시 해제
         setTimeout(function () {
-          document.addEventListener('click', function onceClear() {
-            clearSpotlight();
-            document.removeEventListener('click', onceClear, true);
-          }, true);
-        }, 0);
+          spotOverlay = document.createElement('div');
+          spotOverlay.className = 'spot-overlay';
+          var hole = document.createElement('div');
+          hole.className = 'spot-hole';
+          spotOverlay.appendChild(hole);
+          spotOverlay.addEventListener('click', clearSpotlight);
+          document.body.appendChild(spotOverlay);
+          positionHole();
+          window.addEventListener('scroll', positionHole, true);
+          window.addEventListener('resize', positionHole);
+          document.addEventListener('keydown', spotEsc);
+        }, 320);
       }
 
       // 화면 설명 구역으로 스크롤 + 포커스
@@ -943,6 +969,110 @@
             : document.querySelector('.callout[data-pcallout="' + pn + '"]');
           if (badge) spotlight(badge.parentElement);
         });
+      });
+
+      /* ===== 번호별 댓글 기능 (작성자 입력 + 삭제) ===== */
+      function loadCmts(key) {
+        try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
+      }
+      function saveCmts(key, list) {
+        try { localStorage.setItem(key, JSON.stringify(list)); } catch (e) {}
+      }
+      function nowShort() {
+        var d = new Date();
+        function p(x) { return (x < 10 ? '0' : '') + x; }
+        return (d.getMonth() + 1) + '/' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+      }
+      function escapeHtml(s) {
+        return s.replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-section'), function (sec) {
+        var ta = sec.querySelector('.doc-area');
+        if (!ta) return;
+        var cmtKey = ta.getAttribute('data-key') + '_cmt';
+        var head = sec.querySelector('.doc-section-head');
+
+        // 헤더에 댓글 토글 버튼
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cmt-btn';
+        head.appendChild(btn);
+
+        // 댓글 영역(리스트 + 입력 폼)
+        var box = document.createElement('div');
+        box.className = 'cmt-box';
+        box.hidden = true;
+        box.innerHTML =
+          '<div class="cmt-list"></div>' +
+          '<div class="cmt-form">' +
+          '  <input type="text" class="cmt-author" placeholder="작성자" />' +
+          '  <input type="text" class="cmt-input" placeholder="댓글을 입력하세요" />' +
+          '  <button type="button" class="cmt-add">등록</button>' +
+          '</div>';
+        ta.parentNode.insertBefore(box, ta.nextSibling);
+
+        var listEl = box.querySelector('.cmt-list');
+        var authorEl = box.querySelector('.cmt-author');
+        var inputEl = box.querySelector('.cmt-input');
+        var addBtn = box.querySelector('.cmt-add');
+
+        // 마지막 작성자 기억
+        try { authorEl.value = localStorage.getItem('projectory_cmt_author') || ''; } catch (e) {}
+
+        function render() {
+          var list = loadCmts(cmtKey);
+          btn.textContent = '💬 댓글 (' + list.length + ')';
+          if (!list.length) {
+            listEl.innerHTML = '<div class="cmt-empty">등록된 댓글이 없습니다.</div>';
+            return;
+          }
+          listEl.innerHTML = list.map(function (c, i) {
+            return '<div class="cmt-item">' +
+              '<div class="cmt-meta"><b>' + escapeHtml(c.author || '익명') + '</b>' +
+              '<span class="cmt-time">' + escapeHtml(c.time || '') + '</span>' +
+              '<button type="button" class="cmt-del" data-i="' + i + '" title="삭제">✕</button></div>' +
+              '<div class="cmt-text">' + escapeHtml(c.text) + '</div>' +
+              '</div>';
+          }).join('');
+        }
+
+        function add() {
+          var text = inputEl.value.trim();
+          if (!text) { inputEl.focus(); return; }
+          var author = authorEl.value.trim() || '익명';
+          try { localStorage.setItem('projectory_cmt_author', author); } catch (e) {}
+          var list = loadCmts(cmtKey);
+          list.push({ author: author, text: text, time: nowShort() });
+          saveCmts(cmtKey, list);
+          inputEl.value = '';
+          render();
+        }
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();   // 스포트라이트 트리거 방지
+          box.hidden = !box.hidden;
+        });
+        addBtn.addEventListener('click', add);
+        inputEl.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') add();
+        });
+        listEl.addEventListener('click', function (e) {
+          var del = e.target.closest('.cmt-del');
+          if (!del) return;
+          var i = parseInt(del.getAttribute('data-i'), 10);
+          if (!confirm('이 댓글을 삭제하시겠습니까?')) return;
+          var list = loadCmts(cmtKey);
+          list.splice(i, 1);
+          saveCmts(cmtKey, list);
+          render();
+        });
+        // 폼/리스트 클릭이 헤더 스포트라이트로 전파되지 않도록
+        box.addEventListener('click', function (e) { e.stopPropagation(); });
+
+        render();
       });
 
       render();
