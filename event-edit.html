@@ -185,11 +185,12 @@
 
         <div class="applicant-filter">
           <div class="radio-group">
-            <label class="radio"><input type="radio" name="afilter" checked /> 전체</label>
-            <label class="radio"><input type="radio" name="afilter" /> 신청자</label>
-            <label class="radio"><input type="radio" name="afilter" /> 취소자</label>
-            <label class="radio"><input type="radio" name="afilter" /> 미확정자</label>
-            <label class="radio"><input type="radio" name="afilter" /> 확정자</label>
+            <label class="radio"><input type="radio" name="afilter" value="all" checked /> 전체</label>
+            <label class="radio"><input type="radio" name="afilter" value="apply" /> 신청자</label>
+            <label class="radio"><input type="radio" name="afilter" value="added" /> 신청추가</label>
+            <label class="radio"><input type="radio" name="afilter" value="cancel" /> 취소자</label>
+            <label class="radio"><input type="radio" name="afilter" value="unconfirm" /> 미확정자</label>
+            <label class="radio"><input type="radio" name="afilter" value="confirm" /> 확정자</label>
           </div>
           <div class="right">
             <button class="btn btn-green btn-sm">참석확정</button>
@@ -201,6 +202,7 @@
         <table class="data-table">
           <thead>
             <tr>
+              <th>활동 지역</th>
               <th>번호</th>
               <th>멤버 닉네임</th>
               <th>회원 성명</th>
@@ -209,64 +211,73 @@
               <th>신청일</th>
               <th>취소일</th>
               <th>이벤트 참석 확정</th>
+              <th>삭제</th>
             </tr>
           </thead>
           <tbody id="applicantBody">
             <tr>
-              <td>8</td><td>안녕</td><td>이승준</td>
+              <td>서울(혜화)</td><td>8</td><td>안녕</td><td>이승준</td>
               <td>01055512340</td><td></td>
               <td>2026-05-30 13:49:43</td>
               <td class="cancel-note">2026-05-30 13:53:45<br />(홈페이지)</td>
               <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>7</td><td>띠모</td><td>이준희</td>
+              <td>서울(혜화)</td><td>7</td><td>띠모</td><td>이준희</td>
               <td>01066678901</td><td></td>
               <td>2026-05-30 11:30:33</td>
               <td class="cancel-note">2026-05-30 13:40:43<br />(제이)</td>
               <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>6</td><td>돼지</td><td>양시온</td>
+              <td>서울(혜화)</td><td>6</td><td>돼지</td><td>양시온</td>
               <td>01077789012</td><td>01088890123</td>
               <td>2026-05-29 18:16:55</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>5</td><td>냥</td><td>염성경</td>
+              <td>서울(혜화)</td><td>5</td><td>냥</td><td>염성경</td>
               <td>01033067985</td><td>01030457985</td>
               <td>2026-05-28 16:52:51</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>4</td><td>연어</td><td>조연호</td>
+              <td>서울(혜화)</td><td>4</td><td>연어</td><td>조연호</td>
               <td>01090872514</td><td></td>
               <td>2026-05-10 19:57:23</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>3</td><td>토끼</td><td>김민준</td>
+              <td>서울(혜화)</td><td>3</td><td>토끼</td><td>김민준</td>
               <td>01045678912</td><td>01087651234</td>
               <td>2026-05-09 14:22:10</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>2</td><td>별</td><td>박서연</td>
+              <td>서울(혜화)</td><td>2</td><td>별</td><td>박서연</td>
               <td>01023456789</td><td>01098765432</td>
               <td>2026-05-08 09:15:00</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
             </tr>
             <tr>
-              <td>1</td><td>하늘</td><td>정우진</td>
+              <td>서울(혜화)</td><td>1</td><td>하늘</td><td>정우진</td>
               <td>01034567890</td><td>01076543210</td>
               <td>2026-05-07 20:01:33</td>
               <td></td>
               <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -360,25 +371,47 @@
       var miniNext = document.getElementById('miniNext');
       var page = 1;
 
+      var currentFilter = 'all';
+
       function rows() { return Array.prototype.slice.call(body.querySelectorAll('tr')); }
       function perPage() { return parseInt(perPageSel.value, 10); }
-      function totalPages() { return Math.max(1, Math.ceil(rows().length / perPage())); }
+
+      // 라디오 조건에 맞는 행만 추출
+      function matchFilter(tr) {
+        var cancelDate = tr.cells[7].textContent.trim();
+        var chk = tr.querySelector('.attend-check');
+        var confirmed = chk && chk.checked;
+        var added = tr.classList.contains('admin-added');
+        switch (currentFilter) {
+          case 'apply': return cancelDate === '';            // 신청자
+          case 'added': return added;                        // 신청추가(관리자 추가분)
+          case 'cancel': return cancelDate !== '';           // 취소자
+          case 'unconfirm': return cancelDate === '' && !confirmed; // 미확정자
+          case 'confirm': return confirmed;                  // 확정자
+          default: return true;                              // 전체
+        }
+      }
+
+      function filteredRows() { return rows().filter(matchFilter); }
+      function totalPages() { return Math.max(1, Math.ceil(filteredRows().length / perPage())); }
 
       function render() {
-        var all = rows();
+        var list = filteredRows();
         var pp = perPage();
         var tp = totalPages();
         if (page > tp) page = tp;
         var start = (page - 1) * pp;
         var end = start + pp;
 
-        all.forEach(function (tr, i) {
-          tr.style.display = (i >= start && i < end) ? '' : 'none';
+        // 필터 미일치 행은 모두 숨김, 일치 행은 페이지 범위만 표시
+        rows().forEach(function (tr) { tr.style.display = 'none'; });
+        list.forEach(function (tr, i) {
+          if (i >= start && i < end) tr.style.display = '';
         });
 
         // range label
-        var shownEnd = Math.min(end, all.length);
-        rangeLabel.textContent = (all.length ? (start + 1) : 0) + '-' + shownEnd + ' of ' + all.length;
+        var shownEnd = Math.min(end, list.length);
+        rangeLabel.textContent = (list.length ? (start + 1) : 0) + '-' + shownEnd + ' of ' + list.length;
 
         // numbered pager
         pager.innerHTML = '';
@@ -405,6 +438,15 @@
       miniPrev.addEventListener('click', function () { if (page > 1) { page--; render(); } });
       miniNext.addEventListener('click', function () { if (page < totalPages()) { page++; render(); } });
       perPageSel.addEventListener('change', function () { page = 1; render(); });
+
+      // 신청 명단 라디오 필터
+      Array.prototype.forEach.call(document.getElementsByName('afilter'), function (r) {
+        r.addEventListener('change', function () {
+          currentFilter = this.value;
+          page = 1;
+          render();
+        });
+      });
 
       // 삭제: 이벤트 자체 삭제
       document.getElementById('deleteBtn').addEventListener('click', function () {
@@ -515,7 +557,7 @@
               : '<button class="btn btn-row-add" disabled>추가</button>') + '</td>';
           if (has) {
             tr.querySelector('.btn-row-add').addEventListener('click', function () {
-              addOne(m, tr);
+              addOne(m);
             });
           }
           resultsBody.appendChild(tr);
@@ -548,7 +590,7 @@
       function nextNo() {
         var max = 0;
         rows().forEach(function (tr) {
-          var v = parseInt(tr.cells[0].textContent, 10);
+          var v = parseInt(tr.cells[1].textContent, 10);
           if (!isNaN(v) && v > max) max = v;
         });
         return max + 1;
@@ -561,14 +603,16 @@
           ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
       }
 
-      // 1명씩 신청 명단에 추가
-      function addOne(m, sourceRow) {
+      // 1명씩 신청 명단에 추가 (관리자 추가분)
+      function addOne(m) {
         if (m.ms !== '보유') {
           alert('멤버십 보유 회원만 신청 추가가 가능합니다.');
           return;
         }
         var tr = document.createElement('tr');
+        tr.className = 'admin-added';
         tr.innerHTML =
+          '<td>' + m.region + '</td>' +
           '<td>' + nextNo() + '</td>' +
           '<td>' + m.nick + '</td>' +
           '<td>' + m.name + '</td>' +
@@ -576,16 +620,20 @@
           '<td>' + m.phone + '</td>' +
           '<td>' + nowStr() + '</td>' +
           '<td></td>' +
-          '<td><input type="checkbox" class="attend-check" /></td>';
+          '<td><input type="checkbox" class="attend-check" /></td>' +
+          '<td><button class="btn btn-row-del">삭제</button></td>';
+        tr.querySelector('.btn-row-del').addEventListener('click', function () {
+          if (!confirm('관리자가 추가한 신청자입니다.\n해당 인원을 신청 명단에서 삭제하시겠습니까?')) return;
+          tr.remove();
+          render();
+        });
         body.insertBefore(tr, body.firstChild);
 
-        // 중복 추가 방지: 추가한 행은 버튼 비활성화
-        var btn = sourceRow.querySelector('.btn-row-add');
-        btn.textContent = '추가됨';
-        btn.disabled = true;
-        btn.className = 'btn btn-row-add';
-
+        // 추가 완료 → 안내 후 레이어 팝업 닫기
         alert(m.nick + '(' + m.name + ') 님이 신청 명단에 추가되었습니다.');
+        closeModal();
+        currentFilter = 'all';
+        document.querySelector('input[name="afilter"][value="all"]').checked = true;
         page = 1;
         render();
       }

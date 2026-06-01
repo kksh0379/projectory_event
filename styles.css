@@ -946,6 +946,22 @@ button.btn-row-add[disabled] {
   cursor: not-allowed;
 }
 
+/* 신청 명단 - 관리자 추가분 삭제 버튼 */
+.btn-row-del {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 5px;
+  background: #fff;
+  border: 1px solid #d9534f;
+  color: #d9534f;
+  cursor: pointer;
+}
+
+.btn-row-del:hover {
+  background: #d9534f;
+  color: #fff;
+}
+
 /* ===== Read-only 폼 ===== */
 .form-table.readonly input[readonly],
 .form-table.readonly textarea[readonly] {
