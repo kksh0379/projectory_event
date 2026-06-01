@@ -341,17 +341,23 @@
 
           <div class="ms-status">
             <label class="ms-status-label">멤버십 상태</label>
-            <div class="ms-status-options" id="msStatusOptions">
-              <label class="checkbox"><input type="checkbox" class="ms-all" /> 전체</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 보유" checked /> 멤버십 보유</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="상담 예약 가능" /> 상담 예약 가능</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 확정대기" /> 멤버십 확정대기</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 거절" /> 멤버십 거절</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 연장대기" /> 멤버십 연장대기</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" /> 기간 내 휴면</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 해지" /> 멤버십 해지</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
-              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
+            <div class="ms-dropdown" id="msDropdown">
+              <button type="button" class="ms-dd-toggle" id="msDdToggle">
+                <span id="msDdSummary">멤버십 보유</span>
+                <span class="ms-dd-arrow">▾</span>
+              </button>
+              <div class="ms-dd-panel" id="msDdPanel">
+                <label class="checkbox"><input type="checkbox" class="ms-all" /> 전체</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 보유" checked /> 멤버십 보유</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="상담 예약 가능" /> 상담 예약 가능</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 확정대기" /> 멤버십 확정대기</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 거절" /> 멤버십 거절</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 연장대기" /> 멤버십 연장대기</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" /> 기간 내 휴면</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 해지" /> 멤버십 해지</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
+              </div>
             </div>
           </div>
 
@@ -558,6 +564,8 @@
         // 멤버십 상태 기본값: 멤버십 보유만 선택
         msAll.checked = false;
         msOpts.forEach(function (c) { c.checked = (c.value === ADDABLE_MS); });
+        updateMsSummary();
+        msDropdown.classList.remove('open');
         matched = [];
         searched = false;
         mPage = 1;
@@ -566,18 +574,41 @@
       }
       function closeModal() { modal.style.display = 'none'; }
 
-      // 멤버십 상태 체크박스
+      // 멤버십 상태 드롭다운(다중 선택)
       var msAll = document.querySelector('.ms-all');
       var msOpts = Array.prototype.slice.call(document.querySelectorAll('.ms-opt'));
+      var msDropdown = document.getElementById('msDropdown');
+      var msDdToggle = document.getElementById('msDdToggle');
+      var msDdSummary = document.getElementById('msDdSummary');
+
+      // 토글 버튼에 현재 선택 상태 요약 표시
+      function updateMsSummary() {
+        if (msAll.checked) { msDdSummary.textContent = '전체'; return; }
+        var sel = msOpts.filter(function (c) { return c.checked; });
+        if (sel.length === 0) msDdSummary.textContent = '선택 안 함';
+        else if (sel.length === 1) msDdSummary.textContent = sel[0].value;
+        else msDdSummary.textContent = sel[0].value + ' 외 ' + (sel.length - 1) + '건';
+      }
 
       // '전체' 체크 시 전체 선택/해제, 개별 변경 시 '전체' 동기화
       msAll.addEventListener('change', function () {
         msOpts.forEach(function (c) { c.checked = msAll.checked; });
+        updateMsSummary();
       });
       msOpts.forEach(function (c) {
         c.addEventListener('change', function () {
           msAll.checked = msOpts.every(function (x) { return x.checked; });
+          updateMsSummary();
         });
+      });
+
+      // 드롭다운 열기/닫기
+      msDdToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        msDropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function (e) {
+        if (!msDropdown.contains(e.target)) msDropdown.classList.remove('open');
       });
 
       function selectedStatuses() {

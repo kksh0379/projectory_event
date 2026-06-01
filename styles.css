@@ -916,15 +916,73 @@ textarea.detail {
   min-width: 78px;
 }
 
-.ms-status-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 18px;
+/* 멤버십 상태 다중선택 드롭다운 */
+.ms-dropdown {
+  position: relative;
+  min-width: 260px;
 }
 
-.ms-status-options .checkbox {
+.ms-dd-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  cursor: pointer;
+}
+
+.ms-dd-toggle:hover {
+  border-color: var(--green);
+}
+
+.ms-dd-arrow {
+  color: #888;
+  font-size: 12px;
+  transition: transform 0.18s ease;
+}
+
+.ms-dropdown.open .ms-dd-arrow {
+  transform: rotate(180deg);
+}
+
+.ms-dd-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  z-index: 20;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.ms-dropdown.open .ms-dd-panel {
+  display: block;
+}
+
+.ms-dd-panel .checkbox {
+  display: flex;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 4px;
   font-size: 13px;
   white-space: nowrap;
+}
+
+.ms-dd-panel .checkbox:hover {
+  background: #f4f4f4;
 }
 
 .ms-search-btn {
