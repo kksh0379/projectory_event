@@ -1357,6 +1357,18 @@ button.btn-row-add[disabled]:hover {
   flex-shrink: 0;
 }
 
+/* 화면 설명 상단 유의사항 (빨간 글씨) */
+.doc-notice {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #d8352a;
+  font-weight: 600;
+  background: #fff4f3;
+  border-bottom: 1px solid #f3d6d3;
+}
+
 /* 화면 설명 구역별 영역 */
 .doc-body {
   flex: 1;
