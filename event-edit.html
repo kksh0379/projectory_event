@@ -56,8 +56,8 @@
               <div class="form-label">활동 지역<span class="req">*</span></div>
               <div class="form-field">
                 <div class="radio-group">
-                  <label class="radio"><input type="radio" name="eregion" checked disabled /> 서울(혜화)</label>
-                  <label class="radio"><input type="radio" name="eregion" disabled /> 성남</label>
+                  <label class="radio"><input type="radio" name="eregion" checked /> 서울(혜화)</label>
+                  <label class="radio"><input type="radio" name="eregion" /> 성남</label>
                 </div>
               </div>
             </div>
@@ -151,8 +151,8 @@
               <div class="form-label">공개 여부<span class="req">*</span></div>
               <div class="form-field">
                 <div class="radio-group">
-                  <label class="radio"><input type="radio" name="eopen" checked disabled /> 공개</label>
-                  <label class="radio"><input type="radio" name="eopen" disabled /> 미공개</label>
+                  <label class="radio"><input type="radio" name="eopen" checked /> 공개</label>
+                  <label class="radio"><input type="radio" name="eopen" /> 미공개</label>
                 </div>
               </div>
             </div>
@@ -313,6 +313,15 @@
       </div>
       <div class="modal-body">
         <div class="modal-search">
+          <div class="ms-region">
+            <label class="ms-status-label">활동 지역</label>
+            <div class="radio-group">
+              <label class="radio"><input type="radio" name="qRegion" value="" checked /> 전체</label>
+              <label class="radio"><input type="radio" name="qRegion" value="서울(혜화)" /> 서울(혜화)</label>
+              <label class="radio"><input type="radio" name="qRegion" value="성남" /> 성남</label>
+            </div>
+          </div>
+
           <div class="ms-fields">
             <div class="ms-field">
               <label>닉네임</label>
@@ -357,7 +366,6 @@
               <th>닉네임</th>
               <th>이름</th>
               <th>아이디</th>
-              <th>멤버 휴대전화번호</th>
               <th style="width:84px;">추가</th>
             </tr>
           </thead>
@@ -522,6 +530,8 @@
       function openModal() {
         // 초기화: 검색 전에는 결과 없음
         qNick.value = ''; qName.value = ''; qId.value = '';
+        // 활동 지역 기본값: 전체
+        document.querySelector('input[name="qRegion"][value=""]').checked = true;
         // 멤버십 상태 기본값: 멤버십 보유만 선택
         msAll.checked = false;
         msOpts.forEach(function (c) { c.checked = (c.value === ADDABLE_MS); });
@@ -558,11 +568,13 @@
         var n = qNick.value.trim();
         var nm = qName.value.trim();
         var id = qId.value.trim();
+        var region = document.querySelector('input[name="qRegion"]:checked').value;
         var statuses = selectedStatuses();
         matched = members.filter(function (m) {
           return (!n || m.nick.indexOf(n) !== -1)
             && (!nm || m.name.indexOf(nm) !== -1)
             && (!id || m.id.indexOf(id) !== -1)
+            && (!region || m.region === region)
             && (statuses === null || statuses.indexOf(m.ms) !== -1);
         });
         searched = true;
@@ -605,7 +617,6 @@
             '<td>' + m.nick + '</td>' +
             '<td>' + m.name + '</td>' +
             '<td>' + m.id + '</td>' +
-            '<td>' + m.phone + '</td>' +
             '<td>' + (has
               ? '<button class="btn btn-outline-green btn-row-add">추가</button>'
               : '<button class="btn btn-row-add" disabled>추가</button>') + '</td>';

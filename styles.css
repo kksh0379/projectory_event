@@ -883,6 +883,17 @@ textarea.detail {
   color: #444;
 }
 
+/* 활동 지역 필터 */
+.ms-region {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  background: #fafafa;
+}
+
 /* 멤버십 상태 필터 */
 .ms-status {
   display: flex;
