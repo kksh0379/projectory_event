@@ -674,8 +674,8 @@
             '<td>' + m.name + '</td>' +
             '<td>' + m.id + '</td>' +
             '<td>' + (has
-              ? '<button class="btn btn-outline-green btn-row-add">추가</button>'
-              : '<button class="btn btn-row-add" disabled>추가</button>') + '</td>';
+              ? '<button class="btn btn-outline-green btn-row-add"><span class="ico">✎</span> 추가</button>'
+              : '<button class="btn btn-outline-green btn-row-add" disabled><span class="ico">✎</span> 추가</button>') + '</td>';
           if (has) {
             tr.querySelector('.btn-row-add').addEventListener('click', function () {
               addOne(m);
@@ -756,7 +756,7 @@
           '<td>' + nowStr() + '</td>' +
           '<td></td>' +
           '<td><input type="checkbox" class="attend-check" /></td>' +
-          '<td><button class="btn btn-row-del">삭제</button></td>';
+          '<td><button class="btn btn-outline-green btn-row-del"><span class="ico">✎</span> 삭제</button></td>';
         tr.querySelector('.btn-row-del').addEventListener('click', function () {
           if (!confirm('관리자가 추가한 신청자입니다.\n해당 인원을 신청 명단에서 삭제하시겠습니까?')) return;
           tr.remove();
