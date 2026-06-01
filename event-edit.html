@@ -312,19 +312,40 @@
       </div>
       <div class="modal-body">
         <div class="modal-search">
-          <div class="ms-field">
-            <label>닉네임</label>
-            <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
+          <div class="ms-fields">
+            <div class="ms-field">
+              <label>닉네임</label>
+              <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>이름</label>
+              <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>아이디</label>
+              <input type="text" id="qId" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
           </div>
-          <div class="ms-field">
-            <label>이름</label>
-            <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
+
+          <div class="ms-status">
+            <label class="ms-status-label">멤버십 상태</label>
+            <div class="ms-status-options" id="msStatusOptions">
+              <label class="checkbox"><input type="checkbox" class="ms-all" /> 전체</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="상담 예약 가능" /> 상담 예약 가능</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 확정대기" /> 멤버십 확정대기</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 거절" /> 멤버십 거절</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 연장대기" /> 멤버십 연장대기</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 보유" checked /> 멤버십 보유</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" /> 기간 내 휴면</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 해지" /> 멤버십 해지</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
+              <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
+            </div>
           </div>
-          <div class="ms-field">
-            <label>아이디</label>
-            <input type="text" id="qId" class="text-input" placeholder="검색어를 입력해 주세요." />
+
+          <div class="ms-search-btn">
+            <button class="btn btn-green btn-sm" id="modalSearch">검색</button>
           </div>
-          <button class="btn btn-green btn-sm" id="modalSearch">검색</button>
         </div>
 
         <table class="data-table modal-table">
@@ -456,20 +477,28 @@
       });
 
       /* ===== 신청추가 레이어 팝업 ===== */
-      // 검색 대상 회원 목록(샘플 데이터) — 멤버십 보유 회원만 추가 가능
+      var ADDABLE_MS = '멤버십 보유'; // 추가 가능한 멤버십 상태
+
+      // 검색 대상 회원 목록(샘플 데이터) — 모든 멤버십 상태가 골고루 포함
       var members = [
-        { region: '서울(혜화)', nick: '구름', name: '김도윤', id: 'cloud01', phone: '01012341234', ms: '보유' },
-        { region: '성남', nick: '바다', name: '이서아', id: 'sea22', phone: '01023452345', ms: '보유' },
-        { region: '서울(혜화)', nick: '햇살', name: '박지호', id: 'sunny7', phone: '01034563456', ms: '미보유' },
-        { region: '성남', nick: '단풍', name: '최유나', id: 'maple', phone: '01045674567', ms: '보유' },
-        { region: '서울(혜화)', nick: '별이', name: '정민서', id: 'star_j', phone: '01056785678', ms: '보유' },
-        { region: '성남', nick: '도토리', name: '강하준', id: 'acorn', phone: '01067896789', ms: '미보유' },
-        { region: '서울(혜화)', nick: '초코', name: '윤채원', id: 'choco9', phone: '01078907890', ms: '보유' },
-        { region: '성남', nick: '여름', name: '임시우', id: 'summer', phone: '01089018901', ms: '보유' },
-        { region: '서울(혜화)', nick: '노을', name: '한지민', id: 'sunset', phone: '01090120123', ms: '보유' },
-        { region: '성남', nick: '바람', name: '오세훈', id: 'wind77', phone: '01001230234', ms: '미보유' },
-        { region: '서울(혜화)', nick: '달', name: '서아인', id: 'moon_a', phone: '01012340456', ms: '보유' },
-        { region: '성남', nick: '산', name: '문도현', id: 'mount', phone: '01023450567', ms: '보유' }
+        { region: '서울(혜화)', nick: '구름', name: '김도윤', id: 'cloud01', phone: '01012341234', ms: '멤버십 보유' },
+        { region: '성남', nick: '바다', name: '이서아', id: 'sea22', phone: '01023452345', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '단풍', name: '최유나', id: 'maple', phone: '01045674567', ms: '멤버십 보유' },
+        { region: '성남', nick: '별이', name: '정민서', id: 'star_j', phone: '01056785678', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '노을', name: '한지민', id: 'sunset', phone: '01090120123', ms: '멤버십 보유' },
+        { region: '성남', nick: '달', name: '서아인', id: 'moon_a', phone: '01012340456', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '산', name: '문도현', id: 'mount', phone: '01023450567', ms: '멤버십 보유' },
+        { region: '성남', nick: '햇살', name: '박지호', id: 'sunny7', phone: '01034563456', ms: '상담 예약 가능' },
+        { region: '서울(혜화)', nick: '도토리', name: '강하준', id: 'acorn', phone: '01067896789', ms: '멤버십 확정대기' },
+        { region: '성남', nick: '바람', name: '오세훈', id: 'wind77', phone: '01001230234', ms: '멤버십 거절' },
+        { region: '서울(혜화)', nick: '초코', name: '윤채원', id: 'choco9', phone: '01078907890', ms: '멤버십 연장대기' },
+        { region: '성남', nick: '여름', name: '임시우', id: 'summer', phone: '01089018901', ms: '기간 내 휴면' },
+        { region: '서울(혜화)', nick: '겨울', name: '배수빈', id: 'winter', phone: '01034561111', ms: '멤버십 해지' },
+        { region: '성남', nick: '하늘', name: '신우혁', id: 'sky_77', phone: '01045672222', ms: '멤버십 취소' },
+        { region: '서울(혜화)', nick: '별빛', name: '조하은', id: 'starlight', phone: '01056783333', ms: '멤버십 박탈' },
+        { region: '성남', nick: '안개', name: '권태양', id: 'mist01', phone: '01067894444', ms: '상담 예약 가능' },
+        { region: '서울(혜화)', nick: '노래', name: '유다온', id: 'song_y', phone: '01078905555', ms: '멤버십 확정대기' },
+        { region: '성남', nick: '구슬', name: '남시현', id: 'bead99', phone: '01089016666', ms: '멤버십 연장대기' }
       ];
 
       var modal = document.getElementById('addModal');
@@ -492,6 +521,9 @@
       function openModal() {
         // 초기화: 검색 전에는 결과 없음
         qNick.value = ''; qName.value = ''; qId.value = '';
+        // 멤버십 상태 기본값: 멤버십 보유만 선택
+        msAll.checked = false;
+        msOpts.forEach(function (c) { c.checked = (c.value === ADDABLE_MS); });
         matched = [];
         searched = false;
         mPage = 1;
@@ -500,14 +532,37 @@
       }
       function closeModal() { modal.style.display = 'none'; }
 
+      // 멤버십 상태 체크박스
+      var msAll = document.querySelector('.ms-all');
+      var msOpts = Array.prototype.slice.call(document.querySelectorAll('.ms-opt'));
+
+      // '전체' 체크 시 전체 선택/해제, 개별 변경 시 '전체' 동기화
+      msAll.addEventListener('change', function () {
+        msOpts.forEach(function (c) { c.checked = msAll.checked; });
+      });
+      msOpts.forEach(function (c) {
+        c.addEventListener('change', function () {
+          msAll.checked = msOpts.every(function (x) { return x.checked; });
+        });
+      });
+
+      function selectedStatuses() {
+        // '전체'면 null(모든 상태), 아니면 체크된 상태 목록
+        if (msAll.checked) return null;
+        return msOpts.filter(function (c) { return c.checked; })
+          .map(function (c) { return c.value; });
+      }
+
       function doSearch() {
         var n = qNick.value.trim();
         var nm = qName.value.trim();
         var id = qId.value.trim();
+        var statuses = selectedStatuses();
         matched = members.filter(function (m) {
           return (!n || m.nick.indexOf(n) !== -1)
             && (!nm || m.name.indexOf(nm) !== -1)
-            && (!id || m.id.indexOf(id) !== -1);
+            && (!id || m.id.indexOf(id) !== -1)
+            && (statuses === null || statuses.indexOf(m.ms) !== -1);
         });
         searched = true;
         mPage = 1;
@@ -541,7 +596,7 @@
         var pageItems = matched.slice(start, start + pp);
 
         pageItems.forEach(function (m) {
-          var has = (m.ms === '보유');
+          var has = (m.ms === ADDABLE_MS); // 멤버십 보유만 추가 가능
           var tr = document.createElement('tr');
           tr.innerHTML =
             '<td>' + m.region + '</td>' +
@@ -549,9 +604,7 @@
             '<td>' + m.name + '</td>' +
             '<td>' + m.id + '</td>' +
             '<td>' + m.phone + '</td>' +
-            '<td>' + (has
-              ? '<span class="ms-on">보유</span>'
-              : '<span class="ms-off">미보유</span>') + '</td>' +
+            '<td><span class="' + (has ? 'ms-on' : 'ms-off') + '">' + m.ms + '</span></td>' +
             '<td>' + (has
               ? '<button class="btn btn-outline-green btn-row-add">추가</button>'
               : '<button class="btn btn-row-add" disabled>추가</button>') + '</td>';
@@ -605,7 +658,7 @@
 
       // 1명씩 신청 명단에 추가 (관리자 추가분)
       function addOne(m) {
-        if (m.ms !== '보유') {
+        if (m.ms !== ADDABLE_MS) {
           alert('멤버십 보유 회원만 신청 추가가 가능합니다.');
           return;
         }
