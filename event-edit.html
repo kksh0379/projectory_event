@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이벤트 수정 - projectory</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="logo"><span class="logo-mark">⊐</span> projectory</div>
+      <div class="topbar-right">
+        <div class="user-chip"><span class="avatar">👤</span> 휴</div>
+        <button class="logout-btn">⏻ 로그아웃</button>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="timer">
+          <span class="collapse">⇤</span>
+          <span>로그아웃까지 남은시간 :<br />3시간 55분 59초</span>
+        </div>
+        <ul class="nav">
+          <li><a><span class="ico">▦</span> 메인</a></li>
+          <li><a><span class="ico">✎</span> 게시글관리</a></li>
+          <li><a><span class="ico">📅</span> 일정관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👥</span> 멤버관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👤</span> 크루관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">🛍</span> 구매신청 관리</a></li>
+          <li class="active"><a href="event-list.html"><span class="ico">🌐</span> 이벤트 관리</a></li>
+          <li><a><span class="ico">📰</span> 뉴스레터 구독 관리</a></li>
+          <li><a><span class="ico">📋</span> 크루 소개 관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">⚠</span> 알람</a></li>
+          <li><a><span class="ico">⚙</span> 설정<span class="caret">▾</span></a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <main class="content">
+        <nav class="breadcrumb">
+          <span class="crumb-link">홈</span><span class="sep">›</span>
+          <a href="event-list.html" class="crumb-link">이벤트 관리</a><span class="sep">›</span>
+          <a href="event-list.html" class="current">이벤트 목록</a>
+        </nav>
+
+        <h1 class="page-title">이벤트 수정</h1>
+
+        <!-- Edit Form -->
+        <section class="form-table">
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">활동 지역<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="eregion" checked /> 서울(혜화)</label>
+                  <label class="radio"><input type="radio" name="eregion" /> 성남</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">이벤트 구분<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="워밍업 프로젝트" />
+                  <span class="clear-x">✕</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">개최자</div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="크루 쟁쟁" />
+                  <span class="clear-x">✕</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">제목<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대" />
+                  <span class="clear-x">✕</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">개최일자<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="date-edit">
+                  <label>개최일자 1</label>
+                  <div class="date-inner"><span class="cal-ico">📅</span><input type="text" value="2026-05-30" style="width:110px" /></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">개최시간<span class="req">*</span></div>
+              <div class="form-field">
+                <div style="width:100%">
+                  <div style="font-size:11px;color:#888;margin-bottom:4px;">개최시간 1</div>
+                  <div class="time-selects">
+                    <span class="sel"><select><option>14</option></select></span>
+                    <span class="sel"><select><option>00</option></select></span>
+                    <span class="tilde">~</span>
+                    <span class="sel"><select><option>16</option></select></span>
+                    <span class="sel"><select><option>30</option></select></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">모집인원<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="num-input">
+                  <label>숫자만 가능</label>
+                  <input type="text" value="6" />
+                  <span class="clear-x">✕</span>
+                </div>
+                <label class="checkbox"><input type="checkbox" /> 마감여부</label>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">신청 인원</div>
+              <div class="form-field"><span class="static-val">5</span></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">상세 내용<span class="req">*</span></div>
+              <div class="form-field">
+                <textarea class="detail">※ 자세한 내용은 프로젝토리 홈페이지 소식 - 공지를 확인해 주세요.</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">공개 여부<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="eopen" checked /> 공개</label>
+                  <label class="radio"><input type="radio" name="eopen" /> 미공개</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">작성자</div>
+              <div class="form-field"><span class="static-val">Super</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <a href="event-list.html" class="btn btn-outline">≣ 목록</a>
+          <div class="right">
+            <button class="btn btn-dark">취소</button>
+            <button class="btn btn-green">저장</button>
+          </div>
+        </div>
+
+        <!-- Applicant List -->
+        <div class="applicant-head">
+          <h2>[[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대] 신청명단</h2>
+          <button class="btn btn-dark btn-sm">새로고침</button>
+        </div>
+
+        <div class="stat-bar">
+          <div class="stat"><div class="k">모집인원</div><div class="v">6</div></div>
+          <div class="stat"><div class="k">신청인원</div><div class="v">5</div></div>
+          <div class="stat"><div class="k">확정인원</div><div class="v">5</div></div>
+        </div>
+
+        <div class="applicant-filter">
+          <div class="radio-group">
+            <label class="radio"><input type="radio" name="afilter" checked /> 전체</label>
+            <label class="radio"><input type="radio" name="afilter" /> 신청자</label>
+            <label class="radio"><input type="radio" name="afilter" /> 취소자</label>
+            <label class="radio"><input type="radio" name="afilter" /> 미확정자</label>
+            <label class="radio"><input type="radio" name="afilter" /> 확정자</label>
+          </div>
+          <div class="right">
+            <button class="btn btn-green btn-sm">참석확정</button>
+            <button class="btn btn-outline btn-sm">📄 EXCEL 파일 다운로드</button>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>멤버 닉네임</th>
+              <th>회원 성명</th>
+              <th>보호자 휴대전화번호</th>
+              <th>멤버 휴대전화번호</th>
+              <th>신청일</th>
+              <th>취소일</th>
+              <th>이벤트 참석 확정</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>8</td><td>안녕</td><td>이승준</td>
+              <td class="masked">●●●●●●●●●●</td><td></td>
+              <td>2026-05-30 13:49:43</td>
+              <td class="cancel-note">2026-05-30 13:53:45<br />(홈페이지)</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>7</td><td>띠모</td><td>이준희</td>
+              <td class="masked">●●●●●●●●●●</td><td></td>
+              <td>2026-05-30 11:30:33</td>
+              <td class="cancel-note">2026-05-30 13:40:43<br />(제이)</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6</td><td>돼지</td><td>양시온</td>
+              <td class="masked">●●●●●●●●●●</td><td class="masked">●●●●●●●●●●</td>
+              <td>2026-05-29 18:16:55</td>
+              <td></td>
+              <td><span class="check-mark">☑</span></td>
+            </tr>
+            <tr>
+              <td>5</td><td>냥</td><td>염성경</td>
+              <td class="masked">●●●●●●●●●●</td><td class="masked">●●●●●●●●●●</td>
+              <td>2026-05-28 16:52:51</td>
+              <td></td>
+              <td><span class="check-mark">☑</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <button>«</button>
+          <button>‹</button>
+          <button class="active">1</button>
+          <button>›</button>
+          <button>»</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
