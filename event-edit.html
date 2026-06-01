@@ -214,47 +214,159 @@
               <th>이벤트 참석 확정</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="applicantBody">
             <tr>
               <td>8</td><td>안녕</td><td>이승준</td>
-              <td class="masked">●●●●●●●●●●</td><td></td>
+              <td>01055512340</td><td></td>
               <td>2026-05-30 13:49:43</td>
               <td class="cancel-note">2026-05-30 13:53:45<br />(홈페이지)</td>
-              <td></td>
+              <td><input type="checkbox" class="attend-check" /></td>
             </tr>
             <tr>
               <td>7</td><td>띠모</td><td>이준희</td>
-              <td class="masked">●●●●●●●●●●</td><td></td>
+              <td>01066678901</td><td></td>
               <td>2026-05-30 11:30:33</td>
               <td class="cancel-note">2026-05-30 13:40:43<br />(제이)</td>
-              <td></td>
+              <td><input type="checkbox" class="attend-check" /></td>
             </tr>
             <tr>
               <td>6</td><td>돼지</td><td>양시온</td>
-              <td class="masked">●●●●●●●●●●</td><td class="masked">●●●●●●●●●●</td>
+              <td>01077789012</td><td>01088890123</td>
               <td>2026-05-29 18:16:55</td>
               <td></td>
-              <td><span class="check-mark">☑</span></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
             </tr>
             <tr>
               <td>5</td><td>냥</td><td>염성경</td>
-              <td class="masked">●●●●●●●●●●</td><td class="masked">●●●●●●●●●●</td>
+              <td>01033067985</td><td>01030457985</td>
               <td>2026-05-28 16:52:51</td>
               <td></td>
-              <td><span class="check-mark">☑</span></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+            </tr>
+            <tr>
+              <td>4</td><td>연어</td><td>조연호</td>
+              <td>01090872514</td><td></td>
+              <td>2026-05-10 19:57:23</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+            </tr>
+            <tr>
+              <td>3</td><td>토끼</td><td>김민준</td>
+              <td>01045678912</td><td>01087651234</td>
+              <td>2026-05-09 14:22:10</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" /></td>
+            </tr>
+            <tr>
+              <td>2</td><td>별</td><td>박서연</td>
+              <td>01023456789</td><td>01098765432</td>
+              <td>2026-05-08 09:15:00</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+            </tr>
+            <tr>
+              <td>1</td><td>하늘</td><td>정우진</td>
+              <td>01034567890</td><td>01076543210</td>
+              <td>2026-05-07 20:01:33</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
             </tr>
           </tbody>
         </table>
 
-        <div class="pagination">
-          <button>«</button>
-          <button>‹</button>
-          <button class="active">1</button>
-          <button>›</button>
-          <button>»</button>
+        <div class="list-footer">
+          <div class="per-page">
+            <span>노출개수:</span>
+            <select id="perPage">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          <span id="rangeLabel">1-5 of 8</span>
+          <div class="mini-pager"><span id="miniPrev">‹</span><span id="miniNext">›</span></div>
+        </div>
+
+        <div class="pagination-row">
+          <div class="pagination" id="pager"></div>
+          <button class="btn btn-green" id="deleteBtn">삭제</button>
         </div>
       </main>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var body = document.getElementById('applicantBody');
+      var pager = document.getElementById('pager');
+      var perPageSel = document.getElementById('perPage');
+      var rangeLabel = document.getElementById('rangeLabel');
+      var miniPrev = document.getElementById('miniPrev');
+      var miniNext = document.getElementById('miniNext');
+      var page = 1;
+
+      function rows() { return Array.prototype.slice.call(body.querySelectorAll('tr')); }
+      function perPage() { return parseInt(perPageSel.value, 10); }
+      function totalPages() { return Math.max(1, Math.ceil(rows().length / perPage())); }
+
+      function render() {
+        var all = rows();
+        var pp = perPage();
+        var tp = totalPages();
+        if (page > tp) page = tp;
+        var start = (page - 1) * pp;
+        var end = start + pp;
+
+        all.forEach(function (tr, i) {
+          tr.style.display = (i >= start && i < end) ? '' : 'none';
+        });
+
+        // range label
+        var shownEnd = Math.min(end, all.length);
+        rangeLabel.textContent = (all.length ? (start + 1) : 0) + '-' + shownEnd + ' of ' + all.length;
+
+        // numbered pager
+        pager.innerHTML = '';
+        pager.appendChild(navBtn('«', function () { page = 1; render(); }));
+        pager.appendChild(navBtn('‹', function () { if (page > 1) { page--; render(); } }));
+        for (var p = 1; p <= tp; p++) {
+          (function (n) {
+            var b = navBtn(String(n), function () { page = n; render(); });
+            if (n === page) b.className = 'active';
+            pager.appendChild(b);
+          })(p);
+        }
+        pager.appendChild(navBtn('›', function () { if (page < tp) { page++; render(); } }));
+        pager.appendChild(navBtn('»', function () { page = tp; render(); }));
+      }
+
+      function navBtn(label, fn) {
+        var b = document.createElement('button');
+        b.textContent = label;
+        b.addEventListener('click', fn);
+        return b;
+      }
+
+      miniPrev.addEventListener('click', function () { if (page > 1) { page--; render(); } });
+      miniNext.addEventListener('click', function () { if (page < totalPages()) { page++; render(); } });
+      perPageSel.addEventListener('change', function () { page = 1; render(); });
+
+      // 삭제: 참석 확정 체크된 신청자 삭제
+      document.getElementById('deleteBtn').addEventListener('click', function () {
+        var checked = body.querySelectorAll('tr .attend-check:checked');
+        if (!checked.length) {
+          alert('삭제할 항목을 선택해 주세요.');
+          return;
+        }
+        if (!confirm('선택한 ' + checked.length + '건을 삭제하시겠습니까?')) return;
+        Array.prototype.forEach.call(checked, function (chk) {
+          chk.closest('tr').remove();
+        });
+        render();
+      });
+
+      render();
+    })();
+  </script>
 </body>
 </html>

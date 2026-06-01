@@ -766,6 +766,36 @@ textarea.detail {
   font-size: 18px;
 }
 
+.attend-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+.pagination-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 26px;
+}
+
+.pagination-row .pagination {
+  margin-top: 0;
+}
+
+.pagination-row #deleteBtn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mini-pager span {
+  cursor: pointer;
+}
+
 .cancel-note {
   color: #555;
   font-size: 13px;
