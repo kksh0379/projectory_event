@@ -423,48 +423,52 @@
         <div class="doc-body" id="modalDocBody">
           <div class="doc-section" id="pdocSec-1">
             <div class="doc-section-head" data-pspot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 활동 지역 검색</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 추가 대상 회원을 활동 지역으로 필터(드롭다운).
-[옵션] 전체/서울(혜화)/성남. 기본값 전체.
-[연동] 검색 파라미터 region 으로 전달.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 대상 회원 활동 지역 필터 (드롭다운)
+- 옵션: 전체 / 서울(혜화) / 성남 (기본 전체)
+- 연동: region 파라미터</textarea>
           </div>
           <div class="doc-section" id="pdocSec-2">
             <div class="doc-section-head" data-pspot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 멤버십 상태 검색</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 멤버십 상태별 다중 선택 필터(드롭다운).
-[기본값] '멤버십 보유' 선택. '전체' 체크 시 전 상태 일괄 선택/해제.
-[연동] 선택된 상태 배열을 statuses 파라미터로 전달. 미선택 시 결과 없음 처리.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 멤버십 상태 다중선택 필터 (드롭다운)
+- 기본값: 멤버십 보유
+- 동작: '전체' 체크 시 일괄 선택 / 해제
+- 연동: statuses 배열 / 미선택 시 결과 없음</textarea>
           </div>
           <div class="doc-section" id="pdocSec-3">
             <div class="doc-section-head" data-pspot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 회원 검색 (닉네임/이름/아이디)</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 닉네임/이름/아이디 키워드 검색(부분일치, AND 조건).
-[동작] 입력값 trim 후 조합 검색. 빈 값은 조건에서 제외.
-[성능] 서버 페이징 전제. 키워드 인덱스 권장.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 닉네임 / 이름 / 아이디 키워드 검색
+- 조건: 부분일치 AND / 빈 값 제외
+- 성능: 서버 페이징 / 키워드 인덱스 권장</textarea>
           </div>
           <div class="doc-section" id="pdocSec-4">
             <div class="doc-section-head" data-pspot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 검색 버튼</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">[동작] 현재 검색 조건(지역/멤버십상태/키워드)으로 회원 조회 API 호출.
-[정책] 검색 전에는 결과 미노출(안내 문구). 결과 없으면 '검색 결과가 없습니다' 표시.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 조건(지역 / 상태 / 키워드)으로 회원 조회
+- 정책: 검색 전 결과 미노출
+- 무결과: '검색 결과가 없습니다' 표시</textarea>
           </div>
           <div class="doc-section" id="pdocSec-5">
             <div class="doc-section-head" data-pspot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 검색 결과 목록</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">[표시] 활동지역/멤버십상태/닉네임/이름/아이디/추가.
-[정책] 멤버십 보유만 추가 가능, 그 외 상태는 추가 버튼 비활성.
-[연동] 서버 페이징 응답(목록 + 총건수) 바인딩.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">- 컬럼: 활동지역 / 멤버십상태 / 닉네임 / 이름 / 아이디 / 추가
+- 정책: 보유만 추가 가능 / 그 외 비활성
+- 연동: 서버 페이징 응답 (목록 + 총건수)</textarea>
           </div>
           <div class="doc-section" id="pdocSec-6">
             <div class="doc-section-head" data-pspot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 추가 버튼 (1명씩 추가)</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">[동작] 행 단위로 1명씩 신청 명단에 추가.
-[검증] 멤버십 보유 여부 + 동일 아이디 중복 여부 확인 후 추가.
-[처리] 추가 성공 시 안내 후 팝업을 닫고 명단 갱신. source=ADMIN 저장.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 행 단위 1명씩 추가
+- 검증: 보유 여부 + 동일 아이디 중복
+- 처리: 성공 시 안내 → 팝업 닫고 명단 갱신
+- 저장: source=ADMIN</textarea>
           </div>
           <div class="doc-section" id="pdocSec-7">
             <div class="doc-section-head" data-pspot="7" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">7</span> 페이징 / 노출개수</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec7" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 검색 결과 페이지네이션 및 페이지당 노출개수(5/10) 선택.
-[연동] page, size 파라미터. 노출개수 변경 시 1페이지로 초기화.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec7" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 결과 페이지네이션 + 노출개수(5 / 10)
+- 연동: page / size
+- 동작: 노출개수 변경 시 1페이지 초기화</textarea>
           </div>
           <div class="doc-section" id="pdocSec-8">
             <div class="doc-section-head" data-pspot="8" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">8</span> 닫기 버튼</div>
-            <textarea class="doc-area" data-key="projectory_pdesc_sec8" placeholder="설명을 작성하세요. (실시간 저장)">[동작] 레이어 팝업을 닫는다(저장 없이 종료). 오버레이 클릭/ESC와 동일.
-[비고] 추가 작업은 행별 '추가' 시점에 즉시 반영되므로 별도 저장 버튼 없음.</textarea>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec8" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 팝업 닫기 (저장 없이) / 오버레이 · ESC 동일
+- 비고: 추가는 행별 즉시 반영 / 별도 저장 없음</textarea>
           </div>
         </div>
         <div class="doc-saved" id="modalDocSaved">실시간 저장</div>
@@ -479,42 +483,45 @@
     <div class="doc-body" id="docBody">
       <div class="doc-section" id="docSec-1">
         <div class="doc-section-head" data-spot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 신청추가 버튼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 관리자가 사용자의 직접 신청 없이 참석자를 신청 명단에 직접 등록하는 기능.
-[동작] 클릭 시 '신청추가' 레이어 팝업을 오픈한다.
-[노출/권한] 이벤트 관리 권한 보유 관리자에게만 노출.
-[연동] 팝업에서 선택한 회원을 신청 명단에 등록(POST /events/{eventId}/applicants). 추가 출처 source=ADMIN 으로 저장하여 일반 신청과 구분.
-[예외] 마감(정원 초과) 이벤트의 추가 허용 정책은 기획 협의 필요.</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자가 사용자 신청 없이 참석자 직접 추가
+- 동작: 클릭 시 '신청추가' 레이어 팝업 오픈
+- 권한: 이벤트 관리 권한 관리자만 노출
+- 연동: 선택 회원 명단 등록 (POST), source=ADMIN
+- 예외: 정원 초과(마감) 시 추가 정책 협의</textarea>
       </div>
       <div class="doc-section" id="docSec-2">
         <div class="doc-section-head" data-spot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 신청 명단 필터 - 신청추가</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 관리자가 직접 추가한 인원만 별도로 조회하는 필터.
-[동작] 라디오 선택 시 신청 명단을 source=ADMIN 레코드로 필터링.
-[연계] 전체/신청자/취소자/미확정자/확정자 필터와 동일한 조회 파라미터 체계 사용.
-[비고] 클라이언트 필터가 아닌 서버 조회 시 status=ADMIN_ADDED 파라미터 전달 권장.</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자 추가분만 조회
+- 동작: 라디오 선택 시 source=ADMIN 필터
+- 연계: 전체 / 신청자 / 취소자 / 미확정자 / 확정자와 동일 체계
+- 비고: 서버 조회 시 status=ADMIN_ADDED 전달</textarea>
       </div>
       <div class="doc-section" id="docSec-3">
         <div class="doc-section-head" data-spot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 활동 지역 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 신청자의 소속 활동 지역(서울(혜화)/성남)을 표시.
-[데이터] member.regionCode 매핑값. 이벤트 활동지역과 신청자 지역이 다를 수 있어 별도 표기.
-[확장] 추후 컬럼 정렬 및 지역 필터 확장 고려.</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 신청자 활동 지역 표기 (서울(혜화) / 성남)
+- 데이터: member.regionCode
+- 비고: 이벤트 지역과 신청자 지역 상이 가능
+- 확장: 컬럼 정렬 / 지역 필터 추후</textarea>
       </div>
       <div class="doc-section" id="docSec-4">
         <div class="doc-section-head" data-spot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 멤버십 상태 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 신청자의 현재 멤버십 상태 표시(멤버십 보유/상담 예약 가능/확정대기/거절/연장대기/기간 내 휴면/해지/취소/박탈).
-[정책] 신규 추가는 '멤버십 보유'만 가능. 그 외 상태는 팝업에서 추가 버튼 비활성.
-[데이터] membership.statusCode. 상태값 enum은 회원 도메인과 동기화 필요.</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 신청자 멤버십 상태 표기
+- 값: 보유 / 상담예약가능 / 확정대기 / 거절 / 연장대기 / 기간내휴면 / 해지 / 취소 / 박탈
+- 정책: 신규 추가는 '멤버십 보유'만 / 그 외 비활성
+- 데이터: membership.statusCode (회원 도메인 enum 동기화)</textarea>
       </div>
       <div class="doc-section" id="docSec-5">
         <div class="doc-section-head" data-spot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 아이디 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 회원 식별용 로그인 아이디 표시.
-[검증] 동일 아이디 중복 추가 차단(클라이언트 1차 검증 + 서버 유니크 제약 2차).
-[개인정보] 노출 범위 정책 확인(마스킹 여부 협의).</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 로그인 아이디 표기
+- 검증: 동일 아이디 중복 추가 차단 (클라 1차 + 서버 유니크 2차)
+- 개인정보: 마스킹 여부 협의</textarea>
       </div>
       <div class="doc-section" id="docSec-6">
         <div class="doc-section-head" data-spot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 삭제 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">[목적] 관리자가 추가한 인원을 명단에서 삭제.
-[노출 조건] source=ADMIN 레코드에만 삭제 버튼 노출. 일반 신청자는 삭제 불가(취소 프로세스 별도).
-[동작] 클릭 시 확인 모달 후 DELETE 호출. 소프트 삭제/이력 보존 여부 협의.</textarea>
+        <textarea class="doc-area" data-key="projectory_desc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자 추가분 명단 삭제
+- 노출: source=ADMIN 레코드만 (일반 신청자 삭제 불가)
+- 동작: 확인 모달 → DELETE
+- 비고: 소프트 삭제 / 이력 보존 협의</textarea>
       </div>
     </div>
     <div class="doc-saved" id="docSaved">실시간 저장</div>
