@@ -1079,11 +1079,13 @@ textarea.detail {
 .btn-row-del {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   padding: 6px 14px;
   font-size: 13px;
   border-radius: 5px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn-row-add .ico,
@@ -1134,6 +1136,105 @@ button.btn-row-add[disabled]:hover {
   gap: 10px;
   padding: 16px 24px;
   border-top: 1px solid var(--border);
+}
+
+/* ===== 딱지(원형 연번 마커) ===== */
+.callout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e8402c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.callout:hover {
+  background: #c5301f;
+}
+
+/* 패널 내부 구역 라벨용(클릭 비활성, 작게) */
+.callout.sm {
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  cursor: default;
+  box-shadow: none;
+}
+
+.callout-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.callout-wrap > .callout {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+}
+
+.callout-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 화면 설명 구역별 영역 */
+.doc-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 14px 14px;
+}
+
+.doc-section {
+  padding: 10px 0;
+  border-bottom: 1px dashed #e2ddc7;
+  transition: background 0.3s ease;
+  border-radius: 6px;
+}
+
+.doc-section.focused {
+  background: #fff3c4;
+}
+
+.doc-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5a5331;
+  margin-bottom: 8px;
+}
+
+.doc-area {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid #e2ddc7;
+  border-radius: 5px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #333;
+  background: #fff;
+  outline: none;
+  resize: none;          /* 자동 확장이므로 수동 리사이즈 비활성 */
+  overflow: hidden;      /* 높이를 내용에 맞춰 늘림 */
+  box-sizing: border-box;
+}
+
+.doc-area:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(31, 138, 76, 0.12);
 }
 
 /* ===== Description 패널 (EDIT 페이지 우측 고정) ===== */

@@ -187,14 +187,17 @@
           <div class="radio-group">
             <label class="radio"><input type="radio" name="afilter" value="all" checked /> 전체</label>
             <label class="radio"><input type="radio" name="afilter" value="apply" /> 신청자</label>
-            <label class="radio"><input type="radio" name="afilter" value="added" /> 신청추가</label>
+            <span class="callout-inline"><label class="radio"><input type="radio" name="afilter" value="added" /> 신청추가</label><span class="callout" data-callout="2">2</span></span>
             <label class="radio"><input type="radio" name="afilter" value="cancel" /> 취소자</label>
             <label class="radio"><input type="radio" name="afilter" value="unconfirm" /> 미확정자</label>
             <label class="radio"><input type="radio" name="afilter" value="confirm" /> 확정자</label>
           </div>
           <div class="right">
             <button class="btn btn-green btn-sm">참석확정</button>
-            <button class="btn btn-outline-green btn-sm" id="addApplicantBtn">신청추가</button>
+            <span class="callout-wrap">
+              <button class="btn btn-outline-green btn-sm" id="addApplicantBtn"><span class="ico">✎</span> 신청추가</button>
+              <span class="callout" data-callout="1">1</span>
+            </span>
             <button class="btn btn-outline btn-sm">📄 EXCEL 파일 다운로드</button>
           </div>
         </div>
@@ -203,17 +206,17 @@
           <thead>
             <tr>
               <th>번호</th>
-              <th>활동 지역</th>
-              <th>멤버십 상태</th>
+              <th>활동 지역 <span class="callout" data-callout="3">3</span></th>
+              <th>멤버십 상태 <span class="callout" data-callout="4">4</span></th>
               <th>닉네임</th>
               <th>이름</th>
-              <th>아이디</th>
+              <th>아이디 <span class="callout" data-callout="5">5</span></th>
               <th>보호자 휴대전화번호</th>
               <th>멤버 휴대전화번호</th>
               <th>신청일</th>
               <th>취소일</th>
               <th>이벤트 참석 확정</th>
-              <th>삭제</th>
+              <th>삭제 <span class="callout" data-callout="6">6</span></th>
             </tr>
           </thead>
           <tbody id="applicantBody">
@@ -376,7 +379,7 @@
               <th>닉네임</th>
               <th>이름</th>
               <th>아이디</th>
-              <th style="width:84px;">추가</th>
+              <th style="width:100px;">추가</th>
             </tr>
           </thead>
           <tbody id="searchResults"></tbody>
@@ -416,8 +419,44 @@
       <span>📝 화면 설명</span>
       <span class="doc-toggle" id="docToggle" title="패널 접기/펼치기">⟩</span>
     </div>
-    <textarea class="doc-textarea" id="docTextarea"
-      placeholder="이 화면(이벤트 수정)에 대한 기획 설명을 작성하세요.&#10;예) 화면 정의, 동작 정책, 예외 처리, 유효성 검사 등&#10;텍스트는 자동 저장됩니다."></textarea>
+    <div class="doc-body" id="docBody">
+      <div class="doc-section" id="docSec-1">
+        <div class="doc-section-head"><span class="callout sm">1</span> 신청추가 버튼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec1"
+          data-default="관리자가 직접 참석자를 신청 추가하는 기능. 클릭 시 [신청추가] 레이어 팝업이 열린다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+      <div class="doc-section" id="docSec-2">
+        <div class="doc-section-head"><span class="callout sm">2</span> 신청 명단 필터 - 신청추가</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec2"
+          data-default="신청 명단 조회 필터. '신청추가'를 선택하면 관리자가 직접 추가한 인원만 조회된다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+      <div class="doc-section" id="docSec-3">
+        <div class="doc-section-head"><span class="callout sm">3</span> 활동 지역 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec3"
+          data-default="신청자의 활동 지역(서울(혜화)/성남)을 표시한다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+      <div class="doc-section" id="docSec-4">
+        <div class="doc-section-head"><span class="callout sm">4</span> 멤버십 상태 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec4"
+          data-default="신청자의 멤버십 상태를 표시한다. 멤버십 보유 회원만 추가가 가능하다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+      <div class="doc-section" id="docSec-5">
+        <div class="doc-section-head"><span class="callout sm">5</span> 아이디 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec5"
+          data-default="회원 아이디를 표시한다. 동일 아이디 중복 추가는 차단된다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+      <div class="doc-section" id="docSec-6">
+        <div class="doc-section-head"><span class="callout sm">6</span> 삭제 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec6"
+          data-default="관리자가 추가한 인원에만 삭제 버튼이 노출되며, 확인 메시지 후 명단에서 삭제된다."
+          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+      </div>
+    </div>
     <div class="doc-saved" id="docSaved">자동 저장됨</div>
   </aside>
   <button class="doc-open-btn" id="docOpenBtn" title="화면 설명 열기">📝 설명</button>
@@ -782,31 +821,52 @@
         if (e.target === modal) closeModal();
       });
 
-      /* ===== Description 패널 (자동 저장) ===== */
-      // localStorage에 화면별 설명 텍스트를 저장/복원
+      /* ===== 화면 설명 패널 (자동 저장) ===== */
+      var docSavedTag = document.getElementById('docSaved');
+      function flashSaved(tag) {
+        if (!tag) return;
+        tag.textContent = '저장 중...';
+        clearTimeout(tag._t);
+        tag._t = setTimeout(function () { tag.textContent = '자동 저장됨'; }, 500);
+      }
+
+      // textarea 내용에 따라 높이 자동 확장 (구역별 Area 반응형)
+      function autoGrow(ta) {
+        ta.style.height = 'auto';
+        ta.style.height = (ta.scrollHeight + 2) + 'px';
+      }
+
+      // 구역별 설명 textarea 바인딩 (복원 + 자동저장 + 자동확장)
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-area'), function (ta) {
+        var key = ta.getAttribute('data-key');
+        try {
+          var stored = localStorage.getItem(key);
+          ta.value = (stored !== null) ? stored : (ta.getAttribute('data-default') || '');
+        } catch (e) {
+          ta.value = ta.getAttribute('data-default') || '';
+        }
+        autoGrow(ta);
+        ta.addEventListener('input', function () {
+          autoGrow(ta);
+          try { localStorage.setItem(key, ta.value); } catch (e) {}
+          flashSaved(docSavedTag);
+        });
+      });
+
+      // 단일 textarea(팝업 화면 설명) 저장/복원
       function bindDescription(textareaId, savedId, storageKey) {
         var ta = document.getElementById(textareaId);
         var savedTag = document.getElementById(savedId);
         if (!ta) return;
-
-        // 복원
         try {
           var stored = localStorage.getItem(storageKey);
           if (stored !== null) ta.value = stored;
-        } catch (e) { /* localStorage 미지원 무시 */ }
-
-        var timer = null;
+        } catch (e) {}
         ta.addEventListener('input', function () {
           try { localStorage.setItem(storageKey, ta.value); } catch (e) {}
-          if (savedTag) {
-            savedTag.textContent = '저장 중...';
-            clearTimeout(timer);
-            timer = setTimeout(function () { savedTag.textContent = '자동 저장됨'; }, 500);
-          }
+          flashSaved(savedTag);
         });
       }
-
-      bindDescription('docTextarea', 'docSaved', 'projectory_desc_event_edit');
       bindDescription('modalDocTextarea', 'modalDocSaved', 'projectory_desc_addmodal');
 
       // EDIT 페이지 우측 패널 접기/펼치기
@@ -824,6 +884,23 @@
       var initCollapsed = false;
       try { initCollapsed = localStorage.getItem('projectory_desc_event_edit_collapsed') === '1'; } catch (e) {}
       setDocCollapsed(initCollapsed);
+
+      // 딱지(연번) 클릭 → 화면 설명의 해당 구역으로 포커스
+      Array.prototype.forEach.call(document.querySelectorAll('.callout'), function (badge) {
+        if (badge.classList.contains('sm')) return; // 패널 내부 라벨용은 제외
+        badge.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var n = badge.getAttribute('data-callout');
+          var sec = document.getElementById('docSec-' + n);
+          if (!sec) return;
+          setDocCollapsed(false); // 패널 펼치기
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          sec.classList.add('focused');
+          setTimeout(function () { sec.classList.remove('focused'); }, 1600);
+          var ta = sec.querySelector('.doc-area');
+          if (ta) setTimeout(function () { ta.focus(); }, 350);
+        });
+      });
 
       render();
     })();
