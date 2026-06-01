@@ -315,33 +315,19 @@
         </div>
         <div class="modal-body">
         <div class="modal-search">
-          <div class="ms-region">
-            <label class="ms-status-label">활동 지역</label>
-            <div class="radio-group">
-              <label class="radio"><input type="radio" name="qRegion" value="" checked /> 전체</label>
-              <label class="radio"><input type="radio" name="qRegion" value="서울(혜화)" /> 서울(혜화)</label>
-              <label class="radio"><input type="radio" name="qRegion" value="성남" /> 성남</label>
+          <div class="ms-filters-row">
+            <div class="ms-region">
+              <label class="ms-status-label">활동 지역</label>
+              <select id="qRegion" class="ms-region-select">
+                <option value="">전체</option>
+                <option value="서울(혜화)">서울(혜화)</option>
+                <option value="성남">성남</option>
+              </select>
             </div>
-          </div>
 
-          <div class="ms-fields">
-            <div class="ms-field">
-              <label>닉네임</label>
-              <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
-            </div>
-            <div class="ms-field">
-              <label>이름</label>
-              <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
-            </div>
-            <div class="ms-field">
-              <label>아이디</label>
-              <input type="text" id="qId" class="text-input" placeholder="검색어를 입력해 주세요." />
-            </div>
-          </div>
-
-          <div class="ms-status">
-            <label class="ms-status-label">멤버십 상태</label>
-            <div class="ms-dropdown" id="msDropdown">
+            <div class="ms-status">
+              <label class="ms-status-label">멤버십 상태</label>
+              <div class="ms-dropdown" id="msDropdown">
               <button type="button" class="ms-dd-toggle" id="msDdToggle">
                 <span id="msDdSummary">멤버십 보유</span>
                 <span class="ms-dd-arrow">▾</span>
@@ -358,6 +344,22 @@
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
               </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="ms-fields">
+            <div class="ms-field">
+              <label>닉네임</label>
+              <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>이름</label>
+              <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>아이디</label>
+              <input type="text" id="qId" class="text-input" placeholder="검색어를 입력해 주세요." />
             </div>
           </div>
 
@@ -560,7 +562,7 @@
         // 초기화: 검색 전에는 결과 없음
         qNick.value = ''; qName.value = ''; qId.value = '';
         // 활동 지역 기본값: 전체
-        document.querySelector('input[name="qRegion"][value=""]').checked = true;
+        document.getElementById('qRegion').value = '';
         // 멤버십 상태 기본값: 멤버십 보유만 선택
         msAll.checked = false;
         msOpts.forEach(function (c) { c.checked = (c.value === ADDABLE_MS); });
@@ -622,7 +624,7 @@
         var n = qNick.value.trim();
         var nm = qName.value.trim();
         var id = qId.value.trim();
-        var region = document.querySelector('input[name="qRegion"]:checked').value;
+        var region = document.getElementById('qRegion').value;
         var statuses = selectedStatuses();
         matched = members.filter(function (m) {
           return (!n || m.nick.indexOf(n) !== -1)
