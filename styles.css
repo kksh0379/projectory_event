@@ -852,6 +852,8 @@ textarea.detail {
 .modal-body {
   padding: 22px 24px;
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .modal-search {
@@ -1044,7 +1046,154 @@ button.btn-row-add[disabled] {
   border-top: 1px solid var(--border);
 }
 
+/* ===== Description 패널 (EDIT 페이지 우측 고정) ===== */
+.doc-panel {
+  position: fixed;
+  top: 58px;
+  right: 0;
+  bottom: 0;
+  width: 360px;
+  background: #fffdf5;
+  border-left: 1px solid #e2ddc7;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  z-index: 500;
+  transition: transform 0.22s ease;
+}
+
+.doc-panel.collapsed {
+  transform: translateX(100%);
+}
+
+.doc-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #5a5331;
+  background: #f6f0d8;
+  border-bottom: 1px solid #e2ddc7;
+}
+
+.doc-toggle {
+  cursor: pointer;
+  font-size: 16px;
+  color: #8a8252;
+  padding: 0 4px;
+}
+
+.doc-textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+  background: transparent;
+  overflow-y: auto;
+}
+
+.doc-textarea::placeholder {
+  color: #b9b48f;
+}
+
+.doc-saved {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #9a9468;
+  border-top: 1px solid #e2ddc7;
+  background: #f6f0d8;
+  text-align: right;
+}
+
+/* 펼치기 버튼(접힘 상태일 때) */
+.doc-open-btn {
+  position: fixed;
+  top: 78px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f6f0d8;
+  color: #5a5331;
+  border: 1px solid #e2ddc7;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 500;
+  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* 패널이 열려 있을 때 본문을 왼쪽으로 밀어줌 */
+body.doc-open .content {
+  padding-right: 384px;
+}
+
+/* ===== Description 패널 (레이어 팝업 우측) ===== */
+.modal {
+  flex-direction: row;
+}
+
+.modal-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-height: calc(100vh - 120px);
+}
+
+.modal-doc {
+  width: 280px;
+  flex-shrink: 0;
+  border-left: 1px solid #e2ddc7;
+  background: #fffdf5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 8px 8px 0;
+}
+
+.modal-doc-head {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #5a5331;
+  background: #f6f0d8;
+  border-bottom: 1px solid #e2ddc7;
+  border-radius: 0 8px 0 0;
+}
+
+.modal-doc-textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #333;
+  background: transparent;
+  overflow-y: auto;
+}
+
+.modal-doc-textarea::placeholder {
+  color: #b9b48f;
+}
+
 @media (max-width: 1100px) {
   .filter-row, .form-row { flex-direction: column; }
   .sidebar { display: none; }
+  body.doc-open .content { padding-right: 34px; }
+  .doc-panel { width: 88vw; }
 }

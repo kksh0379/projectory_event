@@ -307,11 +307,12 @@
   <!-- 신청추가 레이어 팝업 -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
-      <div class="modal-head">
-        <h3>신청추가</h3>
-        <span class="modal-close" id="modalClose">✕</span>
-      </div>
-      <div class="modal-body">
+      <div class="modal-main">
+        <div class="modal-head">
+          <h3>신청추가</h3>
+          <span class="modal-close" id="modalClose">✕</span>
+        </div>
+        <div class="modal-body">
         <div class="modal-search">
           <div class="ms-region">
             <label class="ms-status-label">활동 지역</label>
@@ -384,12 +385,33 @@
           <span id="modalRange"></span>
           <div class="pagination" id="modalPager"></div>
         </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
+        </div>
       </div>
-      <div class="modal-foot">
-        <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
-      </div>
+
+      <!-- 레이어 팝업 우측 Description 패널 -->
+      <aside class="modal-doc">
+        <div class="modal-doc-head">📝 Description</div>
+        <textarea class="modal-doc-textarea" id="modalDocTextarea"
+          placeholder="이 팝업(신청추가)에 대한 기획 설명을 작성하세요.&#10;텍스트는 자동 저장됩니다."></textarea>
+        <div class="doc-saved" id="modalDocSaved">자동 저장됨</div>
+      </aside>
     </div>
   </div>
+
+  <!-- EDIT 페이지 우측 Description 패널 -->
+  <aside class="doc-panel" id="docPanel">
+    <div class="doc-panel-head">
+      <span>📝 화면 설명 (Description)</span>
+      <span class="doc-toggle" id="docToggle" title="패널 접기/펼치기">⟩</span>
+    </div>
+    <textarea class="doc-textarea" id="docTextarea"
+      placeholder="이 화면(이벤트 수정)에 대한 기획 설명을 작성하세요.&#10;예) 화면 정의, 동작 정책, 예외 처리, 유효성 검사 등&#10;텍스트는 자동 저장됩니다."></textarea>
+    <div class="doc-saved" id="docSaved">자동 저장됨</div>
+  </aside>
+  <button class="doc-open-btn" id="docOpenBtn" title="화면 설명 열기">📝 설명</button>
 
   <script>
     (function () {
@@ -712,6 +734,49 @@
       modal.addEventListener('click', function (e) {
         if (e.target === modal) closeModal();
       });
+
+      /* ===== Description 패널 (자동 저장) ===== */
+      // localStorage에 화면별 설명 텍스트를 저장/복원
+      function bindDescription(textareaId, savedId, storageKey) {
+        var ta = document.getElementById(textareaId);
+        var savedTag = document.getElementById(savedId);
+        if (!ta) return;
+
+        // 복원
+        try {
+          var stored = localStorage.getItem(storageKey);
+          if (stored !== null) ta.value = stored;
+        } catch (e) { /* localStorage 미지원 무시 */ }
+
+        var timer = null;
+        ta.addEventListener('input', function () {
+          try { localStorage.setItem(storageKey, ta.value); } catch (e) {}
+          if (savedTag) {
+            savedTag.textContent = '저장 중...';
+            clearTimeout(timer);
+            timer = setTimeout(function () { savedTag.textContent = '자동 저장됨'; }, 500);
+          }
+        });
+      }
+
+      bindDescription('docTextarea', 'docSaved', 'projectory_desc_event_edit');
+      bindDescription('modalDocTextarea', 'modalDocSaved', 'projectory_desc_addmodal');
+
+      // EDIT 페이지 우측 패널 접기/펼치기
+      var docPanel = document.getElementById('docPanel');
+      var docToggle = document.getElementById('docToggle');
+      var docOpenBtn = document.getElementById('docOpenBtn');
+      function setDocCollapsed(collapsed) {
+        docPanel.classList.toggle('collapsed', collapsed);
+        document.body.classList.toggle('doc-open', !collapsed);
+        docOpenBtn.style.display = collapsed ? 'flex' : 'none';
+        try { localStorage.setItem('projectory_desc_event_edit_collapsed', collapsed ? '1' : '0'); } catch (e) {}
+      }
+      docToggle.addEventListener('click', function () { setDocCollapsed(true); });
+      docOpenBtn.addEventListener('click', function () { setDocCollapsed(false); });
+      var initCollapsed = false;
+      try { initCollapsed = localStorage.getItem('projectory_desc_event_edit_collapsed') === '1'; } catch (e) {}
+      setDocCollapsed(initCollapsed);
 
       render();
     })();
