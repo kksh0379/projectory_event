@@ -217,6 +217,23 @@ a {
   margin: 6px 0 18px;
 }
 
+/* 목록 화면 안내 배너 (기존 화면 안내) */
+.page-notice {
+  margin: 0 0 18px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d8352a;
+  font-weight: 600;
+  background: #fff4f3;
+  border: 1px solid #f3d6d3;
+  border-radius: 6px;
+}
+
+.page-notice b {
+  color: #b5271d;
+}
+
 /* ===== Search Filter ===== */
 .filter {
   border-top: 2px solid #444;
