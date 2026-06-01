@@ -1187,6 +1187,41 @@ button.btn-row-add[disabled]:hover {
   gap: 4px;
 }
 
+/* 영역(그룹) 딱지 */
+.callout-region {
+  position: relative;
+}
+
+.callout-corner {
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  z-index: 6;
+}
+
+/* ===== 스포트라이트 (화면 설명 → 기능 강조) ===== */
+.spotlight {
+  position: relative;
+  z-index: 10000;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  animation: spotPulse 0.9s ease-in-out;
+}
+
+@keyframes spotPulse {
+  0%   { box-shadow: 0 0 0 8px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55); }
+  100% { box-shadow: 0 0 0 3px #ff5a3c, 0 0 0 9999px rgba(0, 0, 0, 0.55); }
+}
+
+/* 구역 헤더 클릭 가능 표시 */
+.doc-section-head {
+  cursor: pointer;
+}
+
+.doc-section-head:hover {
+  color: var(--green);
+}
+
 /* 화면 설명 구역별 영역 */
 .doc-body {
   flex: 1;

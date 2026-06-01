@@ -319,7 +319,8 @@
         <div class="modal-body">
         <div class="modal-search">
           <div class="ms-filters-row">
-            <div class="ms-region">
+            <div class="ms-region callout-region">
+              <span class="callout callout-corner" data-pcallout="1">1</span>
               <label class="ms-status-label">활동 지역</label>
               <select id="qRegion" class="ms-region-select">
                 <option value="">전체</option>
@@ -328,7 +329,8 @@
               </select>
             </div>
 
-            <div class="ms-status">
+            <div class="ms-status callout-region">
+              <span class="callout callout-corner" data-pcallout="2">2</span>
               <label class="ms-status-label">멤버십 상태</label>
               <div class="ms-dropdown" id="msDropdown">
               <button type="button" class="ms-dd-toggle" id="msDdToggle">
@@ -351,7 +353,8 @@
             </div>
           </div>
 
-          <div class="ms-fields">
+          <div class="ms-fields callout-region">
+            <span class="callout callout-corner" data-pcallout="3">3</span>
             <div class="ms-field">
               <label>닉네임</label>
               <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
@@ -367,26 +370,33 @@
           </div>
 
           <div class="ms-search-btn">
-            <button class="btn btn-green btn-sm" id="modalSearch">검색</button>
+            <span class="callout-wrap">
+              <button class="btn btn-green btn-sm" id="modalSearch">검색</button>
+              <span class="callout" data-pcallout="4">4</span>
+            </span>
           </div>
         </div>
 
-        <table class="data-table modal-table">
-          <thead>
-            <tr>
-              <th>활동 지역</th>
-              <th>멤버십 상태</th>
-              <th>닉네임</th>
-              <th>이름</th>
-              <th>아이디</th>
-              <th style="width:100px;">추가</th>
-            </tr>
-          </thead>
-          <tbody id="searchResults"></tbody>
-        </table>
+        <div class="callout-region">
+          <span class="callout callout-corner" data-pcallout="5">5</span>
+          <table class="data-table modal-table">
+            <thead>
+              <tr>
+                <th>활동 지역</th>
+                <th>멤버십 상태</th>
+                <th>닉네임</th>
+                <th>이름</th>
+                <th>아이디</th>
+                <th style="width:110px;">추가 <span class="callout" data-pcallout="6">6</span></th>
+              </tr>
+            </thead>
+            <tbody id="searchResults"></tbody>
+          </table>
+        </div>
         <p class="modal-empty" id="modalEmpty">검색 조건을 입력 후 검색해 주세요.</p>
 
-        <div class="modal-footer-bar">
+        <div class="modal-footer-bar callout-region">
+          <span class="callout callout-corner" data-pcallout="7">7</span>
           <div class="per-page">
             <span>노출개수:</span>
             <select id="modalPerPage">
@@ -399,67 +409,86 @@
         </div>
         </div>
         <div class="modal-foot">
-          <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
+          <span class="callout-wrap">
+            <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
+            <span class="callout" data-pcallout="8">8</span>
+          </span>
         </div>
       </div>
 
-      <!-- 레이어 팝업 우측 Description 패널 -->
+      <!-- 레이어 팝업 우측 화면 설명 패널 (번호별 구역) -->
       <aside class="modal-doc">
         <div class="modal-doc-head">📝 화면 설명</div>
-        <textarea class="modal-doc-textarea" id="modalDocTextarea"
-          placeholder="이 팝업(신청추가)에 대한 기획 설명을 작성하세요.&#10;텍스트는 자동 저장됩니다."></textarea>
-        <div class="doc-saved" id="modalDocSaved">자동 저장됨</div>
+        <div class="doc-body" id="modalDocBody">
+          <div class="doc-section" id="pdocSec-1">
+            <div class="doc-section-head" data-pspot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 활동 지역 검색</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec1" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-2">
+            <div class="doc-section-head" data-pspot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 멤버십 상태 검색</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec2" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-3">
+            <div class="doc-section-head" data-pspot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 회원 검색 (닉네임/이름/아이디)</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec3" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-4">
+            <div class="doc-section-head" data-pspot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 검색 버튼</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec4" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-5">
+            <div class="doc-section-head" data-pspot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 검색 결과 목록</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec5" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-6">
+            <div class="doc-section-head" data-pspot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 추가 버튼 (1명씩 추가)</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec6" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-7">
+            <div class="doc-section-head" data-pspot="7" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">7</span> 페이징 / 노출개수</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec7" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-8">
+            <div class="doc-section-head" data-pspot="8" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">8</span> 닫기 버튼</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec8" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
+          </div>
+        </div>
+        <div class="doc-saved" id="modalDocSaved">실시간 저장</div>
       </aside>
     </div>
   </div>
 
-  <!-- EDIT 페이지 우측 Description 패널 -->
+  <!-- EDIT 페이지 우측 화면 설명 패널 (항상 노출) -->
   <aside class="doc-panel" id="docPanel">
-    <div class="doc-panel-head">
-      <span>📝 화면 설명</span>
-      <span class="doc-toggle" id="docToggle" title="패널 접기/펼치기">⟩</span>
-    </div>
+    <div class="doc-panel-head"><span>📝 화면 설명</span></div>
     <div class="doc-body" id="docBody">
       <div class="doc-section" id="docSec-1">
-        <div class="doc-section-head"><span class="callout sm">1</span> 신청추가 버튼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec1"
-          data-default="관리자가 직접 참석자를 신청 추가하는 기능. 클릭 시 [신청추가] 레이어 팝업이 열린다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 신청추가 버튼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec1" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
       <div class="doc-section" id="docSec-2">
-        <div class="doc-section-head"><span class="callout sm">2</span> 신청 명단 필터 - 신청추가</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec2"
-          data-default="신청 명단 조회 필터. '신청추가'를 선택하면 관리자가 직접 추가한 인원만 조회된다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 신청 명단 필터 - 신청추가</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec2" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
       <div class="doc-section" id="docSec-3">
-        <div class="doc-section-head"><span class="callout sm">3</span> 활동 지역 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec3"
-          data-default="신청자의 활동 지역(서울(혜화)/성남)을 표시한다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 활동 지역 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec3" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
       <div class="doc-section" id="docSec-4">
-        <div class="doc-section-head"><span class="callout sm">4</span> 멤버십 상태 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec4"
-          data-default="신청자의 멤버십 상태를 표시한다. 멤버십 보유 회원만 추가가 가능하다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 멤버십 상태 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec4" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
       <div class="doc-section" id="docSec-5">
-        <div class="doc-section-head"><span class="callout sm">5</span> 아이디 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec5"
-          data-default="회원 아이디를 표시한다. 동일 아이디 중복 추가는 차단된다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 아이디 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec5" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
       <div class="doc-section" id="docSec-6">
-        <div class="doc-section-head"><span class="callout sm">6</span> 삭제 컬럼</div>
-        <textarea class="doc-area" data-key="projectory_desc_sec6"
-          data-default="관리자가 추가한 인원에만 삭제 버튼이 노출되며, 확인 메시지 후 명단에서 삭제된다."
-          placeholder="설명을 작성하세요. (자동 저장)"></textarea>
+        <div class="doc-section-head" data-spot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 삭제 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec6" placeholder="설명을 작성하세요. (실시간 저장)"></textarea>
       </div>
     </div>
-    <div class="doc-saved" id="docSaved">자동 저장됨</div>
+    <div class="doc-saved" id="docSaved">실시간 저장</div>
   </aside>
-  <button class="doc-open-btn" id="docOpenBtn" title="화면 설명 열기">📝 설명</button>
 
   <script>
     (function () {
@@ -612,6 +641,8 @@
         mPage = 1;
         renderResults();
         modal.style.display = 'flex';
+        // 팝업이 표시된 뒤 화면 설명 textarea 높이 재계산
+        if (typeof growAll === 'function') growAll(modal);
       }
       function closeModal() { modal.style.display = 'none'; }
 
@@ -821,13 +852,15 @@
         if (e.target === modal) closeModal();
       });
 
-      /* ===== 화면 설명 패널 (자동 저장) ===== */
-      var docSavedTag = document.getElementById('docSaved');
-      function flashSaved(tag) {
+      /* ===== 화면 설명 패널 (실시간 저장) ===== */
+      function flashSaved(ta) {
+        // textarea가 속한 패널의 저장 표시를 잠깐 갱신
+        var aside = ta.closest('.doc-panel, .modal-doc');
+        var tag = aside && aside.querySelector('.doc-saved');
         if (!tag) return;
         tag.textContent = '저장 중...';
         clearTimeout(tag._t);
-        tag._t = setTimeout(function () { tag.textContent = '자동 저장됨'; }, 500);
+        tag._t = setTimeout(function () { tag.textContent = '실시간 저장'; }, 500);
       }
 
       // textarea 내용에 따라 높이 자동 확장 (구역별 Area 반응형)
@@ -835,70 +868,80 @@
         ta.style.height = 'auto';
         ta.style.height = (ta.scrollHeight + 2) + 'px';
       }
+      function growAll(scope) {
+        Array.prototype.forEach.call((scope || document).querySelectorAll('.doc-area'), autoGrow);
+      }
 
-      // 구역별 설명 textarea 바인딩 (복원 + 자동저장 + 자동확장)
+      // 구역별 설명 textarea 바인딩 (복원 + 실시간 저장 + 자동 확장)
       Array.prototype.forEach.call(document.querySelectorAll('.doc-area'), function (ta) {
         var key = ta.getAttribute('data-key');
         try {
           var stored = localStorage.getItem(key);
-          ta.value = (stored !== null) ? stored : (ta.getAttribute('data-default') || '');
-        } catch (e) {
-          ta.value = ta.getAttribute('data-default') || '';
-        }
+          if (stored !== null) ta.value = stored;
+        } catch (e) {}
         autoGrow(ta);
         ta.addEventListener('input', function () {
           autoGrow(ta);
-          try { localStorage.setItem(key, ta.value); } catch (e) {}
-          flashSaved(docSavedTag);
+          try { localStorage.setItem(key, ta.value); } catch (e) {}  // 실시간 저장
+          flashSaved(ta);
         });
       });
 
-      // 단일 textarea(팝업 화면 설명) 저장/복원
-      function bindDescription(textareaId, savedId, storageKey) {
-        var ta = document.getElementById(textareaId);
-        var savedTag = document.getElementById(savedId);
-        if (!ta) return;
-        try {
-          var stored = localStorage.getItem(storageKey);
-          if (stored !== null) ta.value = stored;
-        } catch (e) {}
-        ta.addEventListener('input', function () {
-          try { localStorage.setItem(storageKey, ta.value); } catch (e) {}
-          flashSaved(savedTag);
-        });
-      }
-      bindDescription('modalDocTextarea', 'modalDocSaved', 'projectory_desc_addmodal');
+      // EDIT 패널은 항상 노출 — 본문에 공간 확보
+      document.body.classList.add('doc-open');
 
-      // EDIT 페이지 우측 패널 접기/펼치기
-      var docPanel = document.getElementById('docPanel');
-      var docToggle = document.getElementById('docToggle');
-      var docOpenBtn = document.getElementById('docOpenBtn');
-      function setDocCollapsed(collapsed) {
-        docPanel.classList.toggle('collapsed', collapsed);
-        document.body.classList.toggle('doc-open', !collapsed);
-        docOpenBtn.style.display = collapsed ? 'flex' : 'none';
-        try { localStorage.setItem('projectory_desc_event_edit_collapsed', collapsed ? '1' : '0'); } catch (e) {}
+      /* ===== 스포트라이트 (화면 설명 ↔ 기능 연동) ===== */
+      var spotTarget = null;
+      function clearSpotlight() {
+        if (spotTarget) { spotTarget.classList.remove('spotlight'); spotTarget = null; }
       }
-      docToggle.addEventListener('click', function () { setDocCollapsed(true); });
-      docOpenBtn.addEventListener('click', function () { setDocCollapsed(false); });
-      var initCollapsed = false;
-      try { initCollapsed = localStorage.getItem('projectory_desc_event_edit_collapsed') === '1'; } catch (e) {}
-      setDocCollapsed(initCollapsed);
+      function spotlight(el) {
+        if (!el) return;
+        clearSpotlight();
+        spotTarget = el;
+        el.classList.add('spotlight');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // 다음 클릭 시 해제
+        setTimeout(function () {
+          document.addEventListener('click', function onceClear() {
+            clearSpotlight();
+            document.removeEventListener('click', onceClear, true);
+          }, true);
+        }, 0);
+      }
+
+      // 화면 설명 구역으로 스크롤 + 포커스
+      function focusSection(sec) {
+        if (!sec) return;
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        sec.classList.add('focused');
+        setTimeout(function () { sec.classList.remove('focused'); }, 1600);
+        var ta = sec.querySelector('.doc-area');
+        if (ta) setTimeout(function () { ta.focus(); }, 350);
+      }
 
       // 딱지(연번) 클릭 → 화면 설명의 해당 구역으로 포커스
       Array.prototype.forEach.call(document.querySelectorAll('.callout'), function (badge) {
-        if (badge.classList.contains('sm')) return; // 패널 내부 라벨용은 제외
+        if (badge.classList.contains('sm')) return; // 패널 내부 라벨용 제외
         badge.addEventListener('click', function (e) {
           e.stopPropagation();
           var n = badge.getAttribute('data-callout');
-          var sec = document.getElementById('docSec-' + n);
-          if (!sec) return;
-          setDocCollapsed(false); // 패널 펼치기
-          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          sec.classList.add('focused');
-          setTimeout(function () { sec.classList.remove('focused'); }, 1600);
-          var ta = sec.querySelector('.doc-area');
-          if (ta) setTimeout(function () { ta.focus(); }, 350);
+          var pn = badge.getAttribute('data-pcallout');
+          if (n) focusSection(document.getElementById('docSec-' + n));
+          else if (pn) focusSection(document.getElementById('pdocSec-' + pn));
+        });
+      });
+
+      // 화면 설명 구역 헤더 클릭 → 해당 기능을 스포트라이트로 강조 (역방향)
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-section-head'), function (head) {
+        head.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var n = head.getAttribute('data-spot');
+          var pn = head.getAttribute('data-pspot');
+          var badge = n
+            ? document.querySelector('.callout[data-callout="' + n + '"]')
+            : document.querySelector('.callout[data-pcallout="' + pn + '"]');
+          if (badge) spotlight(badge.parentElement);
         });
       });
 
