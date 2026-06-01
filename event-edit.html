@@ -49,15 +49,15 @@
 
         <h1 class="page-title">이벤트 수정</h1>
 
-        <!-- Edit Form -->
-        <section class="form-table">
+        <!-- Edit Form (Read only) -->
+        <section class="form-table readonly">
           <div class="form-row">
             <div class="form-cell" style="flex:1">
               <div class="form-label">활동 지역<span class="req">*</span></div>
               <div class="form-field">
                 <div class="radio-group">
-                  <label class="radio"><input type="radio" name="eregion" checked /> 서울(혜화)</label>
-                  <label class="radio"><input type="radio" name="eregion" /> 성남</label>
+                  <label class="radio"><input type="radio" name="eregion" checked disabled /> 서울(혜화)</label>
+                  <label class="radio"><input type="radio" name="eregion" disabled /> 성남</label>
                 </div>
               </div>
             </div>
@@ -68,8 +68,7 @@
               <div class="form-label">이벤트 구분<span class="req">*</span></div>
               <div class="form-field">
                 <div class="input-clear">
-                  <input type="text" value="워밍업 프로젝트" />
-                  <span class="clear-x">✕</span>
+                  <input type="text" value="워밍업 프로젝트" readonly />
                 </div>
               </div>
             </div>
@@ -77,8 +76,7 @@
               <div class="form-label">개최자</div>
               <div class="form-field">
                 <div class="input-clear">
-                  <input type="text" value="크루 쟁쟁" />
-                  <span class="clear-x">✕</span>
+                  <input type="text" value="크루 쟁쟁" readonly />
                 </div>
               </div>
             </div>
@@ -89,8 +87,7 @@
               <div class="form-label">제목<span class="req">*</span></div>
               <div class="form-field">
                 <div class="input-clear">
-                  <input type="text" value="[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대" />
-                  <span class="clear-x">✕</span>
+                  <input type="text" value="[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대" readonly />
                 </div>
               </div>
             </div>
@@ -102,7 +99,7 @@
               <div class="form-field">
                 <div class="date-edit">
                   <label>개최일자 1</label>
-                  <div class="date-inner"><span class="cal-ico">📅</span><input type="text" value="2026-05-30" style="width:110px" /></div>
+                  <div class="date-inner"><span class="cal-ico">📅</span><input type="text" value="2026-05-30" style="width:110px" readonly /></div>
                 </div>
               </div>
             </div>
@@ -112,11 +109,11 @@
                 <div style="width:100%">
                   <div style="font-size:11px;color:#888;margin-bottom:4px;">개최시간 1</div>
                   <div class="time-selects">
-                    <span class="sel"><select><option>14</option></select></span>
-                    <span class="sel"><select><option>00</option></select></span>
+                    <span class="sel"><select disabled><option>14</option></select></span>
+                    <span class="sel"><select disabled><option>00</option></select></span>
                     <span class="tilde">~</span>
-                    <span class="sel"><select><option>16</option></select></span>
-                    <span class="sel"><select><option>30</option></select></span>
+                    <span class="sel"><select disabled><option>16</option></select></span>
+                    <span class="sel"><select disabled><option>30</option></select></span>
                   </div>
                 </div>
               </div>
@@ -129,10 +126,9 @@
               <div class="form-field">
                 <div class="num-input">
                   <label>숫자만 가능</label>
-                  <input type="text" value="6" />
-                  <span class="clear-x">✕</span>
+                  <input type="text" value="6" readonly />
                 </div>
-                <label class="checkbox"><input type="checkbox" /> 마감여부</label>
+                <label class="checkbox"><input type="checkbox" disabled /> 마감여부</label>
               </div>
             </div>
             <div class="form-cell">
@@ -145,7 +141,7 @@
             <div class="form-cell" style="flex:1">
               <div class="form-label">상세 내용<span class="req">*</span></div>
               <div class="form-field">
-                <textarea class="detail">※ 자세한 내용은 프로젝토리 홈페이지 소식 - 공지를 확인해 주세요.</textarea>
+                <textarea class="detail" readonly>※ 자세한 내용은 프로젝토리 홈페이지 소식 - 공지를 확인해 주세요.</textarea>
               </div>
             </div>
           </div>
@@ -155,8 +151,8 @@
               <div class="form-label">공개 여부<span class="req">*</span></div>
               <div class="form-field">
                 <div class="radio-group">
-                  <label class="radio"><input type="radio" name="eopen" checked /> 공개</label>
-                  <label class="radio"><input type="radio" name="eopen" /> 미공개</label>
+                  <label class="radio"><input type="radio" name="eopen" checked disabled /> 공개</label>
+                  <label class="radio"><input type="radio" name="eopen" disabled /> 미공개</label>
                 </div>
               </div>
             </div>
@@ -170,8 +166,8 @@
         <div class="form-actions">
           <a href="event-list.html" class="btn btn-outline">≣ 목록</a>
           <div class="right">
-            <button class="btn btn-dark">취소</button>
-            <button class="btn btn-green">저장</button>
+            <button class="btn btn-dark" disabled>취소</button>
+            <button class="btn btn-green" disabled>저장</button>
           </div>
         </div>
 
@@ -296,21 +292,21 @@
     </div>
   </div>
 
-  <!-- 참석자 추가 레이어 팝업 -->
+  <!-- 신청추가 레이어 팝업 -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
       <div class="modal-head">
-        <h3>참석자 추가</h3>
+        <h3>신청추가</h3>
         <span class="modal-close" id="modalClose">✕</span>
       </div>
       <div class="modal-body">
         <div class="modal-search">
           <div class="ms-field">
-            <label>멤버 닉네임</label>
+            <label>닉네임</label>
             <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
           </div>
           <div class="ms-field">
-            <label>회원 성명</label>
+            <label>이름</label>
             <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
           </div>
           <div class="ms-field">
@@ -323,20 +319,33 @@
         <table class="data-table modal-table">
           <thead>
             <tr>
-              <th style="width:54px;">선택</th>
-              <th>멤버 닉네임</th>
-              <th>회원 성명</th>
+              <th>활동 지역</th>
+              <th>닉네임</th>
+              <th>이름</th>
               <th>아이디</th>
               <th>멤버 휴대전화번호</th>
+              <th>멤버십 상태</th>
+              <th style="width:84px;">추가</th>
             </tr>
           </thead>
           <tbody id="searchResults"></tbody>
         </table>
         <p class="modal-empty" id="modalEmpty">검색 조건을 입력 후 검색해 주세요.</p>
+
+        <div class="modal-footer-bar">
+          <div class="per-page">
+            <span>노출개수:</span>
+            <select id="modalPerPage">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <span id="modalRange"></span>
+          <div class="pagination" id="modalPager"></div>
+        </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-outline btn-sm" id="modalCancel">취소</button>
-        <button class="btn btn-green btn-sm" id="modalAdd">신청 추가</button>
+        <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
       </div>
     </div>
   </div>
@@ -404,17 +413,21 @@
         location.href = 'event-list.html';
       });
 
-      /* ===== 참석자 추가 레이어 팝업 ===== */
-      // 검색 대상 회원 목록(샘플 데이터)
+      /* ===== 신청추가 레이어 팝업 ===== */
+      // 검색 대상 회원 목록(샘플 데이터) — 멤버십 보유 회원만 추가 가능
       var members = [
-        { nick: '구름', name: '김도윤', id: 'cloud01', phone: '01012341234' },
-        { nick: '바다', name: '이서아', id: 'sea22', phone: '01023452345' },
-        { nick: '햇살', name: '박지호', id: 'sunny7', phone: '01034563456' },
-        { nick: '단풍', name: '최유나', id: 'maple', phone: '01045674567' },
-        { nick: '별이', name: '정민서', id: 'star_j', phone: '01056785678' },
-        { nick: '도토리', name: '강하준', id: 'acorn', phone: '01067896789' },
-        { nick: '초코', name: '윤채원', id: 'choco9', phone: '01078907890' },
-        { nick: '여름', name: '임시우', id: 'summer', phone: '01089018901' }
+        { region: '서울(혜화)', nick: '구름', name: '김도윤', id: 'cloud01', phone: '01012341234', ms: '보유' },
+        { region: '성남', nick: '바다', name: '이서아', id: 'sea22', phone: '01023452345', ms: '보유' },
+        { region: '서울(혜화)', nick: '햇살', name: '박지호', id: 'sunny7', phone: '01034563456', ms: '미보유' },
+        { region: '성남', nick: '단풍', name: '최유나', id: 'maple', phone: '01045674567', ms: '보유' },
+        { region: '서울(혜화)', nick: '별이', name: '정민서', id: 'star_j', phone: '01056785678', ms: '보유' },
+        { region: '성남', nick: '도토리', name: '강하준', id: 'acorn', phone: '01067896789', ms: '미보유' },
+        { region: '서울(혜화)', nick: '초코', name: '윤채원', id: 'choco9', phone: '01078907890', ms: '보유' },
+        { region: '성남', nick: '여름', name: '임시우', id: 'summer', phone: '01089018901', ms: '보유' },
+        { region: '서울(혜화)', nick: '노을', name: '한지민', id: 'sunset', phone: '01090120123', ms: '보유' },
+        { region: '성남', nick: '바람', name: '오세훈', id: 'wind77', phone: '01001230234', ms: '미보유' },
+        { region: '서울(혜화)', nick: '달', name: '서아인', id: 'moon_a', phone: '01012340456', ms: '보유' },
+        { region: '성남', nick: '산', name: '문도현', id: 'mount', phone: '01023450567', ms: '보유' }
       ];
 
       var modal = document.getElementById('addModal');
@@ -423,13 +436,24 @@
       var qNick = document.getElementById('qNick');
       var qName = document.getElementById('qName');
       var qId = document.getElementById('qId');
+      var modalPager = document.getElementById('modalPager');
+      var modalRange = document.getElementById('modalRange');
+      var modalPerPage = document.getElementById('modalPerPage');
+      var footerBar = document.querySelector('.modal-footer-bar');
+      var matched = [];     // 현재 검색 결과
+      var searched = false; // 검색 수행 여부
+      var mPage = 1;
+
+      function mPerPage() { return parseInt(modalPerPage.value, 10); }
+      function mTotalPages() { return Math.max(1, Math.ceil(matched.length / mPerPage())); }
 
       function openModal() {
         // 초기화: 검색 전에는 결과 없음
         qNick.value = ''; qName.value = ''; qId.value = '';
-        resultsBody.innerHTML = '';
-        emptyMsg.textContent = '검색 조건을 입력 후 검색해 주세요.';
-        emptyMsg.style.display = 'block';
+        matched = [];
+        searched = false;
+        mPage = 1;
+        renderResults();
         modal.style.display = 'flex';
       }
       function closeModal() { modal.style.display = 'none'; }
@@ -438,32 +462,87 @@
         var n = qNick.value.trim();
         var nm = qName.value.trim();
         var id = qId.value.trim();
-        var matched = members.filter(function (m) {
+        matched = members.filter(function (m) {
           return (!n || m.nick.indexOf(n) !== -1)
             && (!nm || m.name.indexOf(nm) !== -1)
             && (!id || m.id.indexOf(id) !== -1);
         });
+        searched = true;
+        mPage = 1;
+        renderResults();
+      }
 
+      function renderResults() {
         resultsBody.innerHTML = '';
+
+        // 검색 전: 아무것도 노출하지 않음
+        if (!searched) {
+          emptyMsg.textContent = '검색 조건을 입력 후 검색해 주세요.';
+          emptyMsg.style.display = 'block';
+          footerBar.style.display = 'none';
+          return;
+        }
         if (!matched.length) {
           emptyMsg.textContent = '검색 결과가 없습니다.';
           emptyMsg.style.display = 'block';
+          footerBar.style.display = 'none';
           return;
         }
+
         emptyMsg.style.display = 'none';
-        matched.forEach(function (m) {
+        footerBar.style.display = 'flex';
+
+        var pp = mPerPage();
+        var tp = mTotalPages();
+        if (mPage > tp) mPage = tp;
+        var start = (mPage - 1) * pp;
+        var pageItems = matched.slice(start, start + pp);
+
+        pageItems.forEach(function (m) {
+          var has = (m.ms === '보유');
           var tr = document.createElement('tr');
           tr.innerHTML =
-            '<td><input type="checkbox" class="pick-check" /></td>' +
+            '<td>' + m.region + '</td>' +
             '<td>' + m.nick + '</td>' +
             '<td>' + m.name + '</td>' +
             '<td>' + m.id + '</td>' +
-            '<td>' + m.phone + '</td>';
-          tr.dataset.nick = m.nick;
-          tr.dataset.name = m.name;
-          tr.dataset.phone = m.phone;
+            '<td>' + m.phone + '</td>' +
+            '<td>' + (has
+              ? '<span class="ms-on">보유</span>'
+              : '<span class="ms-off">미보유</span>') + '</td>' +
+            '<td>' + (has
+              ? '<button class="btn btn-outline-green btn-row-add">추가</button>'
+              : '<button class="btn btn-row-add" disabled>추가</button>') + '</td>';
+          if (has) {
+            tr.querySelector('.btn-row-add').addEventListener('click', function () {
+              addOne(m, tr);
+            });
+          }
           resultsBody.appendChild(tr);
         });
+
+        modalRange.textContent = (start + 1) + '-' + (start + pageItems.length) + ' of ' + matched.length;
+
+        // 페이저
+        modalPager.innerHTML = '';
+        modalPager.appendChild(mNavBtn('«', function () { mPage = 1; renderResults(); }));
+        modalPager.appendChild(mNavBtn('‹', function () { if (mPage > 1) { mPage--; renderResults(); } }));
+        for (var p = 1; p <= tp; p++) {
+          (function (num) {
+            var b = mNavBtn(String(num), function () { mPage = num; renderResults(); });
+            if (num === mPage) b.className = 'active';
+            modalPager.appendChild(b);
+          })(p);
+        }
+        modalPager.appendChild(mNavBtn('›', function () { if (mPage < tp) { mPage++; renderResults(); } }));
+        modalPager.appendChild(mNavBtn('»', function () { mPage = mTotalPages(); renderResults(); }));
+      }
+
+      function mNavBtn(label, fn) {
+        var b = document.createElement('button');
+        b.textContent = label;
+        b.addEventListener('click', fn);
+        return b;
       }
 
       function nextNo() {
@@ -482,28 +561,31 @@
           ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
       }
 
-      function addSelected() {
-        var picked = resultsBody.querySelectorAll('tr .pick-check:checked');
-        if (!picked.length) {
-          alert('추가할 신청자를 선택해 주세요.');
+      // 1명씩 신청 명단에 추가
+      function addOne(m, sourceRow) {
+        if (m.ms !== '보유') {
+          alert('멤버십 보유 회원만 신청 추가가 가능합니다.');
           return;
         }
-        Array.prototype.forEach.call(picked, function (chk) {
-          var src = chk.closest('tr');
-          var tr = document.createElement('tr');
-          tr.innerHTML =
-            '<td>' + nextNo() + '</td>' +
-            '<td>' + src.dataset.nick + '</td>' +
-            '<td>' + src.dataset.name + '</td>' +
-            '<td></td>' +
-            '<td>' + src.dataset.phone + '</td>' +
-            '<td>' + nowStr() + '</td>' +
-            '<td></td>' +
-            '<td><input type="checkbox" class="attend-check" /></td>';
-          body.insertBefore(tr, body.firstChild);
-        });
-        alert(picked.length + '명이 신청 명단에 추가되었습니다.');
-        closeModal();
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + nextNo() + '</td>' +
+          '<td>' + m.nick + '</td>' +
+          '<td>' + m.name + '</td>' +
+          '<td></td>' +
+          '<td>' + m.phone + '</td>' +
+          '<td>' + nowStr() + '</td>' +
+          '<td></td>' +
+          '<td><input type="checkbox" class="attend-check" /></td>';
+        body.insertBefore(tr, body.firstChild);
+
+        // 중복 추가 방지: 추가한 행은 버튼 비활성화
+        var btn = sourceRow.querySelector('.btn-row-add');
+        btn.textContent = '추가됨';
+        btn.disabled = true;
+        btn.className = 'btn btn-row-add';
+
+        alert(m.nick + '(' + m.name + ') 님이 신청 명단에 추가되었습니다.');
         page = 1;
         render();
       }
@@ -512,7 +594,7 @@
       document.getElementById('modalClose').addEventListener('click', closeModal);
       document.getElementById('modalCancel').addEventListener('click', closeModal);
       document.getElementById('modalSearch').addEventListener('click', doSearch);
-      document.getElementById('modalAdd').addEventListener('click', addSelected);
+      modalPerPage.addEventListener('change', function () { mPage = 1; renderResults(); });
       modal.addEventListener('click', function (e) {
         if (e.target === modal) closeModal();
       });
