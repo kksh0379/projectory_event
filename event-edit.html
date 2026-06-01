@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이벤트 수정 - projectory</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="logo"><span class="logo-mark">⊐</span> projectory</div>
+      <div class="topbar-right">
+        <div class="user-chip"><span class="avatar">👤</span> 휴</div>
+        <button class="logout-btn">⏻ 로그아웃</button>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="timer">
+          <span class="collapse">⇤</span>
+          <span>로그아웃까지 남은시간 :<br />3시간 55분 59초</span>
+        </div>
+        <ul class="nav">
+          <li><a><span class="ico">▦</span> 메인</a></li>
+          <li><a><span class="ico">✎</span> 게시글관리</a></li>
+          <li><a><span class="ico">📅</span> 일정관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👥</span> 멤버관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👤</span> 크루관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">🛍</span> 구매신청 관리</a></li>
+          <li class="active"><a href="event-list.html"><span class="ico">🌐</span> 이벤트 관리</a></li>
+          <li><a><span class="ico">📰</span> 뉴스레터 구독 관리</a></li>
+          <li><a><span class="ico">📋</span> 크루 소개 관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">⚠</span> 알람</a></li>
+          <li><a><span class="ico">⚙</span> 설정<span class="caret">▾</span></a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <main class="content">
+        <nav class="breadcrumb">
+          <span class="crumb-link">홈</span><span class="sep">›</span>
+          <a href="event-list.html" class="crumb-link">이벤트 관리</a><span class="sep">›</span>
+          <a href="event-list.html" class="current">이벤트 목록</a>
+        </nav>
+
+        <h1 class="page-title">이벤트 수정</h1>
+
+        <!-- Edit Form (Read only) -->
+        <section class="form-table readonly">
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">활동 지역<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="eregion" checked /> 서울(혜화)</label>
+                  <label class="radio"><input type="radio" name="eregion" /> 성남</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">이벤트 구분<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="워밍업 프로젝트" readonly />
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">개최자</div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="크루 쟁쟁" readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">제목<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="input-clear">
+                  <input type="text" value="[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대" readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">개최일자<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="date-edit">
+                  <label>개최일자 1</label>
+                  <div class="date-inner"><span class="cal-ico">📅</span><input type="text" value="2026-05-30" style="width:110px" readonly /></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">개최시간<span class="req">*</span></div>
+              <div class="form-field">
+                <div style="width:100%">
+                  <div style="font-size:11px;color:#888;margin-bottom:4px;">개최시간 1</div>
+                  <div class="time-selects">
+                    <span class="sel"><select disabled><option>14</option></select></span>
+                    <span class="sel"><select disabled><option>00</option></select></span>
+                    <span class="tilde">~</span>
+                    <span class="sel"><select disabled><option>16</option></select></span>
+                    <span class="sel"><select disabled><option>30</option></select></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">모집인원<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="num-input">
+                  <label>숫자만 가능</label>
+                  <input type="text" value="6" readonly />
+                </div>
+                <label class="checkbox"><input type="checkbox" disabled /> 마감여부</label>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">신청 인원</div>
+              <div class="form-field"><span class="static-val">5</span></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell" style="flex:1">
+              <div class="form-label">상세 내용<span class="req">*</span></div>
+              <div class="form-field">
+                <textarea class="detail" readonly>※ 자세한 내용은 프로젝토리 홈페이지 소식 - 공지를 확인해 주세요.</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-cell">
+              <div class="form-label">공개 여부<span class="req">*</span></div>
+              <div class="form-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="eopen" checked /> 공개</label>
+                  <label class="radio"><input type="radio" name="eopen" /> 미공개</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-cell">
+              <div class="form-label">작성자</div>
+              <div class="form-field"><span class="static-val">Super</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <a href="event-list.html" class="btn btn-outline">≣ 목록</a>
+          <div class="right">
+            <button class="btn btn-dark">취소</button>
+            <button class="btn btn-green">저장</button>
+          </div>
+        </div>
+
+        <!-- Applicant List -->
+        <div class="applicant-head">
+          <h2>[[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대] 신청명단</h2>
+          <button class="btn btn-dark btn-sm">새로고침</button>
+        </div>
+
+        <div class="stat-bar">
+          <div class="stat"><div class="k">모집인원</div><div class="v">6</div></div>
+          <div class="stat"><div class="k">신청인원</div><div class="v">5</div></div>
+          <div class="stat"><div class="k">확정인원</div><div class="v">5</div></div>
+        </div>
+
+        <div class="applicant-filter">
+          <div class="radio-group">
+            <label class="radio"><input type="radio" name="afilter" value="all" checked /> 전체</label>
+            <label class="radio"><input type="radio" name="afilter" value="apply" /> 신청자</label>
+            <span class="callout-inline"><label class="radio"><input type="radio" name="afilter" value="added" /> 신청추가</label><span class="callout" data-callout="2">2</span></span>
+            <label class="radio"><input type="radio" name="afilter" value="cancel" /> 취소자</label>
+            <label class="radio"><input type="radio" name="afilter" value="unconfirm" /> 미확정자</label>
+            <label class="radio"><input type="radio" name="afilter" value="confirm" /> 확정자</label>
+          </div>
+          <div class="right">
+            <button class="btn btn-green btn-sm">참석확정</button>
+            <span class="callout-wrap">
+              <button class="btn btn-outline-green btn-sm" id="addApplicantBtn"><span class="ico">✎</span> 신청추가</button>
+              <span class="callout" data-callout="1">1</span>
+            </span>
+            <button class="btn btn-outline btn-sm">📄 EXCEL 파일 다운로드</button>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>활동 지역 <span class="callout" data-callout="3">3</span></th>
+              <th>멤버십 상태 <span class="callout" data-callout="4">4</span></th>
+              <th>닉네임</th>
+              <th>이름</th>
+              <th>아이디 <span class="callout" data-callout="5">5</span></th>
+              <th>보호자 휴대전화번호</th>
+              <th>멤버 휴대전화번호</th>
+              <th>신청일</th>
+              <th>취소일</th>
+              <th>이벤트 참석 확정</th>
+              <th>삭제 <span class="callout" data-callout="6">6</span></th>
+            </tr>
+          </thead>
+          <tbody id="applicantBody">
+            <tr>
+              <td>8</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>안녕</td><td>이승준</td><td>seungjun01</td>
+              <td>01055512340</td><td></td>
+              <td>2026-05-30 13:49:43</td>
+              <td class="cancel-note">2026-05-30 13:53:45<br />(홈페이지)</td>
+              <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>7</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>띠모</td><td>이준희</td><td>junhee_lee</td>
+              <td>01066678901</td><td></td>
+              <td>2026-05-30 11:30:33</td>
+              <td class="cancel-note">2026-05-30 13:40:43<br />(제이)</td>
+              <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>돼지</td><td>양시온</td><td>sion99</td>
+              <td>01077789012</td><td>01088890123</td>
+              <td>2026-05-29 18:16:55</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>5</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>냥</td><td>염성경</td><td>nyang_k</td>
+              <td>01033067985</td><td>01030457985</td>
+              <td>2026-05-28 16:52:51</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>연어</td><td>조연호</td><td>salmon_jo</td>
+              <td>01090872514</td><td></td>
+              <td>2026-05-10 19:57:23</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>토끼</td><td>김민준</td><td>rabbit_mj</td>
+              <td>01045678912</td><td>01087651234</td>
+              <td>2026-05-09 14:22:10</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>별</td><td>박서연</td><td>star_sy</td>
+              <td>01023456789</td><td>01098765432</td>
+              <td>2026-05-08 09:15:00</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1</td><td>서울(혜화)</td><td><span class="ms-on">멤버십 보유</span></td><td>하늘</td><td>정우진</td><td>sky_wj</td>
+              <td>01034567890</td><td>01076543210</td>
+              <td>2026-05-07 20:01:33</td>
+              <td></td>
+              <td><input type="checkbox" class="attend-check" checked /></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="list-footer">
+          <div class="per-page">
+            <span>노출개수:</span>
+            <select id="perPage">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          <span id="rangeLabel">1-5 of 8</span>
+          <div class="mini-pager"><span id="miniPrev">‹</span><span id="miniNext">›</span></div>
+        </div>
+
+        <div class="pagination-row">
+          <div class="pagination" id="pager"></div>
+          <button class="btn btn-green" id="deleteBtn">삭제</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- 신청추가 레이어 팝업 -->
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <div class="modal-main">
+        <div class="modal-head">
+          <h3>신청추가</h3>
+          <span class="modal-close" id="modalClose">✕</span>
+        </div>
+        <div class="modal-body">
+        <div class="modal-search">
+          <div class="ms-filters-row">
+            <div class="ms-region callout-region">
+              <span class="callout callout-corner" data-pcallout="1">1</span>
+              <label class="ms-status-label">활동 지역</label>
+              <select id="qRegion" class="ms-region-select">
+                <option value="">전체</option>
+                <option value="서울(혜화)">서울(혜화)</option>
+                <option value="성남">성남</option>
+              </select>
+            </div>
+
+            <div class="ms-status callout-region">
+              <span class="callout callout-corner" data-pcallout="2">2</span>
+              <label class="ms-status-label">멤버십 상태</label>
+              <div class="ms-dropdown" id="msDropdown">
+              <button type="button" class="ms-dd-toggle" id="msDdToggle">
+                <span id="msDdSummary">멤버십 보유</span>
+                <span class="ms-dd-arrow">▾</span>
+              </button>
+              <div class="ms-dd-panel" id="msDdPanel">
+                <label class="checkbox"><input type="checkbox" class="ms-all" /> 전체</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 보유" checked /> 멤버십 보유</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="상담 예약 가능" /> 상담 예약 가능</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 확정대기" /> 멤버십 확정대기</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 거절" /> 멤버십 거절</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 연장대기" /> 멤버십 연장대기</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" /> 기간 내 휴면</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 해지" /> 멤버십 해지</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="ms-fields callout-region">
+            <span class="callout callout-corner" data-pcallout="3">3</span>
+            <div class="ms-field">
+              <label>닉네임</label>
+              <input type="text" id="qNick" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>이름</label>
+              <input type="text" id="qName" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+            <div class="ms-field">
+              <label>아이디</label>
+              <input type="text" id="qId" class="text-input" placeholder="검색어를 입력해 주세요." />
+            </div>
+          </div>
+
+          <div class="ms-search-btn">
+            <span class="callout-wrap">
+              <button class="btn btn-green btn-sm" id="modalSearch">검색</button>
+              <span class="callout" data-pcallout="4">4</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="callout-region">
+          <span class="callout callout-corner" data-pcallout="5">5</span>
+          <table class="data-table modal-table">
+            <thead>
+              <tr>
+                <th>활동 지역</th>
+                <th>멤버십 상태</th>
+                <th>닉네임</th>
+                <th>이름</th>
+                <th>아이디</th>
+                <th style="width:110px;">추가 <span class="callout" data-pcallout="6">6</span></th>
+              </tr>
+            </thead>
+            <tbody id="searchResults"></tbody>
+          </table>
+        </div>
+        <p class="modal-empty" id="modalEmpty">검색 조건을 입력 후 검색해 주세요.</p>
+
+        <div class="modal-footer-bar callout-region">
+          <span class="callout callout-corner" data-pcallout="7">7</span>
+          <div class="per-page">
+            <span>노출개수:</span>
+            <select id="modalPerPage">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <span id="modalRange"></span>
+          <div class="pagination" id="modalPager"></div>
+        </div>
+        </div>
+        <div class="modal-foot">
+          <span class="callout-wrap">
+            <button class="btn btn-outline btn-sm" id="modalCancel">닫기</button>
+            <span class="callout" data-pcallout="8">8</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- 레이어 팝업 우측 화면 설명 패널 (번호별 구역) -->
+      <aside class="modal-doc">
+        <div class="modal-doc-head">📝 화면 설명</div>
+        <p class="doc-notice">※ 본 화면은 데모 화면입니다. 신규로 추가/수정되는 부분의 동작(인터랙션)만 시각적으로 구현하였으므로 실제 화면과는 차이가 있습니다.</p>
+        <div class="doc-body" id="modalDocBody">
+          <div class="doc-section" id="pdocSec-1">
+            <div class="doc-section-head" data-pspot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 활동 지역 검색</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 대상 회원 활동 지역 필터 (드롭다운)
+- 옵션: 전체 / 서울(혜화) / 성남 (기본 전체)
+- 연동: region 파라미터</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-2">
+            <div class="doc-section-head" data-pspot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 멤버십 상태 검색</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 멤버십 상태 다중선택 필터 (드롭다운)
+- 기본값: 멤버십 보유
+- 동작: '전체' 체크 시 일괄 선택 / 해제
+- 연동: statuses 배열 / 미선택 시 결과 없음</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-3">
+            <div class="doc-section-head" data-pspot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 회원 검색 (닉네임/이름/아이디)</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 닉네임 / 이름 / 아이디 키워드 검색
+- 조건: 부분일치 AND / 빈 값 제외
+- 성능: 서버 페이징 / 키워드 인덱스 권장</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-4">
+            <div class="doc-section-head" data-pspot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 검색 버튼</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 조건(지역 / 상태 / 키워드)으로 회원 조회
+- 정책: 검색 전 결과 미노출
+- 무결과: '검색 결과가 없습니다' 표시</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-5">
+            <div class="doc-section-head" data-pspot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 검색 결과 목록</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">- 컬럼: 활동지역 / 멤버십상태 / 닉네임 / 이름 / 아이디 / 추가
+- 정책: 보유만 추가 가능 / 그 외 비활성
+- 연동: 서버 페이징 응답 (목록 + 총건수)</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-6">
+            <div class="doc-section-head" data-pspot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 추가 버튼 (1명씩 추가)</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 행 단위 1명씩 추가
+- 검증: 보유 여부 + 동일 아이디 중복
+- 처리: 성공 시 안내 → 팝업 닫고 명단 갱신
+- 저장: source=ADMIN</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-7">
+            <div class="doc-section-head" data-pspot="7" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">7</span> 페이징 / 노출개수</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec7" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 결과 페이지네이션 + 노출개수(5 / 10)
+- 연동: page / size
+- 동작: 노출개수 변경 시 1페이지 초기화</textarea>
+          </div>
+          <div class="doc-section" id="pdocSec-8">
+            <div class="doc-section-head" data-pspot="8" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">8</span> 닫기 버튼</div>
+            <textarea class="doc-area" data-key="projectory_pdesc_sec8" placeholder="설명을 작성하세요. (실시간 저장)">- 동작: 팝업 닫기 (저장 없이) / 오버레이 · ESC 동일
+- 비고: 추가는 행별 즉시 반영 / 별도 저장 없음</textarea>
+          </div>
+        </div>
+        <div class="doc-saved" id="modalDocSaved">실시간 저장</div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- EDIT 페이지 우측 화면 설명 패널 (항상 노출) -->
+  <aside class="doc-panel" id="docPanel">
+    <div class="doc-panel-head"><span>📝 화면 설명</span></div>
+    <p class="doc-notice">※ 본 화면은 데모 화면입니다. 신규로 추가/수정되는 부분의 동작(인터랙션)만 시각적으로 구현하였으므로 실제 화면과는 차이가 있습니다.</p>
+    <div class="doc-body" id="docBody">
+      <div class="doc-section" id="docSec-1">
+        <div class="doc-section-head" data-spot="1" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">1</span> 신청추가 버튼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec1" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자가 사용자 신청 없이 참석자 직접 추가
+- 동작: 클릭 시 '신청추가' 레이어 팝업 오픈
+- 권한: 이벤트 관리 권한 관리자만 노출
+- 연동: 선택 회원 명단 등록 (POST), source=ADMIN
+- 예외: 정원 초과(마감) 시 추가 정책 협의</textarea>
+      </div>
+      <div class="doc-section" id="docSec-2">
+        <div class="doc-section-head" data-spot="2" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">2</span> 신청 명단 필터 - 신청추가</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec2" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자 추가분만 조회
+- 동작: 라디오 선택 시 source=ADMIN 필터
+- 연계: 전체 / 신청자 / 취소자 / 미확정자 / 확정자와 동일 체계
+- 비고: 서버 조회 시 status=ADMIN_ADDED 전달</textarea>
+      </div>
+      <div class="doc-section" id="docSec-3">
+        <div class="doc-section-head" data-spot="3" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">3</span> 활동 지역 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec3" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 신청자 활동 지역 표기 (서울(혜화) / 성남)
+- 데이터: member.regionCode
+- 비고: 이벤트 지역과 신청자 지역 상이 가능
+- 확장: 컬럼 정렬 / 지역 필터 추후</textarea>
+      </div>
+      <div class="doc-section" id="docSec-4">
+        <div class="doc-section-head" data-spot="4" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">4</span> 멤버십 상태 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec4" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 신청자 멤버십 상태 표기
+- 값: 보유 / 상담예약가능 / 확정대기 / 거절 / 연장대기 / 기간내휴면 / 해지 / 취소 / 박탈
+- 정책: 신규 추가는 '멤버십 보유'만 / 그 외 비활성
+- 데이터: membership.statusCode (회원 도메인 enum 동기화)</textarea>
+      </div>
+      <div class="doc-section" id="docSec-5">
+        <div class="doc-section-head" data-spot="5" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">5</span> 아이디 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec5" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 로그인 아이디 표기
+- 검증: 동일 아이디 중복 추가 차단 (클라 1차 + 서버 유니크 2차)
+- 개인정보: 마스킹 여부 협의</textarea>
+      </div>
+      <div class="doc-section" id="docSec-6">
+        <div class="doc-section-head" data-spot="6" title="클릭 시 해당 기능 위치 표시"><span class="callout sm">6</span> 삭제 컬럼</div>
+        <textarea class="doc-area" data-key="projectory_desc_sec6" placeholder="설명을 작성하세요. (실시간 저장)">- 목적: 관리자 추가분 명단 삭제
+- 노출: source=ADMIN 레코드만 (일반 신청자 삭제 불가)
+- 동작: 확인 모달 → DELETE
+- 비고: 소프트 삭제 / 이력 보존 협의</textarea>
+      </div>
+    </div>
+    <div class="doc-saved" id="docSaved">실시간 저장</div>
+  </aside>
+
+  <script>
+    (function () {
+      var body = document.getElementById('applicantBody');
+      var pager = document.getElementById('pager');
+      var perPageSel = document.getElementById('perPage');
+      var rangeLabel = document.getElementById('rangeLabel');
+      var miniPrev = document.getElementById('miniPrev');
+      var miniNext = document.getElementById('miniNext');
+      var page = 1;
+
+      var currentFilter = 'all';
+
+      function rows() { return Array.prototype.slice.call(body.querySelectorAll('tr')); }
+      function perPage() { return parseInt(perPageSel.value, 10); }
+
+      // 라디오 조건에 맞는 행만 추출
+      function matchFilter(tr) {
+        var cancelDate = tr.cells[9].textContent.trim();
+        var chk = tr.querySelector('.attend-check');
+        var confirmed = chk && chk.checked;
+        var added = tr.classList.contains('admin-added');
+        switch (currentFilter) {
+          case 'apply': return cancelDate === '';            // 신청자
+          case 'added': return added;                        // 신청추가(관리자 추가분)
+          case 'cancel': return cancelDate !== '';           // 취소자
+          case 'unconfirm': return cancelDate === '' && !confirmed; // 미확정자
+          case 'confirm': return confirmed;                  // 확정자
+          default: return true;                              // 전체
+        }
+      }
+
+      function filteredRows() { return rows().filter(matchFilter); }
+      function totalPages() { return Math.max(1, Math.ceil(filteredRows().length / perPage())); }
+
+      function render() {
+        var list = filteredRows();
+        var pp = perPage();
+        var tp = totalPages();
+        if (page > tp) page = tp;
+        var start = (page - 1) * pp;
+        var end = start + pp;
+
+        // 필터 미일치 행은 모두 숨김, 일치 행은 페이지 범위만 표시
+        rows().forEach(function (tr) { tr.style.display = 'none'; });
+        list.forEach(function (tr, i) {
+          if (i >= start && i < end) tr.style.display = '';
+        });
+
+        // range label
+        var shownEnd = Math.min(end, list.length);
+        rangeLabel.textContent = (list.length ? (start + 1) : 0) + '-' + shownEnd + ' of ' + list.length;
+
+        // numbered pager
+        pager.innerHTML = '';
+        pager.appendChild(navBtn('«', function () { page = 1; render(); }));
+        pager.appendChild(navBtn('‹', function () { if (page > 1) { page--; render(); } }));
+        for (var p = 1; p <= tp; p++) {
+          (function (n) {
+            var b = navBtn(String(n), function () { page = n; render(); });
+            if (n === page) b.className = 'active';
+            pager.appendChild(b);
+          })(p);
+        }
+        pager.appendChild(navBtn('›', function () { if (page < tp) { page++; render(); } }));
+        pager.appendChild(navBtn('»', function () { page = tp; render(); }));
+      }
+
+      function navBtn(label, fn) {
+        var b = document.createElement('button');
+        b.textContent = label;
+        b.addEventListener('click', fn);
+        return b;
+      }
+
+      miniPrev.addEventListener('click', function () { if (page > 1) { page--; render(); } });
+      miniNext.addEventListener('click', function () { if (page < totalPages()) { page++; render(); } });
+      perPageSel.addEventListener('change', function () { page = 1; render(); });
+
+      // 신청 명단 라디오 필터
+      Array.prototype.forEach.call(document.getElementsByName('afilter'), function (r) {
+        r.addEventListener('change', function () {
+          currentFilter = this.value;
+          page = 1;
+          render();
+        });
+      });
+
+      // 삭제: 이벤트 자체 삭제
+      document.getElementById('deleteBtn').addEventListener('click', function () {
+        if (!confirm('해당 이벤트를 삭제하시겠습니까?')) return;
+        alert('이벤트가 삭제되었습니다.');
+        location.href = 'event-list.html';
+      });
+
+      /* ===== 신청추가 레이어 팝업 ===== */
+      var ADDABLE_MS = '멤버십 보유'; // 추가 가능한 멤버십 상태
+
+      // 검색 대상 회원 목록(샘플 데이터) — 모든 멤버십 상태가 골고루 포함
+      var members = [
+        { region: '서울(혜화)', nick: '구름', name: '김도윤', id: 'cloud01', phone: '01012341234', ms: '멤버십 보유' },
+        { region: '성남', nick: '바다', name: '이서아', id: 'sea22', phone: '01023452345', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '단풍', name: '최유나', id: 'maple', phone: '01045674567', ms: '멤버십 보유' },
+        { region: '성남', nick: '별이', name: '정민서', id: 'star_j', phone: '01056785678', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '노을', name: '한지민', id: 'sunset', phone: '01090120123', ms: '멤버십 보유' },
+        { region: '성남', nick: '달', name: '서아인', id: 'moon_a', phone: '01012340456', ms: '멤버십 보유' },
+        { region: '서울(혜화)', nick: '산', name: '문도현', id: 'mount', phone: '01023450567', ms: '멤버십 보유' },
+        { region: '성남', nick: '햇살', name: '박지호', id: 'sunny7', phone: '01034563456', ms: '상담 예약 가능' },
+        { region: '서울(혜화)', nick: '도토리', name: '강하준', id: 'acorn', phone: '01067896789', ms: '멤버십 확정대기' },
+        { region: '성남', nick: '바람', name: '오세훈', id: 'wind77', phone: '01001230234', ms: '멤버십 거절' },
+        { region: '서울(혜화)', nick: '초코', name: '윤채원', id: 'choco9', phone: '01078907890', ms: '멤버십 연장대기' },
+        { region: '성남', nick: '여름', name: '임시우', id: 'summer', phone: '01089018901', ms: '기간 내 휴면' },
+        { region: '서울(혜화)', nick: '겨울', name: '배수빈', id: 'winter', phone: '01034561111', ms: '멤버십 해지' },
+        { region: '성남', nick: '하늘', name: '신우혁', id: 'sky_77', phone: '01045672222', ms: '멤버십 취소' },
+        { region: '서울(혜화)', nick: '별빛', name: '조하은', id: 'starlight', phone: '01056783333', ms: '멤버십 박탈' },
+        { region: '성남', nick: '안개', name: '권태양', id: 'mist01', phone: '01067894444', ms: '상담 예약 가능' },
+        { region: '서울(혜화)', nick: '노래', name: '유다온', id: 'song_y', phone: '01078905555', ms: '멤버십 확정대기' },
+        { region: '성남', nick: '구슬', name: '남시현', id: 'bead99', phone: '01089016666', ms: '멤버십 연장대기' }
+      ];
+
+      var modal = document.getElementById('addModal');
+      var resultsBody = document.getElementById('searchResults');
+      var emptyMsg = document.getElementById('modalEmpty');
+      var qNick = document.getElementById('qNick');
+      var qName = document.getElementById('qName');
+      var qId = document.getElementById('qId');
+      var modalPager = document.getElementById('modalPager');
+      var modalRange = document.getElementById('modalRange');
+      var modalPerPage = document.getElementById('modalPerPage');
+      var footerBar = document.querySelector('.modal-footer-bar');
+      var matched = [];     // 현재 검색 결과
+      var searched = false; // 검색 수행 여부
+      var mPage = 1;
+
+      function mPerPage() { return parseInt(modalPerPage.value, 10); }
+      function mTotalPages() { return Math.max(1, Math.ceil(matched.length / mPerPage())); }
+
+      function openModal() {
+        // 초기화: 검색 전에는 결과 없음
+        qNick.value = ''; qName.value = ''; qId.value = '';
+        // 활동 지역 기본값: 전체
+        document.getElementById('qRegion').value = '';
+        // 멤버십 상태 기본값: 멤버십 보유만 선택
+        msAll.checked = false;
+        msOpts.forEach(function (c) { c.checked = (c.value === ADDABLE_MS); });
+        updateMsSummary();
+        msDropdown.classList.remove('open');
+        matched = [];
+        searched = false;
+        mPage = 1;
+        renderResults();
+        modal.style.display = 'flex';
+        // 팝업이 표시된 뒤 화면 설명 textarea 높이 재계산
+        if (typeof growAll === 'function') growAll(modal);
+      }
+      function closeModal() { modal.style.display = 'none'; }
+
+      // 멤버십 상태 드롭다운(다중 선택)
+      var msAll = document.querySelector('.ms-all');
+      var msOpts = Array.prototype.slice.call(document.querySelectorAll('.ms-opt'));
+      var msDropdown = document.getElementById('msDropdown');
+      var msDdToggle = document.getElementById('msDdToggle');
+      var msDdSummary = document.getElementById('msDdSummary');
+
+      // 토글 버튼에 현재 선택 상태 요약 표시
+      function updateMsSummary() {
+        if (msAll.checked) { msDdSummary.textContent = '전체'; return; }
+        var sel = msOpts.filter(function (c) { return c.checked; });
+        if (sel.length === 0) msDdSummary.textContent = '선택 안 함';
+        else if (sel.length === 1) msDdSummary.textContent = sel[0].value;
+        else msDdSummary.textContent = sel[0].value + ' 외 ' + (sel.length - 1) + '건';
+      }
+
+      // '전체' 체크 시 전체 선택/해제, 개별 변경 시 '전체' 동기화
+      msAll.addEventListener('change', function () {
+        msOpts.forEach(function (c) { c.checked = msAll.checked; });
+        updateMsSummary();
+      });
+      msOpts.forEach(function (c) {
+        c.addEventListener('change', function () {
+          msAll.checked = msOpts.every(function (x) { return x.checked; });
+          updateMsSummary();
+        });
+      });
+
+      // 드롭다운 열기/닫기
+      msDdToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        msDropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function (e) {
+        if (!msDropdown.contains(e.target)) msDropdown.classList.remove('open');
+      });
+
+      function selectedStatuses() {
+        // '전체'면 null(모든 상태), 아니면 체크된 상태 목록
+        if (msAll.checked) return null;
+        return msOpts.filter(function (c) { return c.checked; })
+          .map(function (c) { return c.value; });
+      }
+
+      function doSearch() {
+        var n = qNick.value.trim();
+        var nm = qName.value.trim();
+        var id = qId.value.trim();
+        var region = document.getElementById('qRegion').value;
+        var statuses = selectedStatuses();
+        matched = members.filter(function (m) {
+          return (!n || m.nick.indexOf(n) !== -1)
+            && (!nm || m.name.indexOf(nm) !== -1)
+            && (!id || m.id.indexOf(id) !== -1)
+            && (!region || m.region === region)
+            && (statuses === null || statuses.indexOf(m.ms) !== -1);
+        });
+        searched = true;
+        mPage = 1;
+        renderResults();
+      }
+
+      function renderResults() {
+        resultsBody.innerHTML = '';
+
+        // 검색 전: 아무것도 노출하지 않음
+        if (!searched) {
+          emptyMsg.textContent = '검색 조건을 입력 후 검색해 주세요.';
+          emptyMsg.style.display = 'block';
+          footerBar.style.display = 'none';
+          return;
+        }
+        if (!matched.length) {
+          emptyMsg.textContent = '검색 결과가 없습니다.';
+          emptyMsg.style.display = 'block';
+          footerBar.style.display = 'none';
+          return;
+        }
+
+        emptyMsg.style.display = 'none';
+        footerBar.style.display = 'flex';
+
+        var pp = mPerPage();
+        var tp = mTotalPages();
+        if (mPage > tp) mPage = tp;
+        var start = (mPage - 1) * pp;
+        var pageItems = matched.slice(start, start + pp);
+
+        pageItems.forEach(function (m) {
+          var has = (m.ms === ADDABLE_MS); // 멤버십 보유만 추가 가능
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td>' + m.region + '</td>' +
+            '<td><span class="' + (has ? 'ms-on' : 'ms-off') + '">' + m.ms + '</span></td>' +
+            '<td>' + m.nick + '</td>' +
+            '<td>' + m.name + '</td>' +
+            '<td>' + m.id + '</td>' +
+            '<td>' + (has
+              ? '<button class="btn btn-outline-green btn-row-add"><span class="ico">✎</span> 추가</button>'
+              : '<button class="btn btn-outline-green btn-row-add" disabled><span class="ico">✎</span> 추가</button>') + '</td>';
+          if (has) {
+            tr.querySelector('.btn-row-add').addEventListener('click', function () {
+              addOne(m);
+            });
+          }
+          resultsBody.appendChild(tr);
+        });
+
+        modalRange.textContent = (start + 1) + '-' + (start + pageItems.length) + ' of ' + matched.length;
+
+        // 페이저
+        modalPager.innerHTML = '';
+        modalPager.appendChild(mNavBtn('«', function () { mPage = 1; renderResults(); }));
+        modalPager.appendChild(mNavBtn('‹', function () { if (mPage > 1) { mPage--; renderResults(); } }));
+        for (var p = 1; p <= tp; p++) {
+          (function (num) {
+            var b = mNavBtn(String(num), function () { mPage = num; renderResults(); });
+            if (num === mPage) b.className = 'active';
+            modalPager.appendChild(b);
+          })(p);
+        }
+        modalPager.appendChild(mNavBtn('›', function () { if (mPage < tp) { mPage++; renderResults(); } }));
+        modalPager.appendChild(mNavBtn('»', function () { mPage = mTotalPages(); renderResults(); }));
+      }
+
+      function mNavBtn(label, fn) {
+        var b = document.createElement('button');
+        b.textContent = label;
+        b.addEventListener('click', fn);
+        return b;
+      }
+
+      function nextNo() {
+        var max = 0;
+        rows().forEach(function (tr) {
+          var v = parseInt(tr.cells[0].textContent, 10);
+          if (!isNaN(v) && v > max) max = v;
+        });
+        return max + 1;
+      }
+
+      function nowStr() {
+        var d = new Date();
+        function p(x) { return (x < 10 ? '0' : '') + x; }
+        return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) +
+          ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+      }
+
+      // 신청 명단에 이미 존재하는 아이디인지 검사 (아이디 = cells[5])
+      function existsId(id) {
+        return rows().some(function (tr) {
+          return tr.cells[5] && tr.cells[5].textContent.trim() === id;
+        });
+      }
+
+      // 1명씩 신청 명단에 추가 (관리자 추가분)
+      function addOne(m) {
+        if (m.ms !== ADDABLE_MS) {
+          alert('멤버십 보유 회원만 신청 추가가 가능합니다.');
+          return;
+        }
+        // 동일 아이디 중복 추가 방지
+        if (existsId(m.id)) {
+          alert('이미 신청 명단에 등록된 회원입니다.\n(아이디: ' + m.id + ')');
+          return;
+        }
+        var tr = document.createElement('tr');
+        tr.className = 'admin-added';
+        tr.innerHTML =
+          '<td>' + nextNo() + '</td>' +
+          '<td>' + m.region + '</td>' +
+          '<td><span class="ms-on">' + m.ms + '</span></td>' +
+          '<td>' + m.nick + '</td>' +
+          '<td>' + m.name + '</td>' +
+          '<td>' + m.id + '</td>' +
+          '<td></td>' +
+          '<td>' + m.phone + '</td>' +
+          '<td>' + nowStr() + '</td>' +
+          '<td></td>' +
+          '<td><input type="checkbox" class="attend-check" /></td>' +
+          '<td><button class="btn btn-outline-green btn-row-del"><span class="ico">✎</span> 삭제</button></td>';
+        tr.querySelector('.btn-row-del').addEventListener('click', function () {
+          if (!confirm('관리자가 추가한 신청자입니다.\n해당 인원을 신청 명단에서 삭제하시겠습니까?')) return;
+          tr.remove();
+          render();
+        });
+        body.insertBefore(tr, body.firstChild);
+
+        // 추가 완료 → 안내 후 레이어 팝업 닫기
+        alert(m.nick + '(' + m.name + ') 님이 신청 명단에 추가되었습니다.');
+        closeModal();
+        currentFilter = 'all';
+        document.querySelector('input[name="afilter"][value="all"]').checked = true;
+        page = 1;
+        render();
+      }
+
+      document.getElementById('addApplicantBtn').addEventListener('click', openModal);
+      document.getElementById('modalClose').addEventListener('click', closeModal);
+      document.getElementById('modalCancel').addEventListener('click', closeModal);
+      document.getElementById('modalSearch').addEventListener('click', doSearch);
+      modalPerPage.addEventListener('change', function () { mPage = 1; renderResults(); });
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+
+      /* ===== 화면 설명 패널 (실시간 저장) ===== */
+      function flashSaved(ta) {
+        // textarea가 속한 패널의 저장 표시를 잠깐 갱신
+        var aside = ta.closest('.doc-panel, .modal-doc');
+        var tag = aside && aside.querySelector('.doc-saved');
+        if (!tag) return;
+        tag.textContent = '저장 중...';
+        clearTimeout(tag._t);
+        tag._t = setTimeout(function () { tag.textContent = '실시간 저장'; }, 500);
+      }
+
+      // textarea 내용에 따라 높이 자동 확장 (구역별 Area 반응형)
+      function autoGrow(ta) {
+        ta.style.height = 'auto';
+        ta.style.height = (ta.scrollHeight + 2) + 'px';
+      }
+      function growAll(scope) {
+        Array.prototype.forEach.call((scope || document).querySelectorAll('.doc-area'), autoGrow);
+      }
+
+      // 구역별 설명 textarea 바인딩 (복원 + 실시간 저장 + 자동 확장)
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-area'), function (ta) {
+        var key = ta.getAttribute('data-key');
+        try {
+          var stored = localStorage.getItem(key);
+          if (stored !== null) ta.value = stored;
+        } catch (e) {}
+        autoGrow(ta);
+        ta.addEventListener('input', function () {
+          autoGrow(ta);
+          try { localStorage.setItem(key, ta.value); } catch (e) {}  // 실시간 저장
+          flashSaved(ta);
+        });
+      });
+
+      // EDIT 패널은 항상 노출 — 본문에 공간 확보
+      document.body.classList.add('doc-open');
+
+      /* ===== 스포트라이트 (화면 설명 → 기능 강조, 오버레이 방식) ===== */
+      // 오버레이 + 구멍(hole) 방식: 표 셀 등 box-shadow가 안 먹는 요소도 강조 가능
+      var spotOverlay = null, spotEl = null;
+      function positionHole() {
+        if (!spotOverlay || !spotEl) return;
+        var hole = spotOverlay.firstChild;
+        var r = spotEl.getBoundingClientRect();
+        var pad = 6;
+        hole.style.left = (r.left - pad) + 'px';
+        hole.style.top = (r.top - pad) + 'px';
+        hole.style.width = (r.width + pad * 2) + 'px';
+        hole.style.height = (r.height + pad * 2) + 'px';
+      }
+      function clearSpotlight() {
+        if (!spotOverlay) return;
+        spotOverlay.remove();
+        spotOverlay = null; spotEl = null;
+        window.removeEventListener('scroll', positionHole, true);
+        window.removeEventListener('resize', positionHole);
+        document.removeEventListener('keydown', spotEsc);
+      }
+      function spotEsc(e) { if (e.key === 'Escape') clearSpotlight(); }
+      function spotlight(el) {
+        if (!el) return;
+        // 숨겨진 요소면 보이는 상위 영역으로 대체
+        if (el.getClientRects().length === 0) {
+          el = el.closest('.modal-body, .modal-doc, .content, .modal') || el;
+        }
+        clearSpotlight();
+        spotEl = el;
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function () {
+          spotOverlay = document.createElement('div');
+          spotOverlay.className = 'spot-overlay';
+          var hole = document.createElement('div');
+          hole.className = 'spot-hole';
+          spotOverlay.appendChild(hole);
+          spotOverlay.addEventListener('click', clearSpotlight);
+          document.body.appendChild(spotOverlay);
+          positionHole();
+          window.addEventListener('scroll', positionHole, true);
+          window.addEventListener('resize', positionHole);
+          document.addEventListener('keydown', spotEsc);
+        }, 320);
+      }
+
+      // 화면 설명 구역으로 스크롤 + 포커스
+      function focusSection(sec) {
+        if (!sec) return;
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        sec.classList.add('focused');
+        setTimeout(function () { sec.classList.remove('focused'); }, 1600);
+        var ta = sec.querySelector('.doc-area');
+        if (ta) setTimeout(function () { ta.focus(); }, 350);
+      }
+
+      // 딱지(연번) 클릭 → 화면 설명의 해당 구역으로 포커스
+      Array.prototype.forEach.call(document.querySelectorAll('.callout'), function (badge) {
+        if (badge.classList.contains('sm')) return; // 패널 내부 라벨용 제외
+        badge.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var n = badge.getAttribute('data-callout');
+          var pn = badge.getAttribute('data-pcallout');
+          if (n) focusSection(document.getElementById('docSec-' + n));
+          else if (pn) focusSection(document.getElementById('pdocSec-' + pn));
+        });
+      });
+
+      // 화면 설명 구역 헤더 클릭 → 해당 기능을 스포트라이트로 강조 (역방향)
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-section-head'), function (head) {
+        head.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var n = head.getAttribute('data-spot');
+          var pn = head.getAttribute('data-pspot');
+          var badge = n
+            ? document.querySelector('.callout[data-callout="' + n + '"]')
+            : document.querySelector('.callout[data-pcallout="' + pn + '"]');
+          if (badge) spotlight(badge.parentElement);
+        });
+      });
+
+      /* ===== 번호별 댓글 기능 (작성자 입력 + 삭제) ===== */
+      function loadCmts(key) {
+        try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
+      }
+      function saveCmts(key, list) {
+        try { localStorage.setItem(key, JSON.stringify(list)); } catch (e) {}
+      }
+      function nowShort() {
+        var d = new Date();
+        function p(x) { return (x < 10 ? '0' : '') + x; }
+        return (d.getMonth() + 1) + '/' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+      }
+      function escapeHtml(s) {
+        return s.replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll('.doc-section'), function (sec) {
+        var ta = sec.querySelector('.doc-area');
+        if (!ta) return;
+        var cmtKey = ta.getAttribute('data-key') + '_cmt';
+        var head = sec.querySelector('.doc-section-head');
+
+        // 헤더에 댓글 토글 버튼
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cmt-btn';
+        head.appendChild(btn);
+
+        // 댓글 영역(리스트 + 입력 폼)
+        var box = document.createElement('div');
+        box.className = 'cmt-box';
+        box.hidden = true;
+        box.innerHTML =
+          '<div class="cmt-list"></div>' +
+          '<div class="cmt-form">' +
+          '  <input type="text" class="cmt-author" placeholder="작성자" />' +
+          '  <input type="text" class="cmt-input" placeholder="댓글을 입력하세요" />' +
+          '  <button type="button" class="cmt-add">등록</button>' +
+          '</div>';
+        ta.parentNode.insertBefore(box, ta.nextSibling);
+
+        var listEl = box.querySelector('.cmt-list');
+        var authorEl = box.querySelector('.cmt-author');
+        var inputEl = box.querySelector('.cmt-input');
+        var addBtn = box.querySelector('.cmt-add');
+
+        // 마지막 작성자 기억
+        try { authorEl.value = localStorage.getItem('projectory_cmt_author') || ''; } catch (e) {}
+
+        function render() {
+          var list = loadCmts(cmtKey);
+          btn.textContent = '💬 댓글 (' + list.length + ')';
+          if (!list.length) {
+            listEl.innerHTML = '<div class="cmt-empty">등록된 댓글이 없습니다.</div>';
+            return;
+          }
+          listEl.innerHTML = list.map(function (c, i) {
+            return '<div class="cmt-item">' +
+              '<div class="cmt-meta"><b>' + escapeHtml(c.author || '익명') + '</b>' +
+              '<span class="cmt-time">' + escapeHtml(c.time || '') + '</span>' +
+              '<button type="button" class="cmt-del" data-i="' + i + '" title="삭제">✕</button></div>' +
+              '<div class="cmt-text">' + escapeHtml(c.text) + '</div>' +
+              '</div>';
+          }).join('');
+        }
+
+        function add() {
+          var text = inputEl.value.trim();
+          if (!text) { inputEl.focus(); return; }
+          var author = authorEl.value.trim() || '익명';
+          try { localStorage.setItem('projectory_cmt_author', author); } catch (e) {}
+          var list = loadCmts(cmtKey);
+          list.push({ author: author, text: text, time: nowShort() });
+          saveCmts(cmtKey, list);
+          inputEl.value = '';
+          render();
+        }
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();   // 스포트라이트 트리거 방지
+          box.hidden = !box.hidden;
+        });
+        addBtn.addEventListener('click', add);
+        inputEl.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') add();
+        });
+        listEl.addEventListener('click', function (e) {
+          var del = e.target.closest('.cmt-del');
+          if (!del) return;
+          var i = parseInt(del.getAttribute('data-i'), 10);
+          if (!confirm('이 댓글을 삭제하시겠습니까?')) return;
+          var list = loadCmts(cmtKey);
+          list.splice(i, 1);
+          saveCmts(cmtKey, list);
+          render();
+        });
+        // 폼/리스트 클릭이 헤더 스포트라이트로 전파되지 않도록
+        box.addEventListener('click', function (e) { e.stopPropagation(); });
+
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

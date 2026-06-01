@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이벤트 목록 - projectory</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="logo"><span class="logo-mark">⊐</span> projectory</div>
+      <div class="topbar-right">
+        <div class="user-chip"><span class="avatar">👤</span> 휴</div>
+        <button class="logout-btn">⏻ 로그아웃</button>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="timer">
+          <span class="collapse">⇤</span>
+          <span>로그아웃까지 남은시간 :<br />3시간 58분 49초</span>
+        </div>
+        <ul class="nav">
+          <li><a><span class="ico">▦</span> 메인</a></li>
+          <li><a><span class="ico">✎</span> 게시글관리</a></li>
+          <li><a><span class="ico">📅</span> 일정관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👥</span> 멤버관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">👤</span> 크루관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">🛍</span> 구매신청 관리</a></li>
+          <li class="active"><a href="event-list.html"><span class="ico">🌐</span> 이벤트 관리</a></li>
+          <li><a><span class="ico">📰</span> 뉴스레터 구독 관리</a></li>
+          <li><a><span class="ico">📋</span> 크루 소개 관리<span class="caret">▾</span></a></li>
+          <li><a><span class="ico">⚠</span> 알람</a></li>
+          <li><a><span class="ico">⚙</span> 설정<span class="caret">▾</span></a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <main class="content">
+        <nav class="breadcrumb">
+          <span class="crumb-link">홈</span><span class="sep">›</span>
+          <span class="crumb-link">이벤트 관리</span><span class="sep">›</span>
+          <span class="current">이벤트 목록</span>
+        </nav>
+
+        <div class="page-notice">
+          ※ 이 화면은 <b>기존(운영 중) 이벤트 목록 화면</b>입니다. 신규 화면이 아니며, 표에서 <b>이벤트 제목을 클릭하면 해당 이벤트의 수정(상세) 화면으로 이동</b>합니다.<br />
+          (데모에서는 신규로 추가/수정되는 부분만 인터랙션을 구현하였으므로 실제 화면과는 차이가 있습니다.)
+        </div>
+
+        <!-- Search Filter -->
+        <section class="filter">
+          <div class="filter-row">
+            <div class="filter-cell">
+              <div class="filter-label">활동 지역</div>
+              <div class="filter-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="region" checked /> 전체</label>
+                  <label class="radio"><input type="radio" name="region" /> 서울(혜화)</label>
+                  <label class="radio"><input type="radio" name="region" /> 성남</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-cell">
+              <div class="filter-label">이벤트 제목</div>
+              <div class="filter-field">
+                <input type="text" class="text-input" placeholder="검색어를 입력해 주세요." />
+              </div>
+            </div>
+            <div class="filter-cell">
+              <div class="filter-label">이벤트 등록일</div>
+              <div class="filter-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="regdate" /> 전체</label>
+                  <label class="radio"><input type="radio" name="regdate" checked /> 시작 일</label>
+                </div>
+                <div class="date-wrap">
+                  <div class="date-field">
+                    <label>등록 시작일</label>
+                    <div class="date-inner"><span class="cal-ico">📅</span><span class="date-val">2026-05-02</span></div>
+                  </div>
+                  <div class="date-field">
+                    <label>등록 종료일</label>
+                    <div class="date-inner"><span class="cal-ico">📅</span><span class="date-val">2026-06-01</span></div>
+                  </div>
+                </div>
+                <button class="month-pill">6월</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-cell">
+              <div class="filter-label">개최자</div>
+              <div class="filter-field">
+                <input type="text" class="text-input" placeholder="검색어를 입력해 주세요." />
+              </div>
+            </div>
+            <div class="filter-cell">
+              <div class="filter-label">이벤트 개최 일자</div>
+              <div class="filter-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="holddate" checked /> 전체</label>
+                  <label class="radio"><input type="radio" name="holddate" /> 시작 일</label>
+                </div>
+                <div class="date-wrap">
+                  <div class="date-field">
+                    <label>개최 시작일</label>
+                    <div class="date-inner muted"><span class="cal-ico">📅</span><span class="date-val">2026-05-02</span></div>
+                  </div>
+                  <div class="date-field">
+                    <label>개최 종료일</label>
+                    <div class="date-inner muted"><span class="cal-ico">📅</span><span class="date-val">2026-06-01</span></div>
+                  </div>
+                </div>
+                <button class="month-pill disabled">6월</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-cell">
+              <div class="filter-label">이벤트 구분</div>
+              <div class="filter-field">
+                <input type="text" class="text-input" placeholder="검색어를 입력해 주세요." />
+              </div>
+            </div>
+            <div class="filter-cell">
+              <div class="filter-label">공개 여부</div>
+              <div class="filter-field">
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="open" checked /> 전체</label>
+                  <label class="radio"><input type="radio" name="open" /> 공개</label>
+                  <label class="radio"><input type="radio" name="open" /> 미공개</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="search-actions">
+          <button class="btn btn-dark">초기화</button>
+          <button class="btn btn-green">검색</button>
+        </div>
+
+        <!-- Table actions -->
+        <div class="table-actions">
+          <button class="btn btn-outline btn-sm">📄 EXCEL 파일 다운로드</button>
+          <div class="right">
+            <button class="btn btn-outline-green btn-sm">📅 월별 현황</button>
+            <button class="btn btn-outline-green btn-sm">✎ 신규 등록</button>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>활동 지역</th>
+              <th>개최일자</th>
+              <th>이벤트 구분</th>
+              <th>이벤트 제목</th>
+              <th>이벤트 시간</th>
+              <th>이벤트 상태</th>
+              <th>모집인원</th>
+              <th>신청인원</th>
+              <th>공개여부</th>
+              <th>개최자</th>
+              <th>등록일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>9</td><td>서울(혜화)</td><td>2026-05-30</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대</a></td>
+              <td>14:00 ~ 16:30</td><td>종료</td><td>6</td><td>5</td><td>Y</td><td>크루 쟁쟁</td><td>2026-05-30 13:40:54</td>
+            </tr>
+            <tr>
+              <td>8</td><td>서울(혜화)</td><td>2026-05-30</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 업사이클링 파우치 만들기</a></td>
+              <td>10:00 ~ 13:00</td><td>종료</td><td>4</td><td>3</td><td>Y</td><td>크루 코코</td><td>2026-05-30 11:29:47</td>
+            </tr>
+            <tr>
+              <td>7</td><td>서울(혜화)</td><td>2026-05-31</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 나만의 집 만들기</a></td>
+              <td>14:00 ~ 17:00</td><td>종료</td><td>6</td><td>5</td><td>Y</td><td>크루 노아</td><td>2026-05-29 18:18:24</td>
+            </tr>
+            <tr>
+              <td>6</td><td>서울(혜화)</td><td>2026-05-31</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - RC카 만들기</a></td>
+              <td>10:00 ~ 13:00</td><td>종료</td><td>5</td><td>5</td><td>Y</td><td>크루 여름</td><td>2026-05-28 17:37:17</td>
+            </tr>
+            <tr>
+              <td>5</td><td>성남</td><td>2026-05-30</td><td>전시</td>
+              <td class="title-cell"><a href="event-edit.html">프로젝트 그룹(점토조형) 전시 - 주물주물 조물조물</a></td>
+              <td>14:00 ~ 16:00</td><td>종료</td><td>10</td><td>4</td><td>Y</td><td>크루 데이지, 애플</td><td>2026-05-27 12:47:48</td>
+            </tr>
+            <tr>
+              <td>4</td><td>서울(혜화)</td><td>2026-05-09</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 프로젝토리 과학수사대</a></td>
+              <td>10:00 ~ 12:30</td><td>종료</td><td>4</td><td>4</td><td>Y</td><td>크루 쟁쟁</td><td>2026-05-09 10:25:17</td>
+            </tr>
+            <tr>
+              <td>3</td><td>서울(혜화)</td><td>2026-05-09</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 업사이클링 파우치 만들기</a></td>
+              <td>14:00 ~ 17:00</td><td>종료</td><td>5</td><td>4</td><td>Y</td><td>크루 코코</td><td>2026-05-09 10:17:05</td>
+            </tr>
+            <tr>
+              <td>2</td><td>서울(혜화)</td><td>2026-05-10</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - 나만의 집 만들기</a></td>
+              <td>10:00 ~ 13:00</td><td>종료</td><td>4</td><td>4</td><td>Y</td><td>크루 노아</td><td>2026-05-07 19:54:43</td>
+            </tr>
+            <tr>
+              <td>1</td><td>서울(혜화)</td><td>2026-05-10</td><td>워밍업 프로젝트</td>
+              <td class="title-cell"><a href="event-edit.html">[혜화] 워밍업 프로젝트 - RC카 만들기</a></td>
+              <td>14:00 ~ 17:00</td><td>종료</td><td>5</td><td>5</td><td>Y</td><td>크루 여름</td><td>2026-05-07 19:51:19</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="list-footer">
+          <div class="per-page">
+            <span>노출개수:</span>
+            <select>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
+          <span>1-9 of 9</span>
+          <div class="mini-pager"><span>‹</span><span>›</span></div>
+        </div>
+
+        <div class="pagination">
+          <button>«</button>
+          <button>‹</button>
+          <button class="active">1</button>
+          <button>›</button>
+          <button>»</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
