@@ -110,6 +110,6 @@ const server = http.createServer(async function (req, res) {
   });
 });
 
-server.listen(PORT, function () {
-  console.log('Projectory 데모 서버 실행: http://localhost:' + PORT + '/');
+server.listen(PORT, '0.0.0.0', function () {
+  console.log('Projectory 데모 서버 실행: 0.0.0.0:' + PORT);
 });

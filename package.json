@@ -4,5 +4,8 @@
   "description": "이벤트 관리 화면 데모 (화면 설명/댓글 서버 저장)",
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
