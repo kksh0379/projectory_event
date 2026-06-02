@@ -889,17 +889,7 @@
         if (e.target === modal) closeModal();
       });
 
-      /* ===== 화면 설명 패널 (실시간 저장) ===== */
-      function flashSaved(ta) {
-        // textarea가 속한 패널의 저장 표시를 잠깐 갱신
-        var aside = ta.closest('.doc-panel, .modal-doc');
-        var tag = aside && aside.querySelector('.doc-saved');
-        if (!tag) return;
-        tag.textContent = '저장 중...';
-        clearTimeout(tag._t);
-        tag._t = setTimeout(function () { tag.textContent = '실시간 저장'; }, 500);
-      }
-
+      /* ===== 화면 설명: 자동 확장 유틸 ===== */
       // textarea 내용에 따라 높이 자동 확장 (구역별 Area 반응형)
       function autoGrow(ta) {
         ta.style.height = 'auto';
@@ -908,21 +898,6 @@
       function growAll(scope) {
         Array.prototype.forEach.call((scope || document).querySelectorAll('.doc-area'), autoGrow);
       }
-
-      // 구역별 설명 textarea 바인딩 (복원 + 실시간 저장 + 자동 확장)
-      Array.prototype.forEach.call(document.querySelectorAll('.doc-area'), function (ta) {
-        var key = ta.getAttribute('data-key');
-        try {
-          var stored = localStorage.getItem(key);
-          if (stored !== null) ta.value = stored;
-        } catch (e) {}
-        autoGrow(ta);
-        ta.addEventListener('input', function () {
-          autoGrow(ta);
-          try { localStorage.setItem(key, ta.value); } catch (e) {}  // 실시간 저장
-          flashSaved(ta);
-        });
-      });
 
       // EDIT 패널은 항상 노출 — 본문에 공간 확보
       document.body.classList.add('doc-open');
@@ -1008,40 +983,102 @@
         });
       });
 
-      /* ===== 번호별 댓글 기능 (작성자 입력 + 삭제) ===== */
-      function loadCmts(key) {
-        try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
-      }
-      function saveCmts(key, list) {
-        try { localStorage.setItem(key, JSON.stringify(list)); } catch (e) {}
-      }
+      /* ===== 저장소: 서버 우선, 실패 시 localStorage 폴백 ===== */
+      var serverOn = false;                          // 서버 연결 여부
+      var STATE = { descriptions: {}, comments: {} }; // 서버 데이터 캐시
+      var savedBase = '로컬 저장(데모)';
+
       function nowShort() {
-        var d = new Date();
-        function p(x) { return (x < 10 ? '0' : '') + x; }
+        var d = new Date(); function p(x) { return (x < 10 ? '0' : '') + x; }
         return (d.getMonth() + 1) + '/' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
       }
+      function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
       function escapeHtml(s) {
-        return s.replace(/[&<>"]/g, function (c) {
+        return String(s).replace(/[&<>"]/g, function (c) {
           return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
         });
       }
+      function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+      // 설명 조회/저장
+      function descGet(key) {
+        if (serverOn) return STATE.descriptions[key];
+        var v = lsGet(key); return v === null ? undefined : v;
+      }
+      function descSet(key, value) {
+        if (serverOn) {
+          return fetch('/api/descriptions/' + encodeURIComponent(key), {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ value: value })
+          }).then(function (r) { if (!r.ok) throw 0; STATE.descriptions[key] = value; });
+        }
+        lsSet(key, value); return Promise.resolve();
+      }
+      // 댓글 조회/추가/삭제
+      function cmtGet(key) {
+        if (serverOn) return STATE.comments[key] || [];
+        try { return JSON.parse(lsGet(key + '_cmt') || '[]'); } catch (e) { return []; }
+      }
+      function cmtAdd(key, author, text) {
+        if (serverOn) {
+          return fetch('/api/comments/' + encodeURIComponent(key), {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ author: author, text: text })
+          }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+            .then(function (c) { (STATE.comments[key] = STATE.comments[key] || []).push(c); return c; });
+        }
+        var c = { id: genId(), author: author, text: text, time: nowShort() };
+        var list = cmtGet(key); list.push(c); lsSet(key + '_cmt', JSON.stringify(list));
+        return Promise.resolve(c);
+      }
+      function cmtDel(key, id) {
+        if (serverOn) {
+          return fetch('/api/comments/' + encodeURIComponent(key) + '/' + encodeURIComponent(id), { method: 'DELETE' })
+            .then(function (r) { if (!r.ok) throw 0; STATE.comments[key] = (STATE.comments[key] || []).filter(function (c) { return c.id !== id; }); });
+        }
+        var list = cmtGet(key).filter(function (c) { return c.id !== id; });
+        lsSet(key + '_cmt', JSON.stringify(list)); return Promise.resolve();
+      }
+
+      function setSaved(ta, msg) {
+        var aside = ta.closest('.doc-panel, .modal-doc');
+        var tag = aside && aside.querySelector('.doc-saved');
+        if (tag) tag.textContent = msg;
+      }
+      function setAllSaved(msg) {
+        Array.prototype.forEach.call(document.querySelectorAll('.doc-saved'), function (t) { t.textContent = msg; });
+      }
+
+      /* ===== 구역별 설명 + 댓글 빌드 ===== */
+      var sections = [];
       Array.prototype.forEach.call(document.querySelectorAll('.doc-section'), function (sec) {
         var ta = sec.querySelector('.doc-area');
         if (!ta) return;
-        var cmtKey = ta.getAttribute('data-key') + '_cmt';
+        var key = ta.getAttribute('data-key');
         var head = sec.querySelector('.doc-section-head');
 
-        // 헤더에 댓글 토글 버튼
+        // 설명 입력 → 디바운스 저장
+        autoGrow(ta);
+        var t = null;
+        ta.addEventListener('input', function () {
+          autoGrow(ta);
+          setSaved(ta, '저장 중...');
+          clearTimeout(t);
+          t = setTimeout(function () {
+            descSet(key, ta.value)
+              .then(function () { setSaved(ta, savedBase + ' 완료'); })
+              .catch(function () { setSaved(ta, '저장 실패'); });
+          }, 400);
+        });
+
+        // 헤더 댓글 토글 버튼 + 댓글 영역
         var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'cmt-btn';
+        btn.type = 'button'; btn.className = 'cmt-btn';
         head.appendChild(btn);
 
-        // 댓글 영역(리스트 + 입력 폼)
         var box = document.createElement('div');
-        box.className = 'cmt-box';
-        box.hidden = true;
+        box.className = 'cmt-box'; box.hidden = true;
         box.innerHTML =
           '<div class="cmt-list"></div>' +
           '<div class="cmt-form">' +
@@ -1055,22 +1092,17 @@
         var authorEl = box.querySelector('.cmt-author');
         var inputEl = box.querySelector('.cmt-input');
         var addBtn = box.querySelector('.cmt-add');
+        authorEl.value = lsGet('projectory_cmt_author') || '';
 
-        // 마지막 작성자 기억
-        try { authorEl.value = localStorage.getItem('projectory_cmt_author') || ''; } catch (e) {}
-
-        function render() {
-          var list = loadCmts(cmtKey);
+        function renderCmts() {
+          var list = cmtGet(key);
           btn.textContent = '💬 댓글 (' + list.length + ')';
-          if (!list.length) {
-            listEl.innerHTML = '<div class="cmt-empty">등록된 댓글이 없습니다.</div>';
-            return;
-          }
-          listEl.innerHTML = list.map(function (c, i) {
+          if (!list.length) { listEl.innerHTML = '<div class="cmt-empty">등록된 댓글이 없습니다.</div>'; return; }
+          listEl.innerHTML = list.map(function (c) {
             return '<div class="cmt-item">' +
               '<div class="cmt-meta"><b>' + escapeHtml(c.author || '익명') + '</b>' +
               '<span class="cmt-time">' + escapeHtml(c.time || '') + '</span>' +
-              '<button type="button" class="cmt-del" data-i="' + i + '" title="삭제">✕</button></div>' +
+              '<button type="button" class="cmt-del" data-id="' + escapeHtml(c.id) + '" title="삭제">✕</button></div>' +
               '<div class="cmt-text">' + escapeHtml(c.text) + '</div>' +
               '</div>';
           }).join('');
@@ -1080,36 +1112,53 @@
           var text = inputEl.value.trim();
           if (!text) { inputEl.focus(); return; }
           var author = authorEl.value.trim() || '익명';
-          try { localStorage.setItem('projectory_cmt_author', author); } catch (e) {}
-          var list = loadCmts(cmtKey);
-          list.push({ author: author, text: text, time: nowShort() });
-          saveCmts(cmtKey, list);
-          inputEl.value = '';
-          render();
+          lsSet('projectory_cmt_author', author);
+          addBtn.disabled = true;
+          cmtAdd(key, author, text)
+            .then(function () { inputEl.value = ''; renderCmts(); })
+            .catch(function () { alert('댓글 저장에 실패했습니다.'); })
+            .then(function () { addBtn.disabled = false; });
         }
 
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();   // 스포트라이트 트리거 방지
-          box.hidden = !box.hidden;
-        });
+        btn.addEventListener('click', function (e) { e.stopPropagation(); box.hidden = !box.hidden; });
         addBtn.addEventListener('click', add);
-        inputEl.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') add();
-        });
+        inputEl.addEventListener('keydown', function (e) { if (e.key === 'Enter') add(); });
         listEl.addEventListener('click', function (e) {
           var del = e.target.closest('.cmt-del');
           if (!del) return;
-          var i = parseInt(del.getAttribute('data-i'), 10);
           if (!confirm('이 댓글을 삭제하시겠습니까?')) return;
-          var list = loadCmts(cmtKey);
-          list.splice(i, 1);
-          saveCmts(cmtKey, list);
-          render();
+          cmtDel(key, del.getAttribute('data-id')).then(renderCmts).catch(function () { alert('삭제에 실패했습니다.'); });
         });
-        // 폼/리스트 클릭이 헤더 스포트라이트로 전파되지 않도록
         box.addEventListener('click', function (e) { e.stopPropagation(); });
 
-        render();
+        sections.push({ ta: ta, key: key, renderCmts: renderCmts });
+        renderCmts();
+      });
+
+      // 서버/로컬 상태를 화면에 반영 (입력 중인 칸은 건드리지 않음)
+      function applyState() {
+        sections.forEach(function (s) {
+          var v = descGet(s.key);
+          if (v !== undefined && v !== null && document.activeElement !== s.ta && s.ta.value !== v) {
+            s.ta.value = v; autoGrow(s.ta);
+          }
+          s.renderCmts();
+        });
+      }
+
+      /* ===== 서버 연결 시도 + 폴링(타인 변경 반영) ===== */
+      function loadState() { return fetch('/api/state').then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
+      loadState().then(function (state) {
+        serverOn = true; STATE = state; savedBase = '서버 저장';
+        setAllSaved('서버 저장');
+        applyState();
+        setInterval(function () {
+          loadState().then(function (s) { STATE = s; applyState(); }).catch(function () {});
+        }, 5000);
+      }).catch(function () {
+        serverOn = false; savedBase = '로컬 저장(데모)';
+        setAllSaved('로컬 저장(서버 미연결)');
+        applyState();
       });
 
       render();
