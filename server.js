@@ -80,7 +80,10 @@ let data = { descriptions: {}, comments: {} };
 
 // ---- 유틸 ----
 function sendJson(res, code, obj) {
-  res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8' });
+  res.writeHead(code, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store'
+  });
   res.end(JSON.stringify(obj));
 }
 function readBody(req) {
@@ -145,7 +148,13 @@ const server = http.createServer(async function (req, res) {
   if (fp.indexOf(ROOT) !== 0) { res.writeHead(403); return res.end('forbidden'); }
   fs.readFile(fp, function (err, buf) {
     if (err) { res.writeHead(404); return res.end('not found'); }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(fp)] || 'application/octet-stream' });
+    res.writeHead(200, {
+      'Content-Type': MIME[path.extname(fp)] || 'application/octet-stream',
+      // 배포 후 하드 리프레시 없이 최신 반영되도록 캐시 비활성화
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
     res.end(buf);
   });
 });
