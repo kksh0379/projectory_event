@@ -338,11 +338,11 @@
               <div class="ms-dd-panel" id="msDdPanel">
                 <label class="checkbox"><input type="checkbox" class="ms-all" /> 전체</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 보유" checked /> 멤버십 보유</label>
+                <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" checked /> 기간 내 휴면</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="상담 예약 가능" /> 상담 예약 가능</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 확정대기" /> 멤버십 확정대기</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 거절" /> 멤버십 거절</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 연장대기" /> 멤버십 연장대기</label>
-                <label class="checkbox"><input type="checkbox" class="ms-opt" value="기간 내 휴면" /> 기간 내 휴면</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 해지" /> 멤버십 해지</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 취소" /> 멤버십 취소</label>
                 <label class="checkbox"><input type="checkbox" class="ms-opt" value="멤버십 박탈" /> 멤버십 박탈</label>
@@ -726,6 +726,10 @@
           .map(function (c) { return c.value; });
       }
 
+      // 검색 결과 정렬 우선순위 (멤버십 보유 > 기간 내 휴면 > 그 외)
+      var MS_ORDER = ['멤버십 보유', '기간 내 휴면', '상담 예약 가능', '멤버십 확정대기', '멤버십 거절', '멤버십 연장대기', '멤버십 해지', '멤버십 취소', '멤버십 박탈'];
+      function msRank(ms) { var i = MS_ORDER.indexOf(ms); return i === -1 ? 99 : i; }
+
       function doSearch() {
         var n = qNick.value.trim();
         var nm = qName.value.trim();
@@ -739,6 +743,8 @@
             && (!region || m.region === region)
             && (statuses === null || statuses.indexOf(m.ms) !== -1);
         });
+        // 멤버십 보유 > 기간 내 휴면 > 나머지 순으로 정렬
+        matched.sort(function (a, b) { return msRank(a.ms) - msRank(b.ms); });
         searched = true;
         mPage = 1;
         renderResults();
@@ -1003,26 +1009,28 @@
         var v = lsGet(key); return v === null ? undefined : v;
       }
       function descSet(key, value) {
+        lsSet(key, value); // 로컬 백업(미러) — 서버 초기화 대비
         if (serverOn) {
           return fetch('/api/descriptions/' + encodeURIComponent(key), {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ value: value })
           }).then(function (r) { if (!r.ok) throw 0; STATE.descriptions[key] = value; });
         }
-        lsSet(key, value); return Promise.resolve();
+        return Promise.resolve();
       }
       // 댓글 조회/추가/삭제
       function cmtGet(key) {
         if (serverOn) return STATE.comments[key] || [];
         try { return JSON.parse(lsGet(key + '_cmt') || '[]'); } catch (e) { return []; }
       }
+      function mirrorCmts(key) { lsSet(key + '_cmt', JSON.stringify(STATE.comments[key] || [])); }
       function cmtAdd(key, author, text) {
         if (serverOn) {
           return fetch('/api/comments/' + encodeURIComponent(key), {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ author: author, text: text })
           }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
-            .then(function (c) { (STATE.comments[key] = STATE.comments[key] || []).push(c); return c; });
+            .then(function (c) { (STATE.comments[key] = STATE.comments[key] || []).push(c); mirrorCmts(key); return c; });
         }
         var c = { id: genId(), author: author, text: text, time: nowShort() };
         var list = cmtGet(key); list.push(c); lsSet(key + '_cmt', JSON.stringify(list));
@@ -1031,7 +1039,7 @@
       function cmtDel(key, id) {
         if (serverOn) {
           return fetch('/api/comments/' + encodeURIComponent(key) + '/' + encodeURIComponent(id), { method: 'DELETE' })
-            .then(function (r) { if (!r.ok) throw 0; STATE.comments[key] = (STATE.comments[key] || []).filter(function (c) { return c.id !== id; }); });
+            .then(function (r) { if (!r.ok) throw 0; STATE.comments[key] = (STATE.comments[key] || []).filter(function (c) { return c.id !== id; }); mirrorCmts(key); });
         }
         var list = cmtGet(key).filter(function (c) { return c.id !== id; });
         lsSet(key + '_cmt', JSON.stringify(list)); return Promise.resolve();
@@ -1142,11 +1150,41 @@
         });
       }
 
+      /* ===== 로컬 백업 → 서버 복원 (서버 초기화 시 내용 복구) ===== */
+      function restoreFromLocal() {
+        if (!serverOn) return;
+        var jobs = [];
+        sections.forEach(function (s) {
+          var key = s.key;
+          // 설명: 서버가 비어 있고 로컬 백업이 있으면 복원
+          var sv = STATE.descriptions[key];
+          var lv = lsGet(key);
+          if ((sv == null || sv === '') && lv && lv.trim()) {
+            STATE.descriptions[key] = lv;
+            jobs.push(descSet(key, lv));
+          }
+          // 댓글: 서버가 0건이고 로컬 백업이 있으면 복원
+          var scl = STATE.comments[key] || [];
+          var lcl = [];
+          try { lcl = JSON.parse(lsGet(key + '_cmt') || '[]'); } catch (e) {}
+          if (scl.length === 0 && lcl.length > 0) {
+            lcl.forEach(function (c) {
+              if (c && c.text) jobs.push(cmtAdd(key, c.author || '익명', c.text));
+            });
+          }
+        });
+        if (jobs.length) {
+          console.log('[복원] 로컬 백업에서 ' + jobs.length + '건을 서버로 복원합니다.');
+          Promise.all(jobs).then(applyState).catch(function () {});
+        }
+      }
+
       /* ===== 서버 연결 시도 + 폴링(타인 변경 반영) ===== */
       function loadState() { return fetch('/api/state').then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
       loadState().then(function (state) {
         serverOn = true; STATE = state; savedBase = '서버 저장';
         setAllSaved('서버 저장');
+        restoreFromLocal();   // 로컬 백업이 있으면 서버로 복원
         applyState();
         setInterval(function () {
           loadState().then(function (s) { STATE = s; applyState(); }).catch(function () {});
