@@ -1,13 +1,18 @@
 # Render.com 배포 설정 (Blueprint)
-# https://render.com → New → Blueprint → 이 저장소 선택
+# https://render.com → New → Blueprint → 이 저장소 선택 → 브랜치 지정
 services:
   - type: web
     name: projectory-event-demo
     runtime: node
     plan: free
     branch: claude/sleepy-goodall-PwIEK
-    buildCommand: ""        # 외부 의존성 없음
+    buildCommand: ""          # 외부 의존성 없음 (npm install 불필요)
     startCommand: node server.js
     envVars:
       - key: NODE_VERSION
         value: "20"
+      # 영구 저장(Upstash Redis) — Render 대시보드에서 값 입력
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false

@@ -1,34 +1,48 @@
 # projectory_event
 
 이벤트 관리 화면 데모 (이벤트 목록 / 이벤트 수정 + 신청추가 레이어 팝업)
+화면 설명·댓글을 서버에 저장해 여러 사용자가 공유합니다.
 
 ## 구성
 - `event-list.html` : 이벤트 목록 (기존 화면)
 - `event-edit.html` : 이벤트 수정 + 신청 명단 + 신청추가 팝업 + 화면 설명/댓글
 - `styles.css` : 공통 스타일
-- `server.js` : 화면 설명/댓글을 저장하는 간단 백엔드 (외부 의존성 없음)
-- `data.json` : 화면 설명/댓글 저장 파일 (서버 실행 중 자동 갱신)
+- `server.js` : 백엔드 서버 (외부 의존성 없음)
+- `data.json` : 파일 저장소 (Upstash 미설정 시 사용)
+- `Dockerfile`, `render.yaml`, `package.json` : 배포 설정
 
-## 실행 방법 (서버 저장 = 여러 사용자 공유)
-화면 설명과 댓글을 **여러 사람이 공유**하려면 서버를 띄워서 접속해야 합니다.
+## 저장소(영구 보존)
+`server.js`는 두 가지 저장 방식을 자동 선택합니다.
+- 환경변수 `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` 가 있으면 → **Upstash Redis(영구 저장)**
+- 없으면 → 로컬 `data.json` 파일(서버 재시작 시 초기화될 수 있음)
 
+## 로컬 실행
 ```bash
-node server.js          # 기본 포트 3000 (PORT 환경변수로 변경 가능)
+node server.js            # http://localhost:3000
 ```
 
-브라우저에서 접속:
-- 목록: http://localhost:3000/
-- 수정: http://localhost:3000/event-edit.html
+## 배포 (Render + Upstash 영구 저장)
 
-이렇게 접속하면 화면 설명/댓글이 `data.json`(서버)에 저장되어 모든 접속자에게 공유됩니다.
-타인의 변경 사항은 약 5초 간격 폴링으로 자동 반영됩니다.
+### 1) Upstash Redis 무료 DB 생성
+1. https://upstash.com 가입 → Redis Database 생성 (Free)
+2. 데이터베이스 상세에서 **REST API** 항목의 두 값 복사
+   - `UPSTASH_REDIS_REST_URL`
+   - `UPSTASH_REDIS_REST_TOKEN`
 
-## 참고
-- 서버 없이 HTML 파일을 직접 열면(`file://`) 서버에 연결되지 않아 **해당 브라우저 localStorage에만 저장**됩니다.
-  (이 경우 화면 설명 저장 표시가 "로컬 저장(서버 미연결)"로 표시됩니다.)
-- 실제 운영 연동 시 `server.js`의 파일 저장부를 DB/API로 교체하면 됩니다.
+### 2) Render 웹 서비스 배포
+1. https://render.com 가입 → **New → Blueprint** → 이 GitHub 저장소 선택
+   (또는 New → Web Service, Start Command: `node server.js`)
+2. 배포 브랜치 지정 (예: `claude/sleepy-goodall-PwIEK`)
+3. **Environment**에 위 두 값 입력
+   - `UPSTASH_REDIS_REST_URL`
+   - `UPSTASH_REDIS_REST_TOKEN`
+4. 배포 완료 후 발급된 `https://<서비스명>.onrender.com` 으로 접속
+   - 목록: `/`  · 수정: `/event-edit.html`
 
-## API (server.js)
+> Upstash 값을 넣으면 서비스가 재시작/슬립돼도 화면 설명·댓글이 영구 보존되고 모든 접속자에게 공유됩니다.
+> 환경변수를 비워두면 파일 저장(data.json)으로 동작하며, 무료 인스턴스 특성상 재시작 시 초기화될 수 있습니다.
+
+## API
 - `GET    /api/state` : 전체 데이터(설명 + 댓글)
 - `PUT    /api/descriptions/{key}` : 설명 저장 `{ "value": "..." }`
 - `POST   /api/comments/{key}` : 댓글 추가 `{ "author": "...", "text": "..." }`
